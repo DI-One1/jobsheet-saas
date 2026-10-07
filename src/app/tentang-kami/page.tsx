@@ -44,7 +44,7 @@ const TEAM_MEMBERS: TeamMember[] = [
     name: "Muhammad Nafis",
     role: "Lead Developer",
     description:
-      "Bertanggung jawab atas arsitektur sistem dan pengembangan fitur inti LACAK.",
+      "Bertanggung jawab atas arsitektur sistem dan pengembangan ide LACAK.",
     image:
       "https://static.vecteezy.com/system/resources/previews/037/336/395/non_2x/user-profile-flat-illustration-avatar-person-icon-gender-neutral-silhouette-profile-picture-free-vector.jpg",
     profile: "#",
@@ -53,7 +53,7 @@ const TEAM_MEMBERS: TeamMember[] = [
     name: "Muhammad Choerul Akbar",
     role: "Full-Stack Developer",
     description:
-      "Mengembangkan antarmuka dan sistem backend yang menjadi fondasi platform LACAK.",
+      "Mengembangkan ide inti, antarmuka dan sistem backend yang menjadi fondasi platform LACAK.",
     image:
       "https://static.vecteezy.com/system/resources/previews/037/336/395/non_2x/user-profile-flat-illustration-avatar-person-icon-gender-neutral-silhouette-profile-picture-free-vector.jpg",
     profile: "#",
@@ -432,7 +432,7 @@ function ClosingCTA() {
             <Eyebrow>LACAK</Eyebrow>
 
             <h2 className="max-w-2xl font-serif text-4xl leading-[1.08] tracking-[-0.025em] text-green-dark md:text-5xl">
-              Temukan kembali barang yang penting bagi Anda.
+              Temukan kembali barang yang berharga bagi Anda.
             </h2>
 
             <p className="mt-5 max-w-xl text-base leading-8 text-green-dark/55">
