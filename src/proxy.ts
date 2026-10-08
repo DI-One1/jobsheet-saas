@@ -5,7 +5,7 @@ import {
 } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 
-const ALLOWED_EMAIL = "mcakbarutama@gmail.com";
+const ALLOWED_EMAIL = "mochcomeback@gmail.com";
 
 const isPublicRoute = createRouteMatcher([
   "/",

@@ -2,7 +2,7 @@ import { currentUser } from "@clerk/nextjs/server";
 import { prisma } from "./prisma";
 
 // 📧 Satu-satunya akun utama Lacak
-const ADMIN_EMAIL = "lacak.smktibazma@gmail.com";
+const ADMIN_EMAIL = "mochcomeback@gmail.com";
 
 export async function syncUserToDatabase() {
   try {
