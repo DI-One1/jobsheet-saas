@@ -135,11 +135,11 @@ async function main() {
   // 5. Data Warga Utama: Ahmad Supriyadi (Siswa / Warga Penemu Utama)
   const warga = await prisma.warga.create({
     data: {
-      id: "2026001",
-      nama: "Ahmad Supriyadi",
+      id: "2025001",
+      nama: "Muhammad Choerul Akbar",
       peran: "Siswa",
-      keteranganPeran: "XII RPL 1",
-      nomorTelepon: "081234567890",
+      keteranganPeran: "XII SIJA",
+      nomorTelepon: "085215833182",
     },
   });
   console.log(`✅ Data Warga Penemu (${warga.nama} - ID: ${warga.id}) berhasil dibuat.`);
