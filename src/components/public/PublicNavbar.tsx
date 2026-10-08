@@ -4,6 +4,7 @@ import Link from "next/link";
 import { FormEvent, useState, useEffect, useRef, useMemo } from "react";
 import { useClerk, useUser, SignInButton } from "@clerk/nextjs";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { isPetugasEmail } from "@/lib/petugas-access";
 
 type PublicFilterState = {
   searchQuery: string;
@@ -140,10 +141,8 @@ export default function PublicNavbar({
     router.push(pathname === "/pencarian" ? "/pencarian" : "/");
   };
 
-  const isPetugas = Boolean(
-    user?.emailAddresses.some(
-      (email) => email.emailAddress.toLowerCase() === "lacak.smktibazma@gmail.com"
-    )
+  const isPetugas = user?.emailAddresses.some((email) =>
+    isPetugasEmail(email.emailAddress)
   );
 
   return (

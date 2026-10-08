@@ -2,6 +2,7 @@
 
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
+import { PETUGAS_EMAILS } from "@/lib/petugas-access";
 
 export default function AccessDeniedContent() {
   const searchParams = useSearchParams();
@@ -53,9 +54,13 @@ export default function AccessDeniedContent() {
             <p className="text-xs font-medium uppercase tracking-wider text-slate-400">
               Akses resmi
             </p>
-            <p className="mt-1 text-sm font-semibold text-slate-800 break-all">
-              lacak.smktibazma@gmail.com
-            </p>
+            <ul className="mt-1 space-y-1 text-sm font-semibold text-slate-800">
+              {PETUGAS_EMAILS.map((email) => (
+                <li key={email} className="break-all">
+                  {email}
+                </li>
+              ))}
+            </ul>
           </div>
 
           {/* Actions */}

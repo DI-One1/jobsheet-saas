@@ -4,8 +4,7 @@ import {
   createRouteMatcher,
 } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
-
-const ALLOWED_EMAIL = "mochcomeback@gmail.com";
+import { isPetugasEmail, PETUGAS_EMAILS } from "@/lib/petugas-access";
 
 const isPublicRoute = createRouteMatcher([
   "/",
@@ -71,14 +70,12 @@ const handler = clerkMiddleware(async (auth, request) => {
   // ==========================================
   // CEK EMAIL YANG DIIZINKAN
   // ==========================================
-  const isAllowed = emails.includes(
-    ALLOWED_EMAIL.toLowerCase()
-  );
+  const isAllowed = emails.some(isPetugasEmail);
 
   console.log("[LACAK AUTH]", {
     userId,
     emails,
-    allowedEmail: ALLOWED_EMAIL,
+    allowedEmails: PETUGAS_EMAILS,
     isAllowed,
     path: request.nextUrl.pathname,
   });

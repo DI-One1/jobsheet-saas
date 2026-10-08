@@ -8,6 +8,7 @@ import SearchBar from "./SearchBar";
 import Notification from "./Notification";
 import UserProfile from "./UserProfile";
 import NavTabs from "./NavTabs";
+import { isPetugasEmail } from "@/lib/petugas-access";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -20,10 +21,9 @@ export default function Navbar() {
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  const isPetugas =
-    user?.emailAddresses.some(
-      (e) => e.emailAddress.toLowerCase() === "lacak.smktibazma@gmail.com"
-    );
+  const isPetugas = user?.emailAddresses.some((email) =>
+    isPetugasEmail(email.emailAddress)
+  );
 
   if (isPublicPage) {
     return (
