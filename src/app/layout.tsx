@@ -5,6 +5,7 @@ import { Suspense } from "react";
 import "./globals.css";
 import RouteChrome from "@/components/shared/RouteChrome";
 import RouteFooter from "@/components/shared/RouteFooter";
+import { ChromeVisibilityProvider } from "@/components/shared/ChromeVisibility";
 import UserDatabaseSync from "@/components/shared/UserDatabaseSync";
 import { ClerkProvider } from "@clerk/nextjs";
 
@@ -34,20 +35,22 @@ export default async function RootLayout({
           className={`${inter.className} min-h-screen flex flex-col bg-[#fdfdfd]`}
           suppressHydrationWarning
         >
-          <UserDatabaseSync />
-          <Suspense
-            fallback={
-              <header className="bg-[#0d3b2e] min-h-[120px]" />
-            }
-          >
-            <RouteChrome publicData={{ categories, colors, brands, locations }} />
-          </Suspense>
+          <ChromeVisibilityProvider>
+            <UserDatabaseSync />
+            <Suspense
+              fallback={
+                <header className="bg-[#0d3b2e] min-h-[120px]" />
+              }
+            >
+              <RouteChrome publicData={{ categories, colors, brands, locations }} />
+            </Suspense>
 
-          <main className="flex-grow flex flex-col">
-            {children}
-          </main>
+            <main className="flex-grow flex flex-col">
+              {children}
+            </main>
 
-          <RouteFooter />
+            <RouteFooter />
+          </ChromeVisibilityProvider>
         </body>
       </html>
     </ClerkProvider>

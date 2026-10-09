@@ -18,7 +18,7 @@ interface ItemDetailModalProps {
 
 // Nomor WhatsApp Admin LACAK (Bisa disesuaikan lewat ENV jika ada)
 const ADMIN_WA_NUMBER =
-  process.env.NEXT_PUBLIC_ADMIN_WA || "6281284567890";
+  process.env.NEXT_PUBLIC_ADMIN_WA || "6285215833182";
 
 export default function ItemDetailModal({
   item,
