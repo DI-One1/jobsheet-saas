@@ -1,18 +1,26 @@
-// app/components/StaticBanner.tsx
+// src/app/test/StaticBanner.tsx
+/**
+ * 1. STATIC SERVER COMPONENT
+ * Bagian header ini statis: berisi judul & deskripsi portal.
+ * Dirender 1x saat build (Build Time) dan tidak tergantung data request.
+ */
 export default function StaticBanner() {
-  const buildTimestamp = new Date().toLocaleTimeString('id-ID');
-  
   return (
-    <div className="p-4 bg-blue-100 border border-blue-300 rounded-lg my-4">
-      <h2 className="text-xl font-bold text-blue-900">
-        Promo Spesial Hari Ini! (Static Component)
-      </h2>
-      <p className="text-sm text-blue-700">
-        Komponen ini dirender saat build time dan dibagikan secara statis ke seluruh pengguna.
+    <section className="border rounded-lg p-5 bg-emerald-50">
+      <div className="flex items-center justify-between mb-3">
+        <span className="text-[10px] font-bold uppercase text-emerald-700 tracking-wider">
+          Static Component (Prerendered)
+        </span>
+        <span className="text-[10px] font-mono text-emerald-600">
+          Render: Server (Build-Time)
+        </span>
+      </div>
+
+      <h1 className="text-lg font-bold">📦 Posko Barang Temuan Warga</h1>
+      <p className="mt-1 text-xs text-slate-600">
+        Selamat datang di portal informasi barang hilang & temuan.
+        Bagian ini bersifat <strong>statis</strong> — sama untuk semua pengunjung.
       </p>
-      <span className="text-xs bg-blue-200 px-2 py-1 rounded mt-2 inline-block">
-        Waktu Generasi Statis: {buildTimestamp}
-      </span>
-    </div>
+    </section>
   );
 }

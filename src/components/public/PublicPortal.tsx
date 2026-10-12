@@ -16,7 +16,7 @@ interface PublicPortalProps {
   masterData: MasterFilterData;
 }
 
-const ITEMS_PER_PAGE = 20;
+const ITEMS_PER_PAGE = 24;
 
 export default function PublicPortal({
   initialItems,

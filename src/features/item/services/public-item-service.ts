@@ -19,7 +19,7 @@ export async function getPublicData(): Promise<{
         createdAt: true,
       },
       orderBy: { createdAt: "desc" },
-      take: 60,
+      take: 100,
     }),
     prisma.categoryItem.findMany({ select: { id: true, name: true }, orderBy: { name: "asc" } }),
     prisma.colorItem.findMany({ select: { id: true, name: true }, orderBy: { name: "asc" } }),
