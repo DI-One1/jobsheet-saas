@@ -155,12 +155,17 @@ export async function deleteLostReport(id: string) {
   }
 }
 
-/**
- * Hapus semua LostReport.
- */
 export async function deleteAllLostReports() {
   try {
-    await prisma.lostReport.deleteMany();
+    await prisma.$transaction([
+      prisma.notification.deleteMany({
+        where: { lostReportId: { not: null } },
+      }),
+      prisma.claimTransaction.updateMany({
+        data: { lostReportId: null },
+      }),
+      prisma.lostReport.deleteMany(),
+    ]);
     revalidatePath("/riwayat/laporan");
     revalidatePath("/");
     return { success: true };
@@ -169,3 +174,23 @@ export async function deleteAllLostReports() {
     throw new Error("Gagal menghapus semua laporan kehilangan.");
   }
 }
+
+/**
+ * Mengambil satu data laporan kehilangan beserta relasi lengkap (untuk realtime sync)
+ */
+export async function getLostReportById(id: string) {
+  if (!id) return null;
+  try {
+    return await prisma.lostReport.findUnique({
+      where: { id },
+      include: {
+        jenis: true,
+        lokasi: true,
+      },
+    });
+  } catch (error) {
+    console.error("Gagal mengambil data laporan kehilangan:", error);
+    return null;
+  }
+}
+

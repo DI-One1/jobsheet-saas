@@ -15,9 +15,6 @@ export default function HomePage() {
           <h2 className="text-2xl md:text-3xl font-extrabold text-[#102a24] mt-1 tracking-tight">
             Aksi Utama Petugas
           </h2>
-          <p className="text-xs text-[#57706a] mt-1 max-w-md mx-auto">
-            Pilih modul kerja di bawah ini untuk memulai proses administrasi barang dan laporan.
-          </p>
         </div>
 
         {/* Grid 3 Modul Utama */}

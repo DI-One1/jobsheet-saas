@@ -23,11 +23,6 @@ export default async function LaporKehilanganPage() {
         <h1 className="text-3xl font-extrabold text-[#0d3b2e]">
           Lapor Kehilangan
         </h1>
-
-        <p className="text-gray-500 mt-2 text-sm">
-          Laporkan kehilangan barang untuk dipasangkan dengan temuan atau
-          langsung klaim barang yang sudah terdaftar.
-        </p>
       </div>
 
       <LaporForm

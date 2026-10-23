@@ -129,6 +129,69 @@ body.modal-open {
   scrollbar-width: none;
 }
 
+/* ── Subtle Aurora / Ambient Glow for Active Navigation Tabs (Refined & Airy) ── */
+.nav-tab-aurora-active {
+  position: relative;
+  color: #ffffff !important;
+  font-weight: 600 !important;
+  background: linear-gradient(
+    135deg,
+    rgba(61, 189, 132, 0.09) 0%,
+    rgba(20, 184, 166, 0.11) 50%,
+    rgba(13, 117, 101, 0.14) 100%
+  ) !important;
+  border: 1px solid rgba(61, 189, 132, 0.22) !important;
+  box-shadow:
+    0 0 14px -3px rgba(61, 189, 132, 0.22),
+    0 0 24px -6px rgba(45, 212, 191, 0.14),
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.10) !important;
+  border-radius: 0.75rem !important;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.nav-tab-aurora-active::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(61, 189, 132, 0.22) 0%,
+    rgba(45, 212, 191, 0.14) 40%,
+    transparent 68%
+  );
+  border-radius: 0.85rem;
+  filter: blur(6px);
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.65;
+  transition: opacity 0.25s ease;
+}
+
+.nav-tab-aurora-inactive {
+  position: relative;
+  color: rgba(255, 255, 255, 0.75) !important;
+  font-weight: 500 !important;
+  background: transparent !important;
+  border: 1px solid transparent !important;
+  border-radius: 0.75rem !important;
+  transition: all 0.25s ease !important;
+}
+
+.nav-tab-aurora-inactive:hover {
+  color: #ffffff !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-tab-aurora-active,
+  .nav-tab-aurora-active::before,
+  .nav-tab-aurora-inactive {
+    transition: none !important;
+  }
+}
+
+
 /* Public portal follows the standalone lost-and-found reference UI. */
 .public-navbar {
   position: sticky;

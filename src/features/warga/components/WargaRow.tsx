@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect, useCallback } from "react";
 import { createPortal } from "react-dom";
-import { User, Activity, Trash2, MoreVertical } from "lucide-react";
+import { User, Activity, Trash2, MoreHorizontal, Phone } from "lucide-react";
 import { Warga } from "../types";
 
 interface WargaRowProps {
@@ -222,15 +222,37 @@ export default function WargaRow({
       <td className="px-6 py-4 text-xs text-[#57706a]">
         {item.keterangan_peran || "-"}
       </td>
-      <td className="px-6 py-4 text-center">
-        <div className="inline-block">
+      <td className="px-6 py-4 text-xs font-mono text-[#57706a]">
+        {item.nomor_telepon ? (
+          <a
+            href={`https://wa.me/${item.nomor_telepon.replace(/[^0-9]/g, "")}`}
+            target="_blank"
+            rel="noreferrer"
+            title={`Hubungi via WhatsApp: ${item.nomor_telepon}`}
+            className="inline-flex items-center gap-1.5 hover:text-[#0d7565] transition-colors group cursor-pointer"
+          >
+            <Phone className="h-3.5 w-3.5 text-gray-400 group-hover:text-[#0d7565] transition-colors shrink-0" />
+            <span className="font-semibold text-gray-700 group-hover:text-[#0d7565]">
+              {item.nomor_telepon.length > 12
+                ? `${item.nomor_telepon.slice(0, 12)}...`
+                : item.nomor_telepon}
+            </span>
+          </a>
+        ) : (
+          <span className="text-gray-300 font-sans font-medium">—</span>
+        )}
+      </td>
+      <td className="px-6 py-4 text-center w-24">
+        <div className="inline-flex items-center justify-center">
           <button
             ref={buttonRef}
             onClick={() => setIsOpen((prev) => !prev)}
             className="p-2 text-[#57706a] hover:text-[#0d7565] hover:bg-[#eef7f4] rounded-full transition-colors disabled:opacity-50 cursor-pointer"
             disabled={item.id.startsWith("temp-")}
+            title="Aksi Warga"
+            aria-label="Aksi Warga"
           >
-            <MoreVertical className="h-4 w-4" />
+            <MoreHorizontal className="h-4 w-4" />
           </button>
         </div>
 

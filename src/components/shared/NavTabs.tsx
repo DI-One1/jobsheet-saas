@@ -29,31 +29,31 @@ export default function NavTabs() {
     <div className="container mx-auto px-4 md:px-5">
       <div className="grid grid-cols-1 md:grid-cols-[120px_1fr_auto] gap-4 md:gap-10 items-center w-full">
         
-        <div className="col-span-1 md:col-start-2 flex flex-wrap items-center gap-1 md:gap-2 overflow-visible py-1">
+        <div className="col-span-1 md:col-start-2 flex flex-wrap items-center gap-1.5 md:gap-2.5 overflow-visible py-2">
           
           {/* 1. Beranda */}
           <Link
             href="/dashboard"
-            className={`whitespace-nowrap text-[0.9rem] font-medium px-3.5 md:px-4 py-3 border-b-[3px] transition-all no-underline flex items-center gap-2 ${
+            className={`whitespace-nowrap text-[0.875rem] md:text-[0.9rem] px-3.5 md:px-4 py-2.5 no-underline flex items-center gap-2 select-none ${
               isActive("/dashboard")
-                ? "text-white font-semibold border-[#3dbd84]"
-                : "text-white/75 hover:text-white border-transparent hover:bg-white/5 rounded-t-lg"
+                ? "nav-tab-aurora-active"
+                : "nav-tab-aurora-inactive"
             }`}
           >
-            <LayoutDashboard className="h-4 w-4" />
+            <LayoutDashboard className={`h-4 w-4 ${isActive("/dashboard") ? "text-emerald-300" : "text-white/70"}`} />
             <span>Beranda</span>
           </Link>
 
           {/* 2. Data Warga */}
           <Link
             href="/data-warga"
-            className={`whitespace-nowrap text-[0.9rem] font-medium px-3.5 md:px-4 py-3 border-b-[3px] transition-all no-underline flex items-center gap-2 ${
+            className={`whitespace-nowrap text-[0.875rem] md:text-[0.9rem] px-3.5 md:px-4 py-2.5 no-underline flex items-center gap-2 select-none ${
               isActive("/data-warga")
-                ? "text-white font-semibold border-[#3dbd84]"
-                : "text-white/75 hover:text-white border-transparent hover:bg-white/5 rounded-t-lg"
+                ? "nav-tab-aurora-active"
+                : "nav-tab-aurora-inactive"
             }`}
           >
-            <Users className="h-4 w-4" />
+            <Users className={`h-4 w-4 ${isActive("/data-warga") ? "text-emerald-300" : "text-white/70"}`} />
             <span>Data Warga</span>
           </Link>
 
@@ -63,13 +63,13 @@ export default function NavTabs() {
               onClick={() => setIsDropdownOpen(!isDropdownOpen)}
               aria-expanded={isDropdownOpen}
               aria-haspopup="true"
-              className={`whitespace-nowrap text-[0.9rem] font-medium px-3.5 md:px-4 py-3 border-b-[3px] transition-all bg-transparent cursor-pointer flex items-center gap-2 ${
+              className={`whitespace-nowrap text-[0.875rem] md:text-[0.9rem] px-3.5 md:px-4 py-2.5 cursor-pointer flex items-center gap-2 select-none ${
                 isRiwayatActive
-                  ? "text-white font-semibold border-[#3dbd84]"
-                  : "text-white/75 hover:text-white border-transparent hover:bg-white/5 rounded-t-lg"
+                  ? "nav-tab-aurora-active"
+                  : "nav-tab-aurora-inactive"
               }`}
             >
-              <History className="h-4 w-4" />
+              <History className={`h-4 w-4 ${isRiwayatActive ? "text-emerald-300" : "text-white/70"}`} />
               <span>Riwayat</span>
               <ChevronDown className={`h-3.5 w-3.5 transition-transform duration-200 ${isDropdownOpen ? "rotate-180" : ""}`} />
             </button>
@@ -81,7 +81,7 @@ export default function NavTabs() {
                   onClick={() => setIsDropdownOpen(false)}
                   className={`rounded-lg px-3.5 py-2.5 text-[0.85rem] font-medium transition-colors no-underline flex items-center gap-2.5 ${
                     isActive("/riwayat/temuan")
-                      ? "bg-[#0d7565] text-white"
+                      ? "bg-gradient-to-r from-[#0d7565] to-[#125c50] text-white shadow-[0_2px_8px_rgba(13,117,101,0.25)] font-semibold"
                       : "text-[#1c3833] hover:bg-[#eef7f4] hover:text-[#0d7565]"
                   }`}
                 >
@@ -93,7 +93,7 @@ export default function NavTabs() {
                   onClick={() => setIsDropdownOpen(false)}
                   className={`rounded-lg px-3.5 py-2.5 text-[0.85rem] font-medium transition-colors no-underline flex items-center gap-2.5 ${
                     isActive("/riwayat/laporan")
-                      ? "bg-[#0d7565] text-white"
+                      ? "bg-gradient-to-r from-[#0d7565] to-[#125c50] text-white shadow-[0_2px_8px_rgba(13,117,101,0.25)] font-semibold"
                       : "text-[#1c3833] hover:bg-[#eef7f4] hover:text-[#0d7565]"
                   }`}
                 >
@@ -105,7 +105,7 @@ export default function NavTabs() {
                   onClick={() => setIsDropdownOpen(false)}
                   className={`rounded-lg px-3.5 py-2.5 text-[0.85rem] font-medium transition-colors no-underline flex items-center gap-2.5 ${
                     isActive("/riwayat/pengambilan")
-                      ? "bg-[#0d7565] text-white"
+                      ? "bg-gradient-to-r from-[#0d7565] to-[#125c50] text-white shadow-[0_2px_8px_rgba(13,117,101,0.25)] font-semibold"
                       : "text-[#1c3833] hover:bg-[#eef7f4] hover:text-[#0d7565]"
                   }`}
                 >

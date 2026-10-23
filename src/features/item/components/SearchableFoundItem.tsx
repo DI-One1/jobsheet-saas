@@ -126,16 +126,16 @@ export default function SearchableFoundItem({ currentFormState, onSelect }: Sear
       {isOpen && (
         <div className="absolute z-50 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-xl max-h-80 overflow-y-auto">
           {/* Tab filter All / 100% / 75% */}
-          <div className="flex border-b border-gray-100 sticky top-0 bg-white z-10">
+          <div className="flex p-1.5 gap-1 border-b border-gray-100 sticky top-0 bg-white/95 backdrop-blur-xs z-10">
             {TABS.map((tab) => (
               <button
                 key={tab.key}
                 type="button"
                 onClick={() => setActiveTab(tab.key)}
-                className={`flex-1 px-2 py-2 text-[11px] font-bold transition-colors cursor-pointer border-none outline-none bg-transparent ${
+                className={`flex-1 px-2.5 py-1.5 text-[11px] font-bold rounded-md transition-all cursor-pointer border outline-none ${
                   activeTab === tab.key
-                    ? "text-green-mid border-b-2 border-green-accent"
-                    : "text-gray-400 hover:text-gray-600"
+                    ? "bg-emerald-50/90 text-green-dark border-emerald-300/80 shadow-[0_0_12px_rgba(61,189,132,0.18)]"
+                    : "bg-transparent text-gray-500 hover:text-gray-800 border-transparent hover:bg-gray-50"
                 }`}
               >
                 {tab.label}

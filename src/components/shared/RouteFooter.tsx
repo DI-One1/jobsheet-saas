@@ -36,6 +36,11 @@ export default function RouteFooter() {
     return null;
   }
 
+  // Footer petugas hanya ditampilkan pada halaman dashboard
+  if (pathname !== "/dashboard") {
+    return null;
+  }
+
   return (
     <footer className="bg-[#0d3b2e] text-white/90 py-6 text-center text-xs border-t border-white/10">
       <div className="max-w-[1240px] mx-auto px-4">

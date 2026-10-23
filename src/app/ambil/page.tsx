@@ -31,11 +31,6 @@ export default async function AmbilBarangPage() {
         <h1 className="text-3xl font-extrabold text-[#0d3b2e]">
           Pengambilan Barang
         </h1>
-
-        <p className="text-gray-500 mt-2 text-sm">
-          Proses verifikasi serah terima barang temuan kepada pemilik yang
-          sah berdasarkan laporan kehilangan yang aktif.
-        </p>
       </div>
 
       <AmbilBarangClient initialDataWarga={initialDataWarga} />

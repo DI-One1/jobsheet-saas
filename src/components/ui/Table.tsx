@@ -12,11 +12,17 @@ export function Table({ headers, children, className = "" }: TableProps) {
       <table className="w-full text-left border-collapse min-w-[700px]">
         <thead>
           <tr className="bg-gray-50 border-b border-gray-100 text-xs text-gray-500 uppercase tracking-wider">
-            {headers.map((h, i) => (
-              <th key={i} className="px-6 py-4">
-                {h}
-              </th>
-            ))}
+            {headers.map((h, i) => {
+              const isAction = h.toLowerCase() === "aksi";
+              return (
+                <th
+                  key={i}
+                  className={`px-6 py-4 ${isAction ? "text-center w-24" : "text-left"}`}
+                >
+                  {h}
+                </th>
+              );
+            })}
           </tr>
         </thead>
         <tbody className="divide-y divide-gray-100">

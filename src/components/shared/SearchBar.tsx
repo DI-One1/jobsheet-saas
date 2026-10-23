@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
-import { useDebounce } from "@/hooks/useDebounce";
 
 export default function SearchBar() {
   const router = useRouter();
@@ -17,29 +16,24 @@ export default function SearchBar() {
     setQuery(urlQuery);
   }, [urlQuery]);
 
-  const debouncedQuery = useDebounce(query, 300);
-
-  useEffect(() => {
-    const currentQ = searchParams.get("q") || "";
-    const cleanDebounced = debouncedQuery.trim();
-
-    if (cleanDebounced !== currentQ.trim()) {
-      const params = new URLSearchParams(searchParams.toString());
-      if (cleanDebounced) {
-        params.set("q", cleanDebounced);
-      } else {
-        params.delete("q");
-      }
-      router.replace(`${pathname}?${params.toString()}`);
-    }
-  }, [debouncedQuery, pathname, router, searchParams]);
-
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
   };
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    const currentQ = searchParams.get("q") || "";
+    const cleanQuery = query.trim();
+
+    if (cleanQuery !== currentQ.trim()) {
+      const params = new URLSearchParams(searchParams.toString());
+      if (cleanQuery) {
+        params.set("q", cleanQuery);
+      } else {
+        params.delete("q");
+      }
+      router.replace(`${pathname}?${params.toString()}`);
+    }
   };
 
   return (

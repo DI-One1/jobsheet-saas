@@ -145,25 +145,6 @@ export default function LaporForm({
 
   return (
     <div className="space-y-6">
-      {/* Visual Step Progress Bar */}
-      <div className="bg-white rounded-2xl p-4 border border-[#e2ece8] shadow-xs flex items-center justify-between gap-4">
-        <div className={`flex items-center gap-2.5 ${verified ? "text-[#0d7565]" : "text-[#102a24]"}`}>
-          <span className={`h-7 w-7 rounded-full flex items-center justify-center text-xs font-bold transition-colors ${verified ? "bg-emerald-100 text-emerald-800" : "bg-[#0d7565] text-white"}`}>
-            {verified ? "✓" : "1"}
-          </span>
-          <span className="text-xs font-bold">1. Verifikasi Pelapor</span>
-        </div>
-        <div className="flex-1 h-0.5 bg-[#e2ece8] rounded-full overflow-hidden">
-          <div className={`h-full bg-[#0d7565] transition-all duration-500 ${verified ? "w-full" : "w-0"}`} />
-        </div>
-        <div className={`flex items-center gap-2.5 ${verified ? "text-[#102a24]" : "text-gray-400"}`}>
-          <span className={`h-7 w-7 rounded-full flex items-center justify-center text-xs font-bold transition-colors ${verified ? "bg-[#0d7565] text-white" : "bg-gray-100 text-gray-400"}`}>
-            2
-          </span>
-          <span className="text-xs font-bold">2. Detail & Pencocokan</span>
-        </div>
-      </div>
-
       {errorMessage && (
         <div className="p-4 bg-red-50 border border-red-200 text-red-600 rounded-xl text-sm font-bold flex items-center gap-2 shadow-xs animate-in fade-in duration-300">
           <span>⚠️</span>
@@ -192,59 +173,60 @@ export default function LaporForm({
         />
 
         {/* =====================================
-            LANGKAH 2: DETAIL BARANG
+            LANGKAH 2: DETAIL BARANG & SUBMIT
+            (Hanya muncul setelah Langkah 1 selesai & terverifikasi)
         ===================================== */}
 
-        <StepDetailBarang
-          jenisList={jenisList}
-          warnaList={warnaList}
-          merekList={merekList}
-          lokasiList={lokasiList}
-          jenisId={jenisId}
-          warnaId={warnaId}
-          merekId={merekId}
-          lokasiId={lokasiId}
-          matchedFoundItem={matchedFoundItem}
-          onJenisChange={setJenisId}
-          onWarnaChange={setWarnaId}
-          onMerekChange={setMerekId}
-          onLokasiChange={setLokasiId}
-          onSelectFoundItem={setMatchedFoundItem}
-          onClearFoundItem={() => setMatchedFoundItem(null)}
-        />
+        {verified && selectedWarga && (
+          <div className="space-y-6 animate-in fade-in duration-300">
+            <StepDetailBarang
+              jenisList={jenisList}
+              warnaList={warnaList}
+              merekList={merekList}
+              lokasiList={lokasiList}
+              jenisId={jenisId}
+              warnaId={warnaId}
+              merekId={merekId}
+              lokasiId={lokasiId}
+              matchedFoundItem={matchedFoundItem}
+              onJenisChange={setJenisId}
+              onWarnaChange={setWarnaId}
+              onMerekChange={setMerekId}
+              onLokasiChange={setLokasiId}
+              onSelectFoundItem={setMatchedFoundItem}
+              onClearFoundItem={() => setMatchedFoundItem(null)}
+            />
 
-        {/* =====================================
-            SUBMIT BUTTON
-        ===================================== */}
-
-        <div className="flex justify-end pt-2">
-          <button
-            type="submit"
-            disabled={isSubmitting || !verified}
-            className={`w-full sm:w-auto px-8 py-3.5 rounded-xl text-sm font-bold text-white shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer ${
-              !verified
-                ? "bg-gray-400 cursor-not-allowed opacity-70"
-                : matchedFoundItem
-                ? "bg-[#1a5c44] hover:bg-[#0d3b2e]"
-                : "bg-[#0d3b2e] hover:bg-[#1a5c44]"
-            }`}
-          >
-            {isSubmitting ? (
-              <span className="animate-pulse">
-                Menyimpan...
-              </span>
-            ) : matchedFoundItem ? (
-              <>
-                Simpan Laporan & Selesaikan Klaim Sekaligus
-                (Jalur 2) &rarr;
-              </>
-            ) : (
-              <>
-                Buat Laporan Kehilangan (Jalur 1) &rarr;
-              </>
-            )}
-          </button>
-        </div>
+            <div className="flex justify-end pt-2">
+              <button
+                type="submit"
+                disabled={isSubmitting || !verified}
+                className={`w-full sm:w-auto px-8 py-3.5 rounded-xl text-sm font-bold text-white shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer ${
+                  !verified
+                    ? "bg-gray-400 cursor-not-allowed opacity-70"
+                    : matchedFoundItem
+                    ? "bg-[#1a5c44] hover:bg-[#0d3b2e]"
+                    : "bg-[#0d3b2e] hover:bg-[#1a5c44]"
+                }`}
+              >
+                {isSubmitting ? (
+                  <span className="animate-pulse">
+                    Menyimpan...
+                  </span>
+                ) : matchedFoundItem ? (
+                  <>
+                    Simpan Laporan & Selesaikan Klaim Sekaligus
+                    (Jalur 2) &rarr;
+                  </>
+                ) : (
+                  <>
+                    Buat Laporan Kehilangan (Jalur 1) &rarr;
+                  </>
+                )}
+              </button>
+            </div>
+          </div>
+        )}
       </form>
     </div>
   );

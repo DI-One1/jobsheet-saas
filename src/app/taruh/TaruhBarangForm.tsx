@@ -135,9 +135,6 @@ export default function TaruhBarangForm({
         <h1 className="text-3xl font-extrabold text-[#0d3b2e]">
           Formulir Taruh Barang Temuan
         </h1>
-        <p className="text-gray-500 mt-1 text-sm">
-          Daftarkan barang temuan yang berhasil diamankan ke dalam sistem LACAK.
-        </p>
       </div>
 
       {errorMessage && (
@@ -160,140 +157,145 @@ export default function TaruhBarangForm({
           roleLabel="Penemu"
         />
 
-        {/* Step 2: Detail Barang Temuan */}
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 md:p-8 space-y-6">
-          <h3 className="text-lg font-bold text-[#0d3b2e] flex items-center gap-2">
-            <span className="w-6 h-6 rounded-full bg-[#0d3b2e] text-white text-xs flex items-center justify-center font-bold">
-              2
-            </span>
-            Detail Barang Temuan
-          </h3>
+        {/* Step 2: Detail Barang Temuan & Aksi
+            (Hanya muncul setelah Langkah 1 selesai & terverifikasi) */}
+        {verified && selectedWarga && (
+          <div className="space-y-6 animate-in fade-in duration-300">
+            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 md:p-8 space-y-6">
+              <h3 className="text-lg font-bold text-[#0d3b2e] flex items-center gap-2">
+                <span className="w-6 h-6 rounded-full bg-[#0d3b2e] text-white text-xs flex items-center justify-center font-bold">
+                  2
+                </span>
+                Detail Barang Temuan
+              </h3>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-2">
-                Jenis Barang <span className="text-red-500">*</span>
-              </label>
-              <select
-                value={jenisId}
-                onChange={(e) => setJenisId(e.target.value)}
-                required
-                className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#3dbd84] bg-white transition-all"
-              >
-                <option value="">-- Pilih Jenis Barang --</option>
-                {categories.map((cat) => (
-                  <option key={cat.id} value={cat.id}>
-                    {cat.name}
-                  </option>
-                ))}
-              </select>
-            </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-2">
+                    Jenis Barang <span className="text-red-500">*</span>
+                  </label>
+                  <select
+                    value={jenisId}
+                    onChange={(e) => setJenisId(e.target.value)}
+                    required
+                    className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#3dbd84] bg-white transition-all"
+                  >
+                    <option value="">-- Pilih Jenis Barang --</option>
+                    {categories.map((cat) => (
+                      <option key={cat.id} value={cat.id}>
+                        {cat.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
 
-            <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-2">
-                Warna Barang <span className="text-red-500">*</span>
-              </label>
-              <select
-                value={warnaId}
-                onChange={(e) => setWarnaId(e.target.value)}
-                required
-                className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#3dbd84] bg-white transition-all"
-              >
-                <option value="">-- Pilih Warna --</option>
-                {colors.map((c) => (
-                  <option key={c.id} value={c.id}>
-                    {c.name}
-                  </option>
-                ))}
-              </select>
-            </div>
+                <div>
+                  <label className="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-2">
+                    Warna Barang <span className="text-red-500">*</span>
+                  </label>
+                  <select
+                    value={warnaId}
+                    onChange={(e) => setWarnaId(e.target.value)}
+                    required
+                    className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#3dbd84] bg-white transition-all"
+                  >
+                    <option value="">-- Pilih Warna --</option>
+                    {colors.map((c) => (
+                      <option key={c.id} value={c.id}>
+                        {c.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
 
-            <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-2">
-                Merek / Karakteristik <span className="text-red-500">*</span>
-              </label>
-              <select
-                value={merekId}
-                onChange={(e) => setMerekId(e.target.value)}
-                required
-                className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#3dbd84] bg-white transition-all"
-              >
-                <option value="">-- Pilih Merek --</option>
-                {brands.map((b) => (
-                  <option key={b.id} value={b.id}>
-                    {b.name}
-                  </option>
-                ))}
-              </select>
-            </div>
+                <div>
+                  <label className="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-2">
+                    Merek / Karakteristik <span className="text-red-500">*</span>
+                  </label>
+                  <select
+                    value={merekId}
+                    onChange={(e) => setMerekId(e.target.value)}
+                    required
+                    className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#3dbd84] bg-white transition-all"
+                  >
+                    <option value="">-- Pilih Merek --</option>
+                    {brands.map((b) => (
+                      <option key={b.id} value={b.id}>
+                        {b.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
 
-            <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-2">
-                Lokasi Ditemukan <span className="text-red-500">*</span>
-              </label>
-              <select
-                value={lokasiId}
-                onChange={(e) => setLokasiId(e.target.value)}
-                required
-                className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#3dbd84] bg-white transition-all"
-              >
-                <option value="">-- Pilih Lokasi Ditemukan --</option>
-                {locations.map((loc) => (
-                  <option key={loc.id} value={loc.id}>
-                    {loc.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-
-          <div>
-            <label className="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-2">
-              Deskripsi Tambahan / Ciri Khusus
-            </label>
-            <textarea
-              rows={3}
-              value={additionalDesc}
-              onChange={(e) => setAdditionalDesc(e.target.value)}
-              placeholder="Contoh: Ada stiker kucing di pojok kanan, ada gantungan kunci huruf A..."
-              className="w-full border border-gray-200 rounded-xl p-4 text-sm focus:outline-none focus:border-[#3dbd84] transition-all"
-            />
-          </div>
-
-          {/* Preview Kode Unik */}
-          {previewCode && (
-            <div className="p-4 bg-emerald-50 border border-emerald-200 rounded-xl flex items-center justify-between">
-              <div>
-                <p className="text-xs text-emerald-700 font-semibold uppercase tracking-wider">
-                  Kode Barang Otomatis (Preview)
-                </p>
-                <p className="text-xl font-mono font-extrabold text-[#0d3b2e] mt-0.5">
-                  {previewCode}
-                </p>
+                <div>
+                  <label className="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-2">
+                    Lokasi Ditemukan <span className="text-red-500">*</span>
+                  </label>
+                  <select
+                    value={lokasiId}
+                    onChange={(e) => setLokasiId(e.target.value)}
+                    required
+                    className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#3dbd84] bg-white transition-all"
+                  >
+                    <option value="">-- Pilih Lokasi Ditemukan --</option>
+                    {locations.map((loc) => (
+                      <option key={loc.id} value={loc.id}>
+                        {loc.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
               </div>
-              <span className="text-xs bg-emerald-200/70 text-emerald-800 font-bold px-3 py-1 rounded-full">
-                Auto-Generated
-              </span>
-            </div>
-          )}
-        </div>
 
-        {/* Action Button */}
-        <div className="flex justify-end gap-4 pt-4">
-          <Link
-            href="/"
-            className="px-6 py-3 border border-gray-200 rounded-xl text-sm font-semibold text-gray-600 hover:bg-gray-50 transition-colors"
-          >
-            Batal
-          </Link>
-          <button
-            type="submit"
-            disabled={isSubmitting || !verified}
-            className="px-8 py-3 bg-[#3dbd84] hover:bg-[#32a873] disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold text-sm rounded-xl transition-all shadow-md cursor-pointer"
-          >
-            {isSubmitting ? "Menyimpan Data..." : "Simpan Barang Temuan"}
-          </button>
-        </div>
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-2">
+                  Deskripsi Tambahan / Ciri Khusus
+                </label>
+                <textarea
+                  rows={3}
+                  value={additionalDesc}
+                  onChange={(e) => setAdditionalDesc(e.target.value)}
+                  placeholder="Contoh: Ada stiker kucing di pojok kanan, ada gantungan kunci huruf A..."
+                  className="w-full border border-gray-200 rounded-xl p-4 text-sm focus:outline-none focus:border-[#3dbd84] transition-all"
+                />
+              </div>
+
+              {/* Preview Kode Unik */}
+              {previewCode && (
+                <div className="p-4 bg-emerald-50 border border-emerald-200 rounded-xl flex items-center justify-between">
+                  <div>
+                    <p className="text-xs text-emerald-700 font-semibold uppercase tracking-wider">
+                      Kode Barang Otomatis (Preview)
+                    </p>
+                    <p className="text-xl font-mono font-extrabold text-[#0d3b2e] mt-0.5">
+                      {previewCode}
+                    </p>
+                  </div>
+                  <span className="text-xs bg-emerald-200/70 text-emerald-800 font-bold px-3 py-1 rounded-full">
+                    Auto-Generated
+                  </span>
+                </div>
+              )}
+            </div>
+
+            {/* Action Button */}
+            <div className="flex justify-end gap-4 pt-4">
+              <Link
+                href="/dashboard"
+                className="px-6 py-3 border border-gray-200 rounded-xl text-sm font-semibold text-gray-600 hover:bg-gray-50 transition-colors"
+              >
+                Batal
+              </Link>
+              <button
+                type="submit"
+                disabled={isSubmitting || !verified}
+                className="px-8 py-3 bg-[#3dbd84] hover:bg-[#32a873] disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold text-sm rounded-xl transition-all shadow-md cursor-pointer"
+              >
+                {isSubmitting ? "Menyimpan Data..." : "Simpan Barang Temuan"}
+              </button>
+            </div>
+          </div>
+        )}
       </form>
     </div>
   );

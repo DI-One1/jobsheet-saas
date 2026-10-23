@@ -68,7 +68,22 @@ export async function hapusWarga(id: string) {
  */
 export async function hapusSemuaWarga() {
   try {
-    await prisma.warga.deleteMany();
+    await prisma.$transaction([
+      prisma.notification.updateMany({
+        where: { wargaId: { not: null } },
+        data: { wargaId: null },
+      }),
+      prisma.lostReport.updateMany({
+        data: { wargaId: null },
+      }),
+      prisma.foundItem.updateMany({
+        data: { wargaId: null },
+      }),
+      prisma.claimTransaction.updateMany({
+        data: { wargaId: null },
+      }),
+      prisma.warga.deleteMany(),
+    ]);
     revalidatePath("/data-warga");
     return { success: true };
   } catch (error) {

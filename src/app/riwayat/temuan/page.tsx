@@ -20,23 +20,11 @@ export default async function RiwayatTemuanPage() {
   return (
     <div className="container mx-auto px-4 md:px-8 py-8 max-w-5xl flex-grow">
       {/* Header & Navigasi */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
-        <div>
-          <Link href="/dashboard" className="text-sm text-gray-500 hover:text-[#3dbd84] flex items-center gap-2 w-fit mb-2 transition-colors">
-            <span>&larr;</span> Kembali ke Beranda
-          </Link>
-          <h1 className="text-3xl font-extrabold text-[#0d3b2e]">Riwayat Barang Temuan</h1>
-          <p className="text-gray-500 mt-1 text-sm">
-            Daftar barang temuan yang telah diamankan and didaftarkan ke dalam sistem LACAK.
-          </p>
-        </div>
-
-        <Link
-          href="/taruh"
-          className="bg-[#3dbd84] hover:bg-[#32a873] text-white text-xs font-semibold px-5 py-2.5 rounded-xl transition-colors shadow-sm text-center"
-        >
-          + Taruh Barang Temuan
+      <div className="mb-8">
+        <Link href="/dashboard" className="text-sm text-gray-500 hover:text-[#3dbd84] flex items-center gap-2 w-fit mb-2 transition-colors">
+          <span>&larr;</span> Kembali ke Beranda
         </Link>
+        <h1 className="text-3xl font-extrabold text-[#0d3b2e]">Riwayat Barang Temuan</h1>
       </div>
 
       {/* Render Client Component untuk Interaksi & Tabel */}

@@ -118,3 +118,48 @@ export async function deleteAllUnclaimedFoundItems() {
     throw new Error("Gagal menghapus semua barang temuan.");
   }
 }
+
+/**
+ * Hapus seluruh riwayat barang temuan (termasuk referensi claim & notifikasi terkait).
+ */
+export async function deleteAllFoundItems() {
+  try {
+    await prisma.$transaction([
+      prisma.notification.deleteMany({
+        where: { foundItemId: { not: null } },
+      }),
+      prisma.claimTransaction.deleteMany(),
+      prisma.foundItem.deleteMany(),
+    ]);
+    revalidatePath("/riwayat/temuan");
+    revalidatePath("/riwayat/pengambilan");
+    revalidatePath("/data-warga");
+    revalidatePath("/");
+    return { success: true };
+  } catch (error) {
+    console.error("Gagal menghapus seluruh barang temuan:", error);
+    throw new Error("Gagal menghapus seluruh barang temuan.");
+  }
+}
+
+/**
+ * Mengambil satu data barang temuan beserta relasi lengkap (untuk realtime sync)
+ */
+export async function getFoundItemById(id: string) {
+  if (!id) return null;
+  try {
+    return await prisma.foundItem.findUnique({
+      where: { id },
+      include: {
+        jenis: true,
+        warna: true,
+        merek: true,
+        lokasi: true,
+      },
+    });
+  } catch (error) {
+    console.error("Gagal mengambil data barang temuan:", error);
+    return null;
+  }
+}
+

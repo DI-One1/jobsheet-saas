@@ -157,3 +157,48 @@ export async function getMatchingFoundItemsForReport(reportId: string) {
     }))
     .sort((a, b) => b.matchScore - a.matchScore);
 }
+
+/**
+ * Hapus seluruh data transaksi pengambilan (serah terima).
+ * Status barang temuan terkait yang sebelumnya CLAIMED akan dikembalikan ke FOUND.
+ */
+export async function deleteAllClaimTransactions() {
+  try {
+    await prisma.$transaction([
+      prisma.foundItem.updateMany({
+        where: { status: "CLAIMED" },
+        data: { status: "FOUND" },
+      }),
+      prisma.claimTransaction.deleteMany(),
+    ]);
+    revalidatePath("/riwayat/pengambilan");
+    revalidatePath("/riwayat/temuan");
+    revalidatePath("/data-warga");
+    revalidatePath("/");
+    return { success: true };
+  } catch (error) {
+    console.error("Gagal menghapus seluruh transaksi pengambilan:", error);
+    throw new Error("Gagal menghapus seluruh transaksi pengambilan.");
+  }
+}
+
+/**
+ * Mengambil satu data transaksi pengambilan beserta relasi lengkap (untuk realtime sync)
+ */
+export async function getClaimTransactionById(id: string) {
+  if (!id) return null;
+  try {
+    return await prisma.claimTransaction.findUnique({
+      where: { id },
+      include: {
+        foundItem: {
+          include: { jenis: true, warna: true, merek: true, lokasi: true },
+        },
+      },
+    });
+  } catch (error) {
+    console.error("Gagal mengambil data transaksi pengambilan:", error);
+    return null;
+  }
+}
+

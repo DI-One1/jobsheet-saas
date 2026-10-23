@@ -12,6 +12,7 @@ import {
 import { timeAgo } from "@/lib/utils/dateFormat";
 import { useClickOutside } from "@/hooks/useClickOutside";
 import { useKeyboardShortcut } from "@/hooks/useKeyboardShortcut";
+import { createClient } from "@/lib/supabase";
 
 export default function Notification() {
   const [isOpen, setIsOpen] = useState(false);
@@ -35,8 +36,24 @@ export default function Notification() {
 
   useEffect(() => {
     fetchNotifs();
-    const interval = setInterval(fetchNotifs, 15000); // Polling every 15s
-    return () => clearInterval(interval);
+    const interval = setInterval(fetchNotifs, 30000); // Polling cadangan
+
+    const supabase = createClient();
+    const channel = supabase
+      .channel("navbar-notifications-realtime")
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "notifications" },
+        () => {
+          fetchNotifs();
+        }
+      )
+      .subscribe();
+
+    return () => {
+      clearInterval(interval);
+      supabase.removeChannel(channel);
+    };
   }, []);
 
   // Close on Click Outside

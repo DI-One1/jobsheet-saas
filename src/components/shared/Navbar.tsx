@@ -40,13 +40,13 @@ export default function Navbar() {
             </Link>
 
             {/* Desktop Navigation Links */}
-            <nav className="hidden md:flex items-center gap-6">
+            <nav className="hidden md:flex items-center gap-2">
               <Link
                 href="/tentang-kami"
-                className={`text-xs font-semibold tracking-wide transition-colors ${
+                className={`text-xs px-3.5 py-1.5 transition-all no-underline ${
                   pathname === "/tentang-kami"
-                    ? "text-[#3dbd84] border-b-2 border-[#3dbd84] pb-0.5"
-                    : "text-white/80 hover:text-white"
+                    ? "nav-tab-aurora-active"
+                    : "nav-tab-aurora-inactive"
                 }`}
               >
                 Tentang Kami
@@ -54,10 +54,10 @@ export default function Navbar() {
 
               <Link
                 href="/beri-saran"
-                className={`text-xs font-semibold tracking-wide transition-colors ${
+                className={`text-xs px-3.5 py-1.5 transition-all no-underline ${
                   pathname === "/beri-saran"
-                    ? "text-[#3dbd84] border-b-2 border-[#3dbd84] pb-0.5"
-                    : "text-white/80 hover:text-white"
+                    ? "nav-tab-aurora-active"
+                    : "nav-tab-aurora-inactive"
                 }`}
               >
                 Beri Saran
