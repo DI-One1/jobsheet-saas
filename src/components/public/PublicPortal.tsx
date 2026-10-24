@@ -1,11 +1,13 @@
 "use client";
 
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo, useCallback, useRef } from "react";
 import {
   PublicFoundItem,
   MasterFilterData,
   getItemTitle,
 } from "@/features/item/utils/public-item-utils";
+import { createClient } from "@/lib/supabase";
+import { fetchPublicItemsAction } from "@/features/item/actions/public-realtime";
 import LatestItemsTicker from "./LatestItemsTicker";
 import CategoryCarousel from "./CategoryCarousel";
 import CatalogGrid from "./CatalogGrid";
@@ -22,6 +24,9 @@ export default function PublicPortal({
   initialItems,
   masterData,
 }: PublicPortalProps) {
+  // ── Live items state (seeded from SSR, updated via Realtime) ──
+  const [liveItems, setLiveItems] = useState<PublicFoundItem[]>(initialItems);
+
   // State Filter & Pencarian
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedSort, setSelectedSort] = useState<"newest" | "oldest" | "name">("newest");
@@ -33,6 +38,45 @@ export default function PublicPortal({
 
   // State Modal Detail
   const [activeModalItem, setActiveModalItem] = useState<PublicFoundItem | null>(null);
+
+  // ── Debounced refetch via Server Action ──
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const refetchItems = useCallback(() => {
+    if (debounceRef.current) clearTimeout(debounceRef.current);
+    debounceRef.current = setTimeout(async () => {
+      try {
+        const fresh = await fetchPublicItemsAction();
+        setLiveItems(fresh);
+      } catch {
+        // silent — tetap tampilkan data lama jika fetch gagal
+      }
+    }, 400);
+  }, []);
+
+  // ── Supabase Realtime: subscribe ke perubahan tabel FoundItem ──
+  useEffect(() => {
+    let supabase: ReturnType<typeof createClient> | null = null;
+    try {
+      supabase = createClient();
+    } catch {
+      // Supabase env tidak tersedia — skip realtime
+      return;
+    }
+
+    const channel = supabase
+      .channel("public-portal-found-items")
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "found_items" },
+        () => refetchItems()
+      )
+      .subscribe();
+
+    return () => {
+      if (debounceRef.current) clearTimeout(debounceRef.current);
+      supabase?.removeChannel(channel);
+    };
+  }, [refetchItems]);
 
   useEffect(() => {
     const handlePublicFilters = (event: Event) => {
@@ -82,7 +126,7 @@ export default function PublicPortal({
   const filteredAndSortedItems = useMemo(() => {
     const q = searchQuery.toLowerCase().trim();
 
-    return initialItems
+    return liveItems
       .filter((item) => {
         // Filter Kata Kunci
         if (q) {
@@ -139,7 +183,7 @@ export default function PublicPortal({
         return 0;
       });
   }, [
-    initialItems,
+    liveItems,
     searchQuery,
     selectedCategory,
     selectedColor,
@@ -168,7 +212,7 @@ export default function PublicPortal({
     <div className="public-portal w-full flex flex-col pt-6 sm:pt-8">
       {/* ==================== SECTION 1: BARANG TERBARU (TICKER) ==================== */}
       <LatestItemsTicker
-        items={initialItems.slice(0, 4)}
+        items={liveItems.slice(0, 4)}
         onSelectItem={(item) => setActiveModalItem(item)}
         onScrollToCatalog={scrollToCatalog}
       />
