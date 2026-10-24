@@ -11,6 +11,12 @@ export default async function RiwayatTemuanPage() {
       warna: true,
       merek: true,
       lokasi: true,
+      warga: true,
+      claim: {
+        include: {
+          warga: true,
+        },
+      },
     },
     orderBy: {
       createdAt: "desc",

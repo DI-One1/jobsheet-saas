@@ -89,11 +89,22 @@ export async function createFoundItem(formData: FormData) {
 
 /**
  * Hapus satu FoundItem berdasarkan ID.
+ * Membersihkan notifikasi dan klaim terkait secara aman dalam transaksi.
  */
 export async function deleteFoundItem(id: string) {
   try {
-    await prisma.foundItem.delete({ where: { id } });
+    await prisma.$transaction([
+      prisma.notification.deleteMany({
+        where: { foundItemId: id },
+      }),
+      prisma.claimTransaction.deleteMany({
+        where: { foundItemId: id },
+      }),
+      prisma.foundItem.delete({ where: { id } }),
+    ]);
     revalidatePath("/riwayat/temuan");
+    revalidatePath("/riwayat/pengambilan");
+    revalidatePath("/data-warga");
     revalidatePath("/");
     return { success: true };
   } catch (error) {
@@ -155,6 +166,12 @@ export async function getFoundItemById(id: string) {
         warna: true,
         merek: true,
         lokasi: true,
+        warga: true,
+        claim: {
+          include: {
+            warga: true,
+          },
+        },
       },
     });
   } catch (error) {

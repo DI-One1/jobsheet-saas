@@ -9,7 +9,15 @@ export default async function RiwayatLaporanPage() {
   const riwayatList = await prisma.lostReport.findMany({
     include: {
       jenis: true,
+      warna: true,
+      merek: true,
       lokasi: true,
+      warga: true,
+      claimTransactions: {
+        include: {
+          foundItem: true,
+        },
+      },
     },
     orderBy: {
       createdAt: "desc",

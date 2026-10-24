@@ -1,90 +1,77 @@
 "use client";
 
-import { useState } from "react";
-import { timeAgo } from "@/lib/utils/dateFormat";
+import React from "react";
+import { formatDate } from "@/lib/utils/dateFormat";
+import RiwayatActionDropdown from "@/components/riwayat/RiwayatActionDropdown";
 
 interface PengambilanRowProps {
   item: any;
+  onOpenDetail: (item: any) => void;
+  onOpenDelete: (item: any) => void;
+  onToast: (message: string, type: "success" | "error") => void;
 }
 
-export default function PengambilanRow({ item }: PengambilanRowProps) {
-  const [isDetailOpen, setIsDetailOpen] = useState(false);
+export default function PengambilanRow({
+  item,
+  onOpenDetail,
+  onOpenDelete,
+  onToast,
+}: PengambilanRowProps) {
+  const claimantId =
+    item.claimantIdCard && item.claimantIdCard !== "-"
+      ? item.claimantIdCard
+      : item.wargaId || item.warga?.id || "—";
+
+  const foundItem = item.foundItem || {};
 
   return (
-    <>
-      <tr className="hover:bg-gray-50/80 transition-colors border-b border-gray-100">
-        <td className="px-6 py-4 text-sm font-bold text-gray-900">
-          {item.claimantName}
-          <div className="text-[11px] font-mono text-gray-500 font-normal">
-            ID: {item.claimantIdCard}
-          </div>
-        </td>
-        <td className="px-6 py-4 font-mono font-bold text-xs text-[#0d3b2e]">
-          {item.foundItem?.businessCode || "-"}
-        </td>
-        <td className="px-6 py-4 text-sm font-semibold text-gray-800">
-          {item.foundItem?.jenis?.name || "-"}
-        </td>
-        <td className="px-6 py-4 text-sm text-gray-600">
-          {item.foundItem?.merek?.name || "-"} ({item.foundItem?.warna?.name || "-"})
-        </td>
-        <td className="px-6 py-4 text-xs text-gray-500">
-          {timeAgo(item.claimedAt)}
-        </td>
-        <td className="px-6 py-4 text-right">
-          <button
-            onClick={() => setIsDetailOpen(!isDetailOpen)}
-            className="text-xs text-[#3dbd84] hover:text-[#1a5c44] font-bold px-3 py-1 bg-emerald-50 hover:bg-emerald-100 rounded-lg transition-colors cursor-pointer"
-          >
-            {isDetailOpen ? "Tutup" : "Rincian"}
-          </button>
-        </td>
-      </tr>
+    <tr className="hover:bg-gray-50/80 transition-colors border-b border-gray-100">
+      {/* 1. ID Pengambil */}
+      <td className="px-6 py-4 font-mono font-bold text-xs text-[#0d3b2e]">
+        {claimantId}
+      </td>
 
-      {/* Expanded Row Detail */}
-      {isDetailOpen && (
-        <tr className="bg-emerald-50/30 border-b border-emerald-100">
-          <td colSpan={6} className="px-6 py-4">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
-              <div>
-                <p className="font-bold text-gray-700 uppercase tracking-wider">
-                  Data Penerima / Pemilik
-                </p>
-                <p className="text-gray-900 font-semibold mt-1">{item.claimantName}</p>
-                <p className="text-gray-500 font-mono">ID: {item.claimantIdCard}</p>
-                <p className="text-gray-500">Kontak: {item.claimantContact || "-"}</p>
-              </div>
+      {/* 2. Jenis Barang */}
+      <td className="px-6 py-4 text-sm font-semibold text-gray-800">
+        {foundItem.jenis?.name || "—"}
+      </td>
 
-              <div>
-                <p className="font-bold text-gray-700 uppercase tracking-wider">
-                  Data Penemu Awal
-                </p>
-                <p className="text-gray-900 font-semibold mt-1">
-                  {item.foundItem?.finderName || "-"}
-                </p>
-                <p className="text-gray-500 font-mono">
-                  ID: {item.foundItem?.finderIdCard || "-"}
-                </p>
-                <p className="text-gray-500">
-                  Lokasi Temuan: {item.foundItem?.lokasi?.name || "-"}
-                </p>
-              </div>
+      {/* 3. Merek */}
+      <td className="px-6 py-4 text-sm text-gray-600">
+        {foundItem.merek?.name || "—"}
+      </td>
 
-              <div>
-                <p className="font-bold text-gray-700 uppercase tracking-wider">
-                  Waktu Serah Terima
-                </p>
-                <p className="text-gray-700 mt-1">
-                  {new Date(item.claimedAt).toLocaleString("id-ID", {
-                    dateStyle: "long",
-                    timeStyle: "short",
-                  })}
-                </p>
-              </div>
-            </div>
-          </td>
-        </tr>
-      )}
-    </>
+      {/* 4. Warna */}
+      <td className="px-6 py-4 text-sm text-gray-600">
+        {foundItem.warna?.name || "—"}
+      </td>
+
+      {/* 5. Lokasi */}
+      <td className="px-6 py-4 text-sm text-gray-600">
+        {foundItem.lokasi?.name || "—"}
+      </td>
+
+      {/* 6. Status */}
+      <td className="px-6 py-4 text-center">
+        <span className="bg-blue-100 text-blue-800 text-xs px-2.5 py-1 rounded-full font-bold inline-block">
+          Diambil
+        </span>
+      </td>
+
+      {/* 7. Tanggal */}
+      <td className="px-6 py-4 text-xs text-gray-500 whitespace-nowrap">
+        {formatDate(item.claimedAt)}
+      </td>
+
+      {/* 8. Aksi */}
+      <td className="px-6 py-4 text-right">
+        <RiwayatActionDropdown
+          onDelete={() => onOpenDelete(item)}
+          onDetail={() => onOpenDetail(item)}
+          itemCode={foundItem.businessCode}
+          onToast={onToast}
+        />
+      </td>
+    </tr>
   );
 }

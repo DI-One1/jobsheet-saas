@@ -159,6 +159,50 @@ export async function getMatchingFoundItemsForReport(reportId: string) {
 }
 
 /**
+ * Hapus satu transaksi pengambilan (serah terima).
+ * Status barang temuan terkait yang sebelumnya CLAIMED akan dikembalikan ke FOUND,
+ * dan status laporan kehilangan terkait (jika ada) dikembalikan ke DICARI.
+ */
+export async function deleteClaimTransaction(id: string) {
+  try {
+    const claim = await prisma.claimTransaction.findUnique({
+      where: { id },
+      select: { foundItemId: true, lostReportId: true },
+    });
+
+    if (!claim) {
+      throw new Error("Data transaksi pengambilan tidak ditemukan.");
+    }
+
+    await prisma.$transaction([
+      prisma.foundItem.update({
+        where: { id: claim.foundItemId },
+        data: { status: "FOUND" },
+      }),
+      ...(claim.lostReportId
+        ? [
+            prisma.lostReport.update({
+              where: { id: claim.lostReportId },
+              data: { status: "DICARI" },
+            }),
+          ]
+        : []),
+      prisma.claimTransaction.delete({ where: { id } }),
+    ]);
+
+    revalidatePath("/riwayat/pengambilan");
+    revalidatePath("/riwayat/temuan");
+    revalidatePath("/riwayat/laporan");
+    revalidatePath("/data-warga");
+    revalidatePath("/");
+    return { success: true };
+  } catch (error) {
+    console.error("Gagal menghapus transaksi pengambilan:", error);
+    throw new Error("Gagal menghapus transaksi pengambilan.");
+  }
+}
+
+/**
  * Hapus seluruh data transaksi pengambilan (serah terima).
  * Status barang temuan terkait yang sebelumnya CLAIMED akan dikembalikan ke FOUND.
  */
@@ -191,8 +235,16 @@ export async function getClaimTransactionById(id: string) {
     return await prisma.claimTransaction.findUnique({
       where: { id },
       include: {
+        warga: true,
+        lostReport: true,
         foundItem: {
-          include: { jenis: true, warna: true, merek: true, lokasi: true },
+          include: {
+            jenis: true,
+            warna: true,
+            merek: true,
+            lokasi: true,
+            warga: true,
+          },
         },
       },
     });

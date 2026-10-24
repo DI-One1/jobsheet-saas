@@ -142,10 +142,20 @@ export async function createLostReport(formData: FormData) {
 
 /**
  * Hapus satu LostReport berdasarkan ID.
+ * Membersihkan referensi notifikasi dan transaksi klaim secara aman dalam transaksi.
  */
 export async function deleteLostReport(id: string) {
   try {
-    await prisma.lostReport.delete({ where: { id } });
+    await prisma.$transaction([
+      prisma.notification.deleteMany({
+        where: { lostReportId: id },
+      }),
+      prisma.claimTransaction.updateMany({
+        where: { lostReportId: id },
+        data: { lostReportId: null },
+      }),
+      prisma.lostReport.delete({ where: { id } }),
+    ]);
     revalidatePath("/riwayat/laporan");
     revalidatePath("/");
     return { success: true };
@@ -185,7 +195,15 @@ export async function getLostReportById(id: string) {
       where: { id },
       include: {
         jenis: true,
+        warna: true,
+        merek: true,
         lokasi: true,
+        warga: true,
+        claimTransactions: {
+          include: {
+            foundItem: true,
+          },
+        },
       },
     });
   } catch (error) {

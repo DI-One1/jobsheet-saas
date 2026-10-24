@@ -6,7 +6,10 @@ import { CheckCircle2, AlertCircle, X, PackagePlus } from "lucide-react";
 import TemuanRow from "./TemuanRow";
 import ConfirmAdminModal from "@/components/shared/ConfirmAdminModal";
 import RiwayatFAB from "@/components/shared/RiwayatFAB";
-import { deleteAllFoundItems, getFoundItemById } from "@/features/item/actions/found-item";
+import DeleteConfirmModal from "@/components/riwayat/DeleteConfirmModal";
+import RiwayatDetailModal from "@/components/riwayat/RiwayatDetailModal";
+import TemuanDetailContent from "@/components/riwayat/TemuanDetailContent";
+import { deleteAllFoundItems, deleteFoundItem, getFoundItemById } from "@/features/item/actions/found-item";
 import { createClient } from "@/lib/supabase";
 
 type ToastType = "success" | "error";
@@ -16,6 +19,7 @@ function Toast({ message, type, onDismiss }: { message: string; type: ToastType;
     const timer = setTimeout(onDismiss, 4000);
     return () => clearTimeout(timer);
   }, [onDismiss]);
+
   return (
     <div
       role="alert"
@@ -42,10 +46,22 @@ export default function TemuanClient({ foundItems }: TemuanClientProps) {
   const [items, setItems] = useState<any[]>(foundItems);
   const [prevFoundItems, setPrevFoundItems] = useState<any[]>(foundItems);
   const [filterStatus, setFilterStatus] = useState<string>("ALL");
-  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
+  const [isConfirmAllModalOpen, setIsConfirmAllModalOpen] = useState(false);
   const [toast, setToast] = useState<{ message: string; type: ToastType } | null>(null);
-  const showToast = useCallback((message: string, type: ToastType) => { setToast({ message, type }); }, []);
-  if (foundItems !== prevFoundItems) { setPrevFoundItems(foundItems); setItems(foundItems); }
+
+  // Modal Detail & Hapus Single Row
+  const [detailItem, setDetailItem] = useState<any | null>(null);
+  const [deleteTarget, setDeleteTarget] = useState<any | null>(null);
+  const [isDeletingSingle, setIsDeletingSingle] = useState(false);
+
+  const showToast = useCallback((message: string, type: ToastType) => {
+    setToast({ message, type });
+  }, []);
+
+  if (foundItems !== prevFoundItems) {
+    setPrevFoundItems(foundItems);
+    setItems(foundItems);
+  }
 
   const supabase = createClient();
 
@@ -104,6 +120,29 @@ export default function TemuanClient({ foundItems }: TemuanClientProps) {
     };
   }, [supabase]);
 
+  // Handler Hapus Single Row
+  const handleConfirmSingleDelete = async () => {
+    if (!deleteTarget) return;
+    const targetId = deleteTarget.id;
+    const targetCode = deleteTarget.businessCode;
+    const previousItems = [...items];
+
+    try {
+      setIsDeletingSingle(true);
+      // Optimistic update
+      setItems((current) => current.filter((item) => item.id !== targetId));
+      await deleteFoundItem(targetId);
+      showToast(`Barang temuan "${targetCode}" berhasil dihapus.`, "success");
+      setDeleteTarget(null);
+    } catch {
+      setItems(previousItems);
+      showToast(`Gagal menghapus barang temuan "${targetCode}".`, "error");
+    } finally {
+      setIsDeletingSingle(false);
+    }
+  };
+
+  // Handler Hapus Seluruh Riwayat
   const handleKonfirmasiHapusSemua = async () => {
     const snapshot = [...items];
     const count = snapshot.length;
@@ -119,7 +158,18 @@ export default function TemuanClient({ foundItems }: TemuanClientProps) {
   };
 
   const filteredItems = items.filter((item) => {
-    const matchesSearch = !query || item.businessCode?.toLowerCase().includes(query) || item.jenis?.name?.toLowerCase().includes(query) || item.merek?.name?.toLowerCase().includes(query) || item.warna?.name?.toLowerCase().includes(query) || item.lokasi?.name?.toLowerCase().includes(query) || item.finderName?.toLowerCase().includes(query);
+    const matchesSearch =
+      !query ||
+      item.businessCode?.toLowerCase().includes(query) ||
+      item.jenis?.name?.toLowerCase().includes(query) ||
+      item.merek?.name?.toLowerCase().includes(query) ||
+      item.warna?.name?.toLowerCase().includes(query) ||
+      item.lokasi?.name?.toLowerCase().includes(query) ||
+      item.finderName?.toLowerCase().includes(query) ||
+      item.finderIdCard?.toLowerCase().includes(query) ||
+      item.warga?.nama?.toLowerCase().includes(query) ||
+      item.warga?.id?.toLowerCase().includes(query);
+
     const matchesStatus = filterStatus === "ALL" || item.status === filterStatus;
     return matchesSearch && matchesStatus;
   });
@@ -127,23 +177,43 @@ export default function TemuanClient({ foundItems }: TemuanClientProps) {
   return (
     <div className="space-y-4">
       {toast && <Toast message={toast.message} type={toast.type} onDismiss={() => setToast(null)} />}
+
+      {/* Filter Status & Counter */}
       <div className="flex flex-wrap gap-2 items-center justify-between">
         <div className="flex gap-2">
           {["ALL", "FOUND", "CLAIMED", "EXPIRED"].map((status) => (
-            <button key={status} onClick={() => setFilterStatus(status)} className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${filterStatus === status ? "bg-[#0d3b2e] text-white shadow-sm" : "bg-white text-gray-600 hover:bg-gray-100 border border-gray-200"}`}>
-              {status === "ALL" ? "Semua" : status === "FOUND" ? "Tersedia" : status === "CLAIMED" ? "Sudah Diambil" : "Kedaluwarsa"}
+            <button
+              key={status}
+              onClick={() => setFilterStatus(status)}
+              className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                filterStatus === status
+                  ? "bg-[#0d3b2e] text-white shadow-xs"
+                  : "bg-white text-gray-600 hover:bg-gray-100 border border-gray-200"
+              }`}
+            >
+              {status === "ALL"
+                ? "Semua"
+                : status === "FOUND"
+                ? "Tersedia"
+                : status === "CLAIMED"
+                ? "Sudah Diambil"
+                : "Kedaluwarsa"}
             </button>
           ))}
         </div>
-        <span className="text-xs text-gray-500">Menampilkan <strong>{filteredItems.length}</strong> data</span>
+        <span className="text-xs text-gray-500">
+          Menampilkan <strong>{filteredItems.length}</strong> data
+        </span>
       </div>
-      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden mb-24">
+
+      {/* Tabel Utama Riwayat Barang Temuan */}
+      <div className="bg-white rounded-2xl shadow-xs border border-gray-100 overflow-hidden mb-24">
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
               <tr className="bg-gray-50/80 border-b border-gray-100 text-[11px] font-bold text-gray-500 uppercase tracking-wider">
-                <th className="px-6 py-4">Kode Barang</th>
-                <th className="px-6 py-4">Jenis</th>
+                <th className="px-6 py-4">ID Penemu</th>
+                <th className="px-6 py-4">Jenis Barang</th>
                 <th className="px-6 py-4">Merek</th>
                 <th className="px-6 py-4">Warna</th>
                 <th className="px-6 py-4">Lokasi</th>
@@ -154,14 +224,52 @@ export default function TemuanClient({ foundItems }: TemuanClientProps) {
             </thead>
             <tbody className="divide-y divide-gray-50">
               {filteredItems.length === 0 ? (
-                <tr><td colSpan={8} className="px-6 py-12 text-center text-gray-400 text-sm">Tidak ada data barang temuan yang cocok.</td></tr>
+                <tr>
+                  <td colSpan={8} className="px-6 py-12 text-center text-gray-400 text-sm">
+                    Tidak ada data barang temuan yang cocok.
+                  </td>
+                </tr>
               ) : (
-                filteredItems.map((item) => <TemuanRow key={item.id} item={item} />)
+                filteredItems.map((item) => (
+                  <TemuanRow
+                    key={item.id}
+                    item={item}
+                    onOpenDetail={(i) => setDetailItem(i)}
+                    onOpenDelete={(i) => setDeleteTarget(i)}
+                    onToast={showToast}
+                  />
+                ))
               )}
             </tbody>
           </table>
         </div>
       </div>
+
+      {/* MODAL RINCIAN OVERLAY */}
+      {detailItem && (
+        <RiwayatDetailModal
+          isOpen={!!detailItem}
+          onClose={() => setDetailItem(null)}
+          title="Detail Barang Temuan"
+          subtitle={`Kode: ${detailItem.businessCode || "—"}`}
+        >
+          <TemuanDetailContent item={detailItem} onToast={showToast} />
+        </RiwayatDetailModal>
+      )}
+
+      {/* MODAL KONFIRMASI HAPUS SINGLE BARANG TEMUAN */}
+      {deleteTarget && (
+        <DeleteConfirmModal
+          isOpen={!!deleteTarget}
+          onClose={() => setDeleteTarget(null)}
+          onConfirm={handleConfirmSingleDelete}
+          isLoading={isDeletingSingle}
+          title="Hapus Barang Temuan"
+          itemName={`${deleteTarget.jenis?.name || "Barang"} (${deleteTarget.businessCode})`}
+          itemIdentifier={`Penemu: ${deleteTarget.warga?.nama || deleteTarget.finderName || "—"} (ID: ${deleteTarget.finderIdCard || deleteTarget.wargaId || "—"})`}
+          description="Menghapus barang temuan ini akan menghapus catatan temuan dan riwayat klaim terkait (jika ada) dari sistem."
+        />
+      )}
 
       {/* FAB: Tambah Temuan → /taruh | Hapus Riwayat Temuan */}
       <RiwayatFAB
@@ -170,12 +278,13 @@ export default function TemuanClient({ foundItems }: TemuanClientProps) {
         tambahIcon={<PackagePlus className="h-5 w-5" />}
         hapusLabel="Hapus Riwayat Temuan"
         jumlahData={items.length}
-        onHapus={() => setIsConfirmModalOpen(true)}
+        onHapus={() => setIsConfirmAllModalOpen(true)}
       />
 
+      {/* MODAL HAPUS SEMUA DATA */}
       <ConfirmAdminModal
-        isOpen={isConfirmModalOpen}
-        onClose={() => setIsConfirmModalOpen(false)}
+        isOpen={isConfirmAllModalOpen}
+        onClose={() => setIsConfirmAllModalOpen(false)}
         onConfirm={handleKonfirmasiHapusSemua}
         title="Hapus Seluruh Riwayat Barang Temuan"
         targetName={`seluruh riwayat barang temuan (${items.length} data)`}
@@ -183,4 +292,3 @@ export default function TemuanClient({ foundItems }: TemuanClientProps) {
     </div>
   );
 }
-

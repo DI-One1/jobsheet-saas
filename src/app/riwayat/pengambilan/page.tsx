@@ -7,8 +7,16 @@ import PengambilanClient from "./PengambilanClient"; // Import Client Component 
 export default async function RiwayatPengambilanPage() {
   const claims = await prisma.claimTransaction.findMany({
     include: {
+      warga: true,
+      lostReport: true,
       foundItem: {
-        include: { jenis: true, warna: true, merek: true, lokasi: true },
+        include: {
+          jenis: true,
+          warna: true,
+          merek: true,
+          lokasi: true,
+          warga: true,
+        },
       },
     },
     orderBy: { claimedAt: "desc" },
