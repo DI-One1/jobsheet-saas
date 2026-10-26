@@ -90,11 +90,13 @@ export default function PublicNavbar({
     return () => document.removeEventListener("click", handleClickOutside);
   }, []);
 
-  // Close menus on route changes
-  useEffect(() => {
+  // Close menus on route changes (pola resmi React: adjusting state during render)
+  const [prevPathname, setPrevPathname] = useState(pathname);
+  if (pathname !== prevPathname) {
+    setPrevPathname(pathname);
     setProfileOpen(false);
     setMobileMenuOpen(false);
-  }, [pathname]);
+  }
 
   const updateFilter = <K extends keyof PublicFilterState>(
     key: K,

@@ -60,13 +60,19 @@ export default function TaruhBarangForm({
 
   // Update preview code when all 4 attributes are selected
   useEffect(() => {
+    let active = true;
     if (jenisId && warnaId && merekId && lokasiId) {
       getBusinessCodePreview({ jenisId, warnaId, merekId, lokasiId }).then((code) => {
-        setPreviewCode(code);
+        if (active) setPreviewCode(code);
       });
     } else {
-      setPreviewCode(null);
+      queueMicrotask(() => {
+        if (active) setPreviewCode(null);
+      });
     }
+    return () => {
+      active = false;
+    };
   }, [jenisId, warnaId, merekId, lokasiId]);
 
   const handleSelectWarga = (warga: Warga) => {

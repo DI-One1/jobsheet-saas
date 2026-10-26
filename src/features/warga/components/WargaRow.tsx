@@ -1,9 +1,11 @@
 "use client";
 
-import { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useRef, useEffect, useCallback, useSyncExternalStore } from "react";
 import { createPortal } from "react-dom";
 import { User, Activity, Trash2, MoreHorizontal, Phone } from "lucide-react";
 import { Warga } from "../types";
+
+const emptySubscribe = () => () => {};
 
 interface WargaRowProps {
   item: Warga;
@@ -32,12 +34,7 @@ export default function WargaRow({
   const buttonRef = useRef<HTMLButtonElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [pos, setPos] = useState<DropdownPos>({ top: 0, left: 0 });
-  const [mounted, setMounted] = useState(false);
-
-  // Pastikan portal hanya dirender di client untuk menghindari hydration mismatch
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const mounted = useSyncExternalStore(emptySubscribe, () => true, () => false);
 
   // ---- Hitung posisi dropdown relatif terhadap viewport ----
   const recalcPosition = useCallback(() => {
@@ -195,13 +192,13 @@ export default function WargaRow({
   return (
     <tr
       className={
-        item.id.startsWith("temp-")
+        (item.id ?? "").startsWith("temp-")
           ? "opacity-50 animate-pulse bg-[#f8faf9]"
           : "hover:bg-[#f4f9f7] transition-colors border-b border-[#edf4f1]"
       }
     >
       <td className="px-6 py-4 text-xs font-bold text-[#0d7565] font-mono">
-        {item.id.startsWith("temp-") ? "Generating..." : item.id}
+        {(item.id ?? "").startsWith("temp-") ? "Generating..." : (item.id ?? "-")}
       </td>
       <td className="px-6 py-4 text-xs font-bold text-[#142e29]">
         {item.nama}
@@ -248,7 +245,7 @@ export default function WargaRow({
             ref={buttonRef}
             onClick={() => setIsOpen((prev) => !prev)}
             className="p-2 text-[#57706a] hover:text-[#0d7565] hover:bg-[#eef7f4] rounded-full transition-colors disabled:opacity-50 cursor-pointer"
-            disabled={item.id.startsWith("temp-")}
+            disabled={(item.id ?? "").startsWith("temp-")}
             title="Aksi Warga"
             aria-label="Aksi Warga"
           >

@@ -24,10 +24,17 @@ export default function ConfirmAdminModal({
   const [isLoading, setIsLoading] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  useEffect(() => {
+  const [prevIsOpen, setPrevIsOpen] = useState(isOpen);
+  if (isOpen !== prevIsOpen) {
+    setPrevIsOpen(isOpen);
     if (isOpen) {
       setInputText("");
       setIsLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    if (isOpen) {
       // Auto focus after open
       const timer = setTimeout(() => {
         inputRef.current?.focus();

@@ -19,6 +19,8 @@ import { useKeyboardShortcut } from "@/hooks/useKeyboardShortcut";
 
 import { Users, UserRoundPlus, Trash2, Plus, X, CheckCircle2, AlertCircle } from "lucide-react";
 
+import type { RealtimePostgresChangesPayload } from "@supabase/supabase-js";
+
 // UI primitives
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
@@ -79,10 +81,19 @@ export default function WargaClient({ initialData }: { initialData: Warga[] }) {
   const [profilWarga, setProfilWarga] = useState<Warga | null>(null);
   const [aksiWarga, setAksiWarga] = useState<Warga | null>(null);
 
-  // Sync state if server initialData changes
+  // Sync state jika server initialData berubah (pola resmi React: adjusting state during render)
   if (initialData !== prevInitialData) {
     setPrevInitialData(initialData);
-    setDataWarga(initialData);
+    setDataWarga((current) => {
+      const tempItems = current.filter((w) => Boolean(w && (w.id ?? "").startsWith("temp-")));
+      const merged = [...initialData, ...tempItems];
+      const seen = new Set<string>();
+      return merged.filter((w) => {
+        if (!w.id || seen.has(w.id)) return false;
+        seen.add(w.id);
+        return true;
+      });
+    });
   }
 
   // State untuk Riwayat Aksi Warga
@@ -92,7 +103,10 @@ export default function WargaClient({ initialData }: { initialData: Warga[] }) {
 
   const formRef = useRef<HTMLFormElement>(null);
   const fabRef = useRef<HTMLDivElement>(null);
-  const supabase = createClient();
+  const supabaseRef = useRef<ReturnType<typeof createClient> | null>(null);
+  if (supabaseRef.current == null) {
+    supabaseRef.current = createClient();
+  }
   const searchParams = useSearchParams();
   const searchQuery = searchParams.get("q") || "";
 
@@ -107,73 +121,74 @@ export default function WargaClient({ initialData }: { initialData: Warga[] }) {
   });
 
   // Realtime subscription via Supabase
+  // Mengikuti pola resmi: https://supabase.com/docs/guides/realtime/subscribing-to-database-changes
   useEffect(() => {
+    const supabase = supabaseRef.current;
+
+    /** Map raw DB payload (snake_case) ke tipe Warga */
+    const mapPayload = (p: Record<string, unknown>): Warga => ({
+      id: (p.id ?? "") as string,
+      nama: (p.nama ?? "") as string,
+      peran: (p.peran ?? "") as string,
+      keterangan_peran: (p.keterangan_peran ?? null) as string | null,
+      nomor_telepon: (p.nomor_telepon ?? null) as string | null,
+      created_at: (p.created_at ?? new Date().toISOString()) as string,
+    });
+
+    /** Hapus duplikat berdasarkan id */
+    const dedup = (list: Warga[]) => {
+      const seen = new Set<string>();
+      return list.filter((w) => {
+        if (!w.id || seen.has(w.id)) return false;
+        seen.add(w.id);
+        return true;
+      });
+    };
+
     const channel = supabase
       .channel("warga-realtime")
       .on(
         "postgres_changes",
-        { event: "INSERT", schema: "public", table: "warga" },
-        (payload: { new: Record<string, any> }) => {
+        { event: "*", schema: "public", table: "warga" },
+        (payload: RealtimePostgresChangesPayload<Record<string, unknown>>) => {
           setDataWarga((current) => {
-            // payload.new mapping from DB (snake_case)
-            const newWarga: Warga = {
-              id: payload.new.id,
-              nama: payload.new.nama,
-              peran: payload.new.peran,
-              keterangan_peran: payload.new.keterangan_peran || payload.new.keteranganPeran || null,
-              nomor_telepon: payload.new.nomor_telepon || payload.new.nomorTelepon || null,
-              created_at: payload.new.created_at || payload.new.createdAt || new Date().toISOString(),
-            };
-            if (current.some((w) => w.id === newWarga.id)) {
-              return current.map((w) => (w.id === newWarga.id ? newWarga : w));
+            if (payload.eventType === "DELETE") {
+              const deletedId = (payload.old as Record<string, unknown>)?.id as string;
+              return deletedId ? current.filter((w) => w.id !== deletedId) : current;
             }
-            // Bersihkan temp item jika ada (dari optimistic update pengirim)
+
+            const changed = mapPayload(payload.new as Record<string, unknown>);
+            if (!changed.id) return current;
+
+            const exists = current.some((w) => w.id === changed.id);
+
+            if (exists) {
+              // UPDATE atau INSERT yang sudah ada (optimistic) → replace
+              return dedup(current.map((w) => (w.id === changed.id ? changed : w)));
+            }
+
+            // INSERT baru → bersihkan temp item dari optimistic update, tambah di atas
             const withoutTemp = current.filter(
-              (w) => !(w.id.startsWith("temp-") && w.nama === newWarga.nama && w.peran === newWarga.peran)
+              (w) => !(w && (w.id ?? "").startsWith("temp-") && w.nama === changed.nama && w.peran === changed.peran)
             );
-            return [newWarga, ...withoutTemp];
+            return dedup([changed, ...withoutTemp]);
           });
-        }
-      )
-      .on(
-        "postgres_changes",
-        { event: "UPDATE", schema: "public", table: "warga" },
-        (payload: { new: Record<string, any> }) => {
-          setDataWarga((current) =>
-            current.map((w) =>
-              w.id === payload.new.id
-                ? {
-                    id: payload.new.id,
-                    nama: payload.new.nama,
-                    peran: payload.new.peran,
-                    keterangan_peran: payload.new.keterangan_peran || payload.new.keteranganPeran || null,
-                    nomor_telepon: payload.new.nomor_telepon || payload.new.nomorTelepon || null,
-                    created_at: payload.new.created_at || payload.new.createdAt || w.created_at,
-                  }
-                : w
-            )
-          );
-        }
-      )
-      .on(
-        "postgres_changes",
-        { event: "DELETE", schema: "public", table: "warga" },
-        (payload: { old: Record<string, any> }) => {
-          if (payload.old && payload.old.id) {
-            setDataWarga((current) => current.filter((item) => item.id !== payload.old.id));
-          }
         }
       )
       .subscribe((status: string) => {
         if (status === "SUBSCRIBED") {
-          console.log("[Supabase Realtime] Warga channel connected");
+          console.log("[Supabase Realtime] Warga channel connected ✓");
+        }
+        if (status === "CHANNEL_ERROR") {
+          console.error("[Supabase Realtime] Channel error — cek RLS policy & publikasi tabel");
         }
       });
 
     return () => {
       supabase.removeChannel(channel);
     };
-  }, [supabase]);
+  }, []);
+
 
   // Load activity history when aksiWarga is selected
   useEffect(() => {
@@ -246,14 +261,25 @@ export default function WargaClient({ initialData }: { initialData: Warga[] }) {
     } catch {
       // Remove temp row on failure
       setDataWarga((current) => current.filter((w) => w.id !== newTempWarga.id));
-      alert("Gagal menambahkan data.");
+      showToast("Gagal menambahkan data warga.", "error");
     }
   };
 
   const handleHapusSatu = async (id: string) => {
     if (confirm("Hapus data warga ini?")) {
+      // Simpan snapshot untuk rollback
+      const snapshot = dataWarga.find((w) => w.id === id);
+      // Optimistic remove
       setDataWarga((current) => current.filter((w) => w.id !== id));
-      await hapusWarga(id);
+      try {
+        await hapusWarga(id);
+      } catch {
+        // Rollback jika gagal
+        if (snapshot) {
+          setDataWarga((current) => [snapshot, ...current]);
+        }
+        showToast("Gagal menghapus data warga.", "error");
+      }
     }
   };
 
@@ -276,11 +302,11 @@ export default function WargaClient({ initialData }: { initialData: Warga[] }) {
   const filteredData = dataWarga.filter((warga) => {
     const query = searchQuery.toLowerCase();
     return (
-      warga.nama.toLowerCase().includes(query) ||
-      warga.peran.toLowerCase().includes(query) ||
-      (warga.keterangan_peran && warga.keterangan_peran.toLowerCase().includes(query)) ||
-      (warga.nomor_telepon && warga.nomor_telepon.toLowerCase().includes(query)) ||
-      warga.id.toLowerCase().includes(query)
+      (warga.nama ?? "").toLowerCase().includes(query) ||
+      (warga.peran ?? "").toLowerCase().includes(query) ||
+      (warga.keterangan_peran ?? "").toLowerCase().includes(query) ||
+      (warga.nomor_telepon ?? "").toLowerCase().includes(query) ||
+      (warga.id ?? "").toLowerCase().includes(query)
     );
   });
 
@@ -319,7 +345,7 @@ export default function WargaClient({ initialData }: { initialData: Warga[] }) {
           ) : (
             filteredData.map((item) => (
               <WargaRow
-                key={item.id}
+                key={item.id + "-" + (item.nama ?? "")}
                 item={item}
                 onHapus={handleHapusSatu}
                 onRincianProfil={handleRincianProfil}

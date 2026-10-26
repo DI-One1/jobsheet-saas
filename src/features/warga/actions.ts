@@ -28,7 +28,10 @@ export async function tambahWarga(formData: FormData) {
       },
     });
 
-    revalidatePath("/data-warga");
+    // CATATAN: Tidak pakai revalidatePath di sini.
+    // INSERT akan dibroadcast oleh Supabase Realtime ke semua client.
+    // revalidatePath hanya diperlukan untuk operasi yang tidak di-broadcast
+    // (hapus), karena client lain perlu tahu data terbaru saat re-visit.
 
     return {
       success: true,

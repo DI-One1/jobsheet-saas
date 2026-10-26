@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { useSearchParams } from "next/navigation";
 import { CheckCircle2, AlertCircle, X, PackagePlus } from "lucide-react";
 import TemuanRow from "./TemuanRow";
@@ -63,10 +63,16 @@ export default function TemuanClient({ foundItems }: TemuanClientProps) {
     setItems(foundItems);
   }
 
-  const supabase = createClient();
+  const supabaseRef = useRef<ReturnType<typeof createClient> | null>(null);
+  if (supabaseRef.current == null) {
+    supabaseRef.current = createClient();
+  }
 
   // Supabase Realtime subscription
   useEffect(() => {
+    const supabase = supabaseRef.current;
+    if (!supabase) return;
+
     const channel = supabase
       .channel("temuan-realtime")
       .on(
@@ -118,7 +124,7 @@ export default function TemuanClient({ foundItems }: TemuanClientProps) {
     return () => {
       supabase.removeChannel(channel);
     };
-  }, [supabase]);
+  }, []);
 
   // Handler Hapus Single Row
   const handleConfirmSingleDelete = async () => {

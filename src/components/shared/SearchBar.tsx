@@ -10,11 +10,13 @@ export default function SearchBar() {
 
   const urlQuery = searchParams.get("q") || "";
   const [query, setQuery] = useState(urlQuery);
+  const [prevUrlQuery, setPrevUrlQuery] = useState(urlQuery);
 
-  // Sync URL changes back to state (e.g. if the user clears the search or navigates)
-  useEffect(() => {
+  // Sync URL changes back to state (pola resmi React: adjusting state during render)
+  if (urlQuery !== prevUrlQuery) {
+    setPrevUrlQuery(urlQuery);
     setQuery(urlQuery);
-  }, [urlQuery]);
+  }
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);

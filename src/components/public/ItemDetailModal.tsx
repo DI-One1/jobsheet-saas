@@ -27,13 +27,20 @@ export default function ItemDetailModal({
   const { isSignedIn, user } = useUser();
   const [showLoginPrompt, setShowLoginPrompt] = useState(false);
 
+  const [prevItem, setPrevItem] = useState(item);
+  if (item !== prevItem) {
+    setPrevItem(item);
+    if (!item) {
+      setShowLoginPrompt(false);
+    }
+  }
+
   // Kunci scroll body saat modal terbuka
   useEffect(() => {
     if (item) {
       document.body.classList.add("modal-open");
     } else {
       document.body.classList.remove("modal-open");
-      setShowLoginPrompt(false);
     }
     return () => {
       document.body.classList.remove("modal-open");

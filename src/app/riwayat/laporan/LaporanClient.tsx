@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { useSearchParams } from "next/navigation";
 import { CheckCircle2, AlertCircle, X, FilePlus } from "lucide-react";
 import LaporanRow from "./LaporanRow";
@@ -63,10 +63,16 @@ export default function LaporanClient({ riwayatList }: LaporanClientProps) {
     setItems(riwayatList);
   }
 
-  const supabase = createClient();
+  const supabaseRef = useRef<ReturnType<typeof createClient> | null>(null);
+  if (supabaseRef.current == null) {
+    supabaseRef.current = createClient();
+  }
 
   // Supabase Realtime subscription
   useEffect(() => {
+    const supabase = supabaseRef.current;
+    if (!supabase) return;
+
     const channel = supabase
       .channel("laporan-realtime")
       .on(
@@ -118,7 +124,7 @@ export default function LaporanClient({ riwayatList }: LaporanClientProps) {
     return () => {
       supabase.removeChannel(channel);
     };
-  }, [supabase]);
+  }, []);
 
   // Handler Hapus Single Laporan
   const handleConfirmSingleDelete = async () => {

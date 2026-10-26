@@ -35,8 +35,25 @@ export default function Notification() {
   };
 
   useEffect(() => {
-    fetchNotifs();
-    const interval = setInterval(fetchNotifs, 30000); // Polling cadangan
+    let isSubscribed = true;
+
+    const loadData = async () => {
+      try {
+        const [count, notifs] = await Promise.all([
+          getUnreadCount(),
+          getNotifications(10),
+        ]);
+        if (isSubscribed) {
+          setUnreadCount(count);
+          setNotifications(notifs);
+        }
+      } catch (err) {
+        console.error("Gagal load notifikasi:", err);
+      }
+    };
+
+    void loadData();
+    const interval = setInterval(loadData, 60000); // Polling cadangan 60s
 
     const supabase = createClient();
     const channel = supabase
@@ -45,12 +62,13 @@ export default function Notification() {
         "postgres_changes",
         { event: "*", schema: "public", table: "notifications" },
         () => {
-          fetchNotifs();
+          void loadData();
         }
       )
       .subscribe();
 
     return () => {
+      isSubscribed = false;
       clearInterval(interval);
       supabase.removeChannel(channel);
     };
