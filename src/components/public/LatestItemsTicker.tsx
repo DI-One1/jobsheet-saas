@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef } from "react";
+import Image from "next/image";
 import { Sparkles, ArrowRight } from "lucide-react";
 import {
   PublicFoundItem,
@@ -107,13 +108,12 @@ export default function LatestItemsTicker({
                 className="highlight-card group relative flex-shrink-0 overflow-hidden rounded-xl text-left shadow-[0_2px_6px_rgba(0,0,0,0.03)] transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_12px_24px_rgba(13,59,46,0.14)] focus:outline-none cursor-pointer"
               >
                 {/* Background Image */}
-                <img
-                  src={imageUrl}
+                <Image
+                  src={imageUrl || DEFAULT_ITEM_IMAGE}
                   alt={title}
-                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-105 pointer-events-none"
-                  onError={(e) => {
-                    e.currentTarget.src = DEFAULT_ITEM_IMAGE;
-                  }}
+                  fill
+                  sizes="292px"
+                  className="object-cover transition-transform duration-500 ease-out group-hover:scale-105 pointer-events-none"
                 />
 
                 {/* Dark Gradient Overlay */}

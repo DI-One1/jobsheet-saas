@@ -124,10 +124,11 @@ export default function ConfirmAdminModal({
           </div>
 
           <div className="space-y-1.5">
-            <label className="block text-[11px] font-bold text-gray-700 uppercase tracking-wider">
+            <label htmlFor="confirmAdminInput" className="block text-[11px] font-bold text-gray-700 uppercase tracking-wider">
               Konfirmasi Teks
             </label>
             <input
+              id="confirmAdminInput"
               ref={inputRef}
               type="text"
               disabled={isLoading}

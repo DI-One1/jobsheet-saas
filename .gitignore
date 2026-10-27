@@ -43,11 +43,10 @@ next-env.d.ts
 # generated
 /src/generated/prisma
 
-# archived (orphan/duplicate files kept for reference)
-/src/_archive/
-
-.vercel
-.env*
-
 # clerk configuration (can include secrets)
 /.clerk/
+
+# local dumps and temporary exports
+semua_kode*.txt
+*.dump
+

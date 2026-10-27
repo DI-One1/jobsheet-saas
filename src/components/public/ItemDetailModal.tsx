@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { useUser, SignInButton } from "@clerk/nextjs";
 import { X, Lock, MapPin, Calendar, Tag, Palette, Info, MessageCircle, ArrowRight, ShieldCheck } from "lucide-react";
 import {
@@ -107,15 +108,14 @@ export default function ItemDetailModal({
         <div className="reference-modal-grid grid md:grid-cols-[1.05fr_1.3fr]">
           {/* Kolom Kiri: Gambar Barang */}
           <div className="relative min-h-[240px] md:min-h-[480px] bg-gray-100 overflow-hidden">
-            <img
-              src={imageUrl}
+            <Image
+              src={imageUrl || DEFAULT_ITEM_IMAGE}
               alt={title}
-              className="h-full w-full object-cover"
-              onError={(e) => {
-                e.currentTarget.src = DEFAULT_ITEM_IMAGE;
-              }}
+              fill
+              sizes="(max-width: 768px) 100vw, 50vw"
+              className="object-cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/15 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/15 to-transparent pointer-events-none" />
             <span className="absolute top-4 left-4 rounded-md bg-[#0a2622]/85 backdrop-blur-md px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-white border border-white/20">
               {item.jenis.name}
             </span>

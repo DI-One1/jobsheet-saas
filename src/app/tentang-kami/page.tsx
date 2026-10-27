@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -147,11 +148,13 @@ function Hero() {
   return (
     <section className="about-section relative overflow-hidden bg-cream">
       <div className="absolute inset-0">
-        <img
+        <Image
           src={HERO_IMAGE}
-          alt=""
-          aria-hidden="true"
-          className="h-full w-full object-cover"
+          alt="Latar belakang tentang kami"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover"
         />
 
         <div className="absolute inset-0 bg-cream/72" />
@@ -224,11 +227,12 @@ function Introduction() {
           </div>
 
           <div className="relative aspect-[4/5] overflow-hidden rounded-2xl bg-green-dark/5 lg:aspect-auto">
-            <img
+            <Image
               src={INTRO_IMAGE}
               alt="Aktivitas warga sekolah di lingkungan Institusi"
-              className="h-full w-full object-cover"
-              loading="lazy"
+              fill
+              sizes="(max-width: 1024px) 100vw, 50vw"
+              className="object-cover"
             />
           </div>
         </div>
@@ -338,12 +342,13 @@ function TeamCard({ member }: { member: TeamMember }) {
   return (
     <article className="group flex flex-col overflow-hidden bg-white ring-1 ring-green-dark/[0.08] transition-all duration-500 hover:-translate-y-1 hover:ring-green-dark/[0.14] hover:shadow-[0_24px_48px_-24px_rgba(15,40,28,0.2)]">
       {/* Photo */}
-      <div className="aspect-[4/3] overflow-hidden bg-green-dark/5">
-        <img
+      <div className="relative aspect-[4/3] overflow-hidden bg-green-dark/5">
+        <Image
           src={member.image}
           alt={`Foto ${member.name}`}
-          className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-          loading="lazy"
+          fill
+          sizes="(max-width: 768px) 100vw, 33vw"
+          className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
         />
       </div>
 

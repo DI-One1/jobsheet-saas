@@ -4,6 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { generateBusinessCode } from "@/lib/utils/codeGenerator";
+import { requirePetugasAuth } from "@/lib/auth-guard";
 import { processNewFoundItemMatch } from "./matching";
 import { checkAndExpireItems } from "./item-lifecycle";
 
@@ -37,6 +38,8 @@ export async function getBusinessCodePreview(params: {
  * checkAndExpireItems() is called here as this is a mutative write operation.
  */
 export async function createFoundItem(formData: FormData) {
+  await requirePetugasAuth();
+
   const finderName = formData.get("finderName") as string;
   const finderIdCard = formData.get("finderIdCard") as string;
   const finderContact = formData.get("finderContact") as string;
@@ -56,6 +59,7 @@ export async function createFoundItem(formData: FormData) {
 
   // Generate kode unik
   const businessCode = await generateBusinessCode({ jenisId, warnaId, merekId, lokasiId });
+
 
   const newItem = await prisma.foundItem.create({
     data: {
@@ -92,6 +96,8 @@ export async function createFoundItem(formData: FormData) {
  * Membersihkan notifikasi dan klaim terkait secara aman dalam transaksi.
  */
 export async function deleteFoundItem(id: string) {
+  await requirePetugasAuth();
+
   try {
     await prisma.$transaction([
       prisma.notification.deleteMany({
@@ -117,6 +123,8 @@ export async function deleteFoundItem(id: string) {
  * Hapus semua FoundItem yang belum diklaim (status FOUND atau EXPIRED).
  */
 export async function deleteAllUnclaimedFoundItems() {
+  await requirePetugasAuth();
+
   try {
     await prisma.foundItem.deleteMany({
       where: { status: { in: ["FOUND", "EXPIRED"] } },
@@ -134,6 +142,8 @@ export async function deleteAllUnclaimedFoundItems() {
  * Hapus seluruh riwayat barang temuan (termasuk referensi claim & notifikasi terkait).
  */
 export async function deleteAllFoundItems() {
+  await requirePetugasAuth();
+
   try {
     await prisma.$transaction([
       prisma.notification.deleteMany({

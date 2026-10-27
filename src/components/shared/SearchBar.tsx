@@ -39,17 +39,19 @@ export default function SearchBar() {
   };
 
   return (
-    <form onSubmit={handleSearchSubmit} className="w-full relative">
+    <form onSubmit={handleSearchSubmit} className="w-full relative" role="search">
       <input
         type="text"
         value={query}
         onChange={handleSearchChange}
         placeholder="Cari data di halaman ini..."
+        aria-label="Cari data di halaman ini"
         className="w-full bg-white/10 border border-white/20 rounded-full py-2.5 pl-5 pr-12 text-white placeholder:text-white/50 text-sm focus:outline-none focus:bg-white/20 focus:border-green-accent transition-all"
       />
       <button
         type="submit"
         className="absolute right-4 top-1/2 -translate-y-1/2 text-white/60 hover:text-white transition-colors cursor-pointer"
+        aria-label="Cari"
         title="Cari"
       >
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">

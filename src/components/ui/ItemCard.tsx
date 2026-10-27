@@ -1,4 +1,5 @@
 import React from "react";
+import NextImage from "next/image";
 import { MapPin, Calendar, CheckCircle2 } from "lucide-react";
 import {
   PublicFoundItem,
@@ -22,7 +23,7 @@ export function ItemCard({ item, onClick, className = "" }: ItemCardProps) {
   const handleMouseEnter = () => {
     // Preload item image for instant modal rendering
     if (typeof window !== "undefined" && imageUrl) {
-      const img = new Image();
+      const img = new window.Image();
       img.src = imageUrl;
     }
   };
@@ -36,15 +37,14 @@ export function ItemCard({ item, onClick, className = "" }: ItemCardProps) {
     >
       {/* Image Banner */}
       <div className="relative h-[155px] w-full overflow-hidden bg-[#eef4f1]">
-        <img
-          src={imageUrl}
+        <NextImage
+          src={imageUrl || DEFAULT_ITEM_IMAGE}
           alt={title}
-          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-108"
-          loading="lazy"
-          onError={(e) => {
-            e.currentTarget.src = DEFAULT_ITEM_IMAGE;
-          }}
+          fill
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+          className="object-cover transition-transform duration-500 group-hover:scale-108"
         />
+
 
         {/* Gradient Overlay for Contrast */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/20 pointer-events-none" />

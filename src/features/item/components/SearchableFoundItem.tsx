@@ -105,12 +105,13 @@ export default function SearchableFoundItem({ currentFormState, onSelect }: Sear
 
   return (
     <div className="relative w-full" ref={dropdownRef}>
-      <label className="block text-sm font-semibold text-gray-700 mb-1">
+      <label htmlFor="searchFoundItemInput" className="block text-sm font-semibold text-gray-700 mb-1">
         Cari di Riwayat Barang Temuan (Opsional)
       </label>
 
       {/* Input Pencarian */}
       <input
+        id="searchFoundItemInput"
         type="text"
         className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-accent focus:border-transparent outline-none transition-all text-sm"
         placeholder="Ketik kode unik, merek, atau jenis barang..."

@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { FormEvent, useState, useEffect, useRef, useMemo } from "react";
 import { useClerk, useUser, SignInButton } from "@clerk/nextjs";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -215,9 +216,11 @@ export default function PublicNavbar({
                   aria-label="Menu akun pengguna"
                 >
                   {user?.imageUrl ? (
-                    <img
+                    <Image
                       src={user.imageUrl}
                       alt={user.fullName || "Avatar"}
+                      width={28}
+                      height={28}
                       className="w-7 h-7 rounded-full object-cover ring-1 ring-emerald-500/20"
                     />
                   ) : (
@@ -245,9 +248,11 @@ export default function PublicNavbar({
                     {/* Header: Nama & Email */}
                     <div className="flex items-center gap-3 p-2.5 rounded-lg bg-[#f6faf8] mb-1.5 border border-[#e8f2ee]">
                       {user?.imageUrl ? (
-                        <img
+                        <Image
                           src={user.imageUrl}
                           alt={user.fullName || "Avatar"}
+                          width={36}
+                          height={36}
                           className="w-9 h-9 rounded-full object-cover ring-1 ring-emerald-600/20"
                         />
                       ) : (
@@ -466,9 +471,11 @@ export default function PublicNavbar({
                 aria-label="Profil dan menu"
               >
                 {user?.imageUrl ? (
-                  <img
+                  <Image
                     src={user.imageUrl}
                     alt={user.fullName || "Avatar"}
+                    width={28}
+                    height={28}
                     className="w-7 h-7 rounded-full object-cover ring-1 ring-emerald-500/20"
                   />
                 ) : (
@@ -552,9 +559,11 @@ export default function PublicNavbar({
               <div className="mb-3 p-3 rounded-xl bg-[#f6faf8] border border-[#e2ede8]">
                 <div className="flex items-center gap-3 mb-2.5">
                   {user?.imageUrl ? (
-                    <img
+                    <Image
                       src={user.imageUrl}
                       alt={user.fullName || "Avatar"}
+                      width={40}
+                      height={40}
                       className="w-10 h-10 rounded-full object-cover ring-2 ring-emerald-500/30"
                     />
                   ) : (

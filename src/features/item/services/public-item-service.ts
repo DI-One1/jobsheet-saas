@@ -1,11 +1,12 @@
 import { prisma } from "@/lib/prisma";
+import { getMasterData } from "@/lib/master-data";
 import type { MasterFilterData, PublicFoundItem } from "../utils/public-item-utils";
 
 export async function getPublicData(): Promise<{
   items: PublicFoundItem[];
   masterData: MasterFilterData;
 }> {
-  const [rawItems, categories, colors, brands, locations] = await Promise.all([
+  const [rawItems, masterData] = await Promise.all([
     prisma.foundItem.findMany({
       where: { status: "FOUND" },
       select: {
@@ -21,14 +22,15 @@ export async function getPublicData(): Promise<{
       orderBy: { createdAt: "desc" },
       take: 100,
     }),
-    prisma.categoryItem.findMany({ select: { id: true, name: true }, orderBy: { name: "asc" } }),
-    prisma.colorItem.findMany({ select: { id: true, name: true }, orderBy: { name: "asc" } }),
-    prisma.brandItem.findMany({ select: { id: true, name: true }, orderBy: { name: "asc" } }),
-    prisma.locationItem.findMany({ select: { id: true, name: true }, orderBy: { name: "asc" } }),
+    getMasterData(),
   ]);
 
   return {
-    items: rawItems.map((item) => ({ ...item, createdAt: item.createdAt.toISOString() })),
-    masterData: { categories, colors, brands, locations },
+    items: rawItems.map((item) => ({
+      ...item,
+      createdAt: item.createdAt.toISOString(),
+    })),
+    masterData,
   };
 }
+

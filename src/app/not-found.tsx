@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import Link from "next/link";
-import { Search, Home, ArrowLeft } from "lucide-react";
+import { Search, Home } from "lucide-react";
 import { useChromeVisibility } from "@/components/shared/ChromeVisibility";
 
 export default function NotFound() {

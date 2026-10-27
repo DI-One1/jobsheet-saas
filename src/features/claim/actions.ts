@@ -3,6 +3,7 @@
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { requirePetugasAuth } from "@/lib/auth-guard";
 import { checkAndExpireItems } from "@/features/item/actions/item-lifecycle";
 import { resolveMatchNotificationsByFoundItemId } from "@/features/item/actions/notification";
 
@@ -25,12 +26,15 @@ export async function verifyItemExists(businessCode: string) {
 
 // 2. Fungsi Eksekusi Klaim / Pengambilan Barang
 export async function processClaimItem(formData: FormData) {
+  await requirePetugasAuth();
+
   const businessCode = formData.get("businessCode") as string;
   const claimantName = formData.get("claimantName") as string;
   const claimantIdCard = formData.get("claimantIdCard") as string; // NIS / NIP / ID
   const claimantContact = formData.get("claimantContact") as string;
   const wargaId = formData.get("wargaId") as string;
   const lostReportId = formData.get("lostReportId") as string;
+
 
   if (!businessCode || !claimantName || !claimantIdCard || !claimantContact) {
     throw new Error("Semua kolom data pengambil dan kode barang wajib diisi!");
@@ -164,6 +168,8 @@ export async function getMatchingFoundItemsForReport(reportId: string) {
  * dan status laporan kehilangan terkait (jika ada) dikembalikan ke DICARI.
  */
 export async function deleteClaimTransaction(id: string) {
+  await requirePetugasAuth();
+
   try {
     const claim = await prisma.claimTransaction.findUnique({
       where: { id },
@@ -207,6 +213,8 @@ export async function deleteClaimTransaction(id: string) {
  * Status barang temuan terkait yang sebelumnya CLAIMED akan dikembalikan ke FOUND.
  */
 export async function deleteAllClaimTransactions() {
+  await requirePetugasAuth();
+
   try {
     await prisma.$transaction([
       prisma.foundItem.updateMany({

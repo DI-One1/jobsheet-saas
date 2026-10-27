@@ -4,7 +4,7 @@ import {
   createRouteMatcher,
 } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
-import { isPetugasEmail, PETUGAS_EMAILS } from "@/lib/petugas-access";
+import { isPetugasEmail } from "@/lib/petugas-access";
 
 const isPublicRoute = createRouteMatcher([
   "/",
@@ -73,13 +73,13 @@ const handler = clerkMiddleware(async (auth, request) => {
   // ==========================================
   const isAllowed = emails.some(isPetugasEmail);
 
-  console.log("[LACAK AUTH]", {
-    userId,
-    emails,
-    allowedEmails: PETUGAS_EMAILS,
-    isAllowed,
-    path: request.nextUrl.pathname,
-  });
+  if (process.env.NODE_ENV === "development") {
+    console.log("[LACAK AUTH]", {
+      userId,
+      isAllowed,
+      path: request.nextUrl.pathname,
+    });
+  }
 
   // ==========================================
   // EMAIL TIDAK DIIZINKAN

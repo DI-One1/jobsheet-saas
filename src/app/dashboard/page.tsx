@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { PrefetchLink } from "@/components/ui/PrefetchLink";
 import { MODULE_CARD_IMAGES } from "@/constants/assets";
 import { PackagePlus, PackageCheck, FileSpreadsheet, ArrowRight, Sparkles } from "lucide-react";
@@ -23,13 +24,15 @@ export default function HomePage() {
           {/* Modul 1: Taruh Barang */}
           <div className="group bg-white rounded-2xl shadow-xs border border-[#e2ece8] overflow-hidden flex flex-col transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl hover:border-[#0d7565]/40">
             <div className="relative h-48 w-full overflow-hidden bg-[#eef5f2]">
-              <img 
+              <Image 
                 src={MODULE_CARD_IMAGES.taruhBarang} 
                 alt="Taruh Barang" 
-                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-108"
+                fill
+                sizes="(max-width: 768px) 100vw, 33vw"
+                className="object-cover transition-transform duration-500 group-hover:scale-108"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#061814]/85 via-black/20 to-transparent" />
-              <div className="absolute top-4 left-4 h-10 w-10 rounded-xl bg-white/95 backdrop-blur-md flex items-center justify-center text-[#0d7565] shadow-xs">
+              <div className="absolute inset-0 bg-gradient-to-t from-[#061814]/85 via-black/20 to-transparent pointer-events-none" />
+              <div className="absolute top-4 left-4 h-10 w-10 rounded-xl bg-white/95 backdrop-blur-md flex items-center justify-center text-[#0d7565] shadow-xs z-10">
                 <PackagePlus className="h-5 w-5" />
               </div>
             </div>
@@ -54,13 +57,15 @@ export default function HomePage() {
           {/* Modul 2: Ambil Barang */}
           <div className="group bg-white rounded-2xl shadow-xs border border-[#e2ece8] overflow-hidden flex flex-col transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl hover:border-[#0d7565]/40">
             <div className="relative h-48 w-full overflow-hidden bg-[#eef5f2]">
-              <img 
+              <Image 
                 src={MODULE_CARD_IMAGES.ambilBarang} 
                 alt="Ambil Barang" 
-                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-108"
+                fill
+                sizes="(max-width: 768px) 100vw, 33vw"
+                className="object-cover transition-transform duration-500 group-hover:scale-108"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#061814]/85 via-black/20 to-transparent" />
-              <div className="absolute top-4 left-4 h-10 w-10 rounded-xl bg-white/95 backdrop-blur-md flex items-center justify-center text-[#0d7565] shadow-xs">
+              <div className="absolute inset-0 bg-gradient-to-t from-[#061814]/85 via-black/20 to-transparent pointer-events-none" />
+              <div className="absolute top-4 left-4 h-10 w-10 rounded-xl bg-white/95 backdrop-blur-md flex items-center justify-center text-[#0d7565] shadow-xs z-10">
                 <PackageCheck className="h-5 w-5" />
               </div>
             </div>
@@ -85,13 +90,15 @@ export default function HomePage() {
           {/* Modul 3: Laporan Kehilangan */}
           <div className="group bg-white rounded-2xl shadow-xs border border-[#e2ece8] overflow-hidden flex flex-col transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl hover:border-[#0d7565]/40">
             <div className="relative h-48 w-full overflow-hidden bg-[#eef5f2]">
-              <img 
+              <Image 
                 src={MODULE_CARD_IMAGES.laporKehilangan} 
                 alt="Laporan Kehilangan" 
-                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-108"
+                fill
+                sizes="(max-width: 768px) 100vw, 33vw"
+                className="object-cover transition-transform duration-500 group-hover:scale-108"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#061814]/85 via-black/20 to-transparent" />
-              <div className="absolute top-4 left-4 h-10 w-10 rounded-xl bg-white/95 backdrop-blur-md flex items-center justify-center text-[#0d7565] shadow-xs">
+              <div className="absolute inset-0 bg-gradient-to-t from-[#061814]/85 via-black/20 to-transparent pointer-events-none" />
+              <div className="absolute top-4 left-4 h-10 w-10 rounded-xl bg-white/95 backdrop-blur-md flex items-center justify-center text-[#0d7565] shadow-xs z-10">
                 <FileSpreadsheet className="h-5 w-5" />
               </div>
             </div>

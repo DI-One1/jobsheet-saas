@@ -8,11 +8,13 @@ export async function generateBusinessCode(params: {
 }): Promise<string> {
   const { jenisId, warnaId, merekId, lokasiId } = params;
 
-  // 1. Ambil data master dari database
-  const jenis = await prisma.categoryItem.findUnique({ where: { id: jenisId } });
-  const warna = await prisma.colorItem.findUnique({ where: { id: warnaId } });
-  const merek = await prisma.brandItem.findUnique({ where: { id: merekId } });
-  const lokasi = await prisma.locationItem.findUnique({ where: { id: lokasiId } });
+  // 1. Ambil data master dari database secara concurrent (1 round-trip)
+  const [jenis, warna, merek, lokasi] = await Promise.all([
+    prisma.categoryItem.findUnique({ where: { id: jenisId } }),
+    prisma.colorItem.findUnique({ where: { id: warnaId } }),
+    prisma.brandItem.findUnique({ where: { id: merekId } }),
+    prisma.locationItem.findUnique({ where: { id: lokasiId } }),
+  ]);
 
   // 2. Ambil kode master data (atau nilai default jika kosong)
   const codeJenis = jenis?.code || "X";

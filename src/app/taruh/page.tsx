@@ -1,21 +1,17 @@
-// app/taruh/page.tsx (Atau sesuaikan dengan letak page_7.tsx kamu)
 export const dynamic = "force-dynamic";
-import { prisma } from "@/lib/prisma";
-import TaruhBarangForm from "./TaruhBarangForm"; // Import Client Component yang kita buat di bawah
+
+import { getMasterData } from "@/lib/master-data";
+import TaruhBarangForm from "./TaruhBarangForm";
 
 export default async function TaruhBarangPage() {
-  // Mengambil master data secara dinamis dari database PostgreSQL
-  const categories = await prisma.categoryItem.findMany();
-  const colors = await prisma.colorItem.findMany();
-  const brands = await prisma.brandItem.findMany();
-  const locations = await prisma.locationItem.findMany();
+  const { categories, colors, brands, locations } = await getMasterData();
 
   return (
-    <TaruhBarangForm 
-      categories={categories} 
-      colors={colors} 
-      brands={brands} 
-      locations={locations} 
+    <TaruhBarangForm
+      categories={categories}
+      colors={colors}
+      brands={brands}
+      locations={locations}
     />
   );
-}
+}

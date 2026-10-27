@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState, useEffect } from "react";
+import Image from "next/image";
 import ItemDetailModal from "./ItemDetailModal";
 import type { MasterFilterData, PublicFoundItem } from "@/features/item/utils/public-item-utils";
 import {
@@ -229,14 +230,12 @@ export default function PublicSearchPortal({
                       className="card group flex cursor-pointer flex-col overflow-hidden rounded-xl border border-[#e2ece8] bg-white text-left shadow-[0_2px_5px_rgba(0,0,0,0.03)] transition-all duration-200 hover:-translate-y-1 hover:border-[#158a76]/50 hover:shadow-[0_12px_24px_rgba(13,59,46,0.1)]"
                     >
                       <div className="card-image relative h-[155px] w-full overflow-hidden bg-[#eef4f1]">
-                        <img
-                          src={imageUrl}
+                        <Image
+                          src={imageUrl || DEFAULT_ITEM_IMAGE}
                           alt={title}
-                          className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-                          loading="lazy"
-                          onError={(e) => {
-                            e.currentTarget.src = DEFAULT_ITEM_IMAGE;
-                          }}
+                          fill
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                          className="object-cover transition-transform duration-300 group-hover:scale-105"
                         />
 
                         {/* Gradient bottom overlay for contrast */}

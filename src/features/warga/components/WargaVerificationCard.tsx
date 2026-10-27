@@ -67,10 +67,11 @@ export default function WargaVerificationCard({
 
       {!verified ? (
         <div className="space-y-3 relative" ref={dropdownRef}>
-          <label className="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-1">
+          <label htmlFor="wargaSearchInput" className="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-1">
             Cari & Pilih Data Warga
           </label>
           <input
+            id="wargaSearchInput"
             type="text"
             className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-green-accent bg-white transition-all"
             placeholder="Ketik NIS, NIP, atau Nama Warga..."

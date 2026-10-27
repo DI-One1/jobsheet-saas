@@ -3,6 +3,7 @@
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { requirePetugasAuth } from "@/lib/auth-guard";
 import { checkAndExpireItems } from "./item-lifecycle";
 import { processNewLostReportMatch } from "./matching";
 import { resolveMatchNotificationsByFoundItemId } from "./notification";
@@ -24,6 +25,8 @@ import { resolveMatchNotificationsByFoundItemId } from "./notification";
  * checkAndExpireItems() is called here as this is a mutative write operation.
  */
 export async function createLostReport(formData: FormData) {
+  await requirePetugasAuth();
+
   const reporterName = formData.get("reporterName") as string;
   const reporterIdCard = formData.get("reporterIdCard") as string;
   const reporterContact = formData.get("reporterContact") as string;
@@ -145,6 +148,8 @@ export async function createLostReport(formData: FormData) {
  * Membersihkan referensi notifikasi dan transaksi klaim secara aman dalam transaksi.
  */
 export async function deleteLostReport(id: string) {
+  await requirePetugasAuth();
+
   try {
     await prisma.$transaction([
       prisma.notification.deleteMany({
@@ -166,6 +171,8 @@ export async function deleteLostReport(id: string) {
 }
 
 export async function deleteAllLostReports() {
+  await requirePetugasAuth();
+
   try {
     await prisma.$transaction([
       prisma.notification.deleteMany({

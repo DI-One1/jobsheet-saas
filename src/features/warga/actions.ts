@@ -3,6 +3,7 @@
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import { generateNextNIS } from "@/lib/utils/nisGenerator";
+import { requirePetugasAuth } from "@/lib/auth-guard";
 import { WargaActivityItem } from "./types";
 
 /**
@@ -10,6 +11,8 @@ import { WargaActivityItem } from "./types";
  * Mengembalikan objek warga yang berhasil dibuat untuk sinkronisasi optimistic UI.
  */
 export async function tambahWarga(formData: FormData) {
+  await requirePetugasAuth();
+
   try {
     const newId = await generateNextNIS();
 
@@ -54,6 +57,8 @@ export async function tambahWarga(formData: FormData) {
  * Fungsi Action untuk menghapus satu warga berdasarkan ID (NIS).
  */
 export async function hapusWarga(id: string) {
+  await requirePetugasAuth();
+
   try {
     await prisma.warga.delete({
       where: { id },
@@ -70,6 +75,8 @@ export async function hapusWarga(id: string) {
  * Fungsi Action untuk menghapus seluruh data warga.
  */
 export async function hapusSemuaWarga() {
+  await requirePetugasAuth();
+
   try {
     await prisma.$transaction([
       prisma.notification.updateMany({

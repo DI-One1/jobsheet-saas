@@ -2,6 +2,7 @@
 
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
+import { requirePetugasAuth } from "@/lib/auth-guard";
 
 // Tipe untuk notifikasi yang sudah diserialisasi (createdAt menjadi string)
 export type SerializedNotification = {
@@ -24,10 +25,12 @@ export type SerializedNotification = {
  */
 export async function getNotifications(limit = 20): Promise<SerializedNotification[]> {
   try {
+    await requirePetugasAuth();
+    const safeLimit = Math.min(Math.max(1, Number(limit) || 20), 100);
     const notifications = await prisma.notification.findMany({
       where: { isResolved: false },
       orderBy: { createdAt: "desc" },
-      take: limit,
+      take: safeLimit,
     });
     // Konversi Date ke string ISO
     return notifications.map((n) => ({
@@ -45,6 +48,7 @@ export async function getNotifications(limit = 20): Promise<SerializedNotificati
  */
 export async function markAllAsRead() {
   try {
+    await requirePetugasAuth();
     await prisma.notification.updateMany({
       data: { isRead: true },
     });
@@ -61,6 +65,7 @@ export async function markAllAsRead() {
  */
 export async function getUnreadCount() {
   try {
+    await requirePetugasAuth();
     const count = await prisma.notification.count({
       where: { isRead: false, isResolved: false },
     });
@@ -75,7 +80,12 @@ export async function getUnreadCount() {
  * Tandai satu notifikasi sebagai sudah dibaca
  */
 export async function markOneAsRead(notificationId: string) {
+  if (!notificationId || typeof notificationId !== "string") {
+    return { success: false, error: "ID Notifikasi tidak valid" };
+  }
+
   try {
+    await requirePetugasAuth();
     await prisma.notification.update({
       where: { id: notificationId },
       data: { isRead: true },
@@ -93,9 +103,10 @@ export async function markOneAsRead(notificationId: string) {
  * Digunakan untuk menonaktifkan notifikasi setelah barang di-claim.
  */
 export async function resolveMatchNotificationsByFoundItemId(foundItemId: string) {
-  if (!foundItemId) return { success: false };
+  if (!foundItemId || typeof foundItemId !== "string") return { success: false };
 
   try {
+    await requirePetugasAuth();
     const result = await prisma.notification.updateMany({
       where: {
         type: "match",
@@ -118,3 +129,4 @@ export async function resolveMatchNotificationsByFoundItemId(foundItemId: string
     return { success: false, error };
   }
 }
+

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useCallback, useEffect } from "react";
+import Image from "next/image";
 import {
   PublicFoundItem,
   getItemTitle,
@@ -255,12 +256,13 @@ export default function CarouselFoundItems({ items }: Props) {
                       className="relative overflow-hidden bg-gray-100"
                       style={{ aspectRatio: "3 / 4" }}
                     >
-                      <img
+                      <Image
                         src={getCategoryRepresentativeImage(item.jenis.name)}
                         alt={`${item.jenis.name} — ${item.merek.name}`}
-                        className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+                        fill
+                        sizes="(max-width: 768px) 80vw, 380px"
+                        className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
                         draggable={false}
-                        loading="lazy"
                       />
                       {/* subtle gradient */}
                       <div className="absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-black/35 to-transparent pointer-events-none" />
@@ -358,10 +360,12 @@ export default function CarouselFoundItems({ items }: Props) {
                 className="relative bg-gray-100"
                 style={{ aspectRatio: "3 / 4" }}
               >
-                <img
+                <Image
                   src={getCategoryRepresentativeImage(detail.jenis.name)}
                   alt={detail.jenis.name}
-                  className="w-full h-full object-cover"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  className="object-cover"
                 />
                 <span className="absolute top-5 left-5 text-[10px] font-semibold uppercase tracking-[0.15em] text-white bg-black/25 backdrop-blur-[2px] px-3 py-1.5">
                   {detail.jenis.name}

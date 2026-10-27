@@ -1,14 +1,12 @@
 export const dynamic = "force-dynamic";
 
-import { prisma } from "@/lib/prisma";
+import { getMasterData } from "@/lib/master-data";
 import Link from "next/link";
 import LaporForm from "./LaporForm";
 
 export default async function LaporKehilanganPage() {
-  const categories = await prisma.categoryItem.findMany();
-  const colors = await prisma.colorItem.findMany();
-  const brands = await prisma.brandItem.findMany();
-  const locations = await prisma.locationItem.findMany();
+  const { categories, colors, brands, locations } = await getMasterData();
+
 
   return (
     <div className="container mx-auto px-4 md:px-8 py-8 max-w-4xl flex-grow">
