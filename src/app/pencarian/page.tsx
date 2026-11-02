@@ -1,7 +1,8 @@
 import { getPublicData } from "@/features/item/services/public-item-service";
 import PublicSearchPortal from "@/components/public/PublicSearchPortal";
 
-export const dynamic = "force-dynamic";
+// Pencarian Publik LACAK
+// Mengakses searchParams secara dinamis, sementara data katalog di-cache via unstable_cache
 
 export default async function SearchPage({
   searchParams,

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
@@ -70,10 +70,10 @@ export default function ItemDetailModal({
   // Pesan WhatsApp otomatis terstruktur
   const waMessage = encodeURIComponent(
     `Halo Admin LACAK, saya *${userName}* (${userEmail}) ingin konfirmasi pengambilan barang temuan:\n\n` +
-      `📦 *${title}*\n` +
-      `🏷️ Kategori: ${item.jenis.name}\n` +
-      `🎨 Warna: ${item.warna.name}\n` +
-      `📍 Lokasi Ditemukan: ${item.lokasi.name}\n\n` +
+      `ðŸ“¦ *${title}*\n` +
+      `ðŸ·ï¸ Kategori: ${item.jenis.name}\n` +
+      `ðŸŽ¨ Warna: ${item.warna.name}\n` +
+      `ðŸ“ Lokasi Ditemukan: ${item.lokasi.name}\n\n` +
       `Mohon petunjuk untuk proses verifikasi dan pengambilan barang. Terima kasih!`
   );
 
@@ -137,7 +137,7 @@ export default function ItemDetailModal({
             </div>
             <h2
               id="modalItemName"
-              className="font-serif text-2xl sm:text-3xl font-bold text-[#102020] leading-tight mb-5"
+              className="font-sans text-2xl sm:text-3xl font-extrabold text-[#102824] leading-tight mb-5 tracking-tight"
             >
               {title}
             </h2>
@@ -215,7 +215,7 @@ export default function ItemDetailModal({
                   href={waUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full flex items-center justify-center gap-2.5 rounded-xl bg-[#0d594f] px-5 py-3.5 text-xs font-semibold text-white transition-all duration-200 hover:bg-[#09473f] hover:shadow-lg shadow-[#0d594f]/20 active:scale-[0.99] cursor-pointer"
+                  className="w-full flex items-center justify-center gap-2.5 rounded-xl bg-[#0d7565] px-5 py-3.5 text-xs sm:text-sm font-bold text-white transition-all duration-200 hover:bg-[#0a5d50] hover:shadow-md shadow-xs active:scale-[0.98] cursor-pointer"
                 >
                   <MessageCircle className="h-4 w-4 text-emerald-300" />
                   <span>Chat Admin untuk Pengambilan</span>
@@ -226,7 +226,7 @@ export default function ItemDetailModal({
                   <button
                     type="button"
                     onClick={() => setShowLoginPrompt(true)}
-                    className="w-full flex items-center justify-center gap-2.5 rounded-xl bg-[#0d594f] px-5 py-3.5 text-xs font-semibold text-white transition-all duration-200 hover:bg-[#09473f] hover:shadow-lg shadow-[#0d594f]/20 active:scale-[0.99] cursor-pointer"
+                    className="w-full flex items-center justify-center gap-2.5 rounded-xl bg-[#0d7565] px-5 py-3.5 text-xs sm:text-sm font-bold text-white transition-all duration-200 hover:bg-[#0a5d50] hover:shadow-md shadow-xs active:scale-[0.98] cursor-pointer"
                   >
                     <MessageCircle className="h-4 w-4 text-emerald-300" />
                     <span>Chat Admin untuk Pengambilan</span>

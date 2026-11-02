@@ -1,17 +1,29 @@
-@import "tailwindcss";
+﻿@import "tailwindcss";
 
 @theme {
+  --font-sans: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-poppins: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  
+  /* ── Core Design Tokens: Brand Greens ── */
   --color-green-dark: #0d3b2e;
   --color-green-mid: #1a5c44;
   --color-green-accent: #3dbd84;
+  
+  /* ── Interactive & Neutral Tokens ── */
+  --color-primary: #0d7565;
+  --color-primary-hover: #0a5d50;
   --color-cream: #faf9f6;
-  --font-poppins: 'Poppins', sans-serif;
+  --color-app-bg: #fafbfb;
+  --color-surface: #ffffff;
+  --color-border-subtle: #e2ece8;
+  --color-text-main: #102824;
+  --color-text-muted: #526b65;
 }
 
 body {
-  background-color: var(--color-cream);
-  color: var(--color-green-dark);
-  font-family: var(--font-poppins);
+  background-color: var(--color-app-bg, #fafbfb);
+  color: var(--color-text-main, #102824);
+  font-family: var(--font-sans);
 }
 
 /* ── Tentang Kami: Editorial Animations ── */
@@ -51,7 +63,7 @@ body {
   animation-delay: 0.40s;
 }
 
-/* ── Tentang Kami: Step number styling ── */
+/* â”€â”€ Tentang Kami: Step number styling â”€â”€ */
 .about-step-number {
   font-size: 3.5rem;
   font-weight: 800;
@@ -61,7 +73,7 @@ body {
   letter-spacing: -0.04em;
 }
 
-/* ── Tentang Kami: Team card hover ── */
+/* â”€â”€ Tentang Kami: Team card hover â”€â”€ */
 .about-team-card {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -71,7 +83,7 @@ body {
   box-shadow: 0 12px 32px rgba(13, 59, 46, 0.08);
 }
 
-/* ── Custom Scrollbar ── */
+/* â”€â”€ Custom Scrollbar â”€â”€ */
 .custom-scrollbar::-webkit-scrollbar {
   width: 5px;
 }
@@ -90,7 +102,7 @@ body {
   background: #94a3b8;
 }
 
-/* ── Modal enter animation ── */
+/* â”€â”€ Modal enter animation â”€â”€ */
 @keyframes modalFadeIn {
   from {
     opacity: 0;
@@ -111,7 +123,7 @@ body.modal-open {
   overflow: hidden;
 }
 
-/* ── Marquee Ticker Animasi Temuan Terbaru ── */
+/* â”€â”€ Marquee Ticker Animasi Temuan Terbaru â”€â”€ */
 @keyframes latestSlide {
   0% {
     transform: translateX(-50%);
@@ -150,7 +162,7 @@ body.modal-open {
   scrollbar-width: none;
 }
 
-/* ── Subtle Aurora / Ambient Glow for Active Navigation Tabs (Refined & Airy) ── */
+/* â”€â”€ Subtle Aurora / Ambient Glow for Active Navigation Tabs (Refined & Airy) â”€â”€ */
 .nav-tab-aurora-active {
   position: relative;
   color: #ffffff !important;
@@ -295,7 +307,7 @@ body.modal-open {
   border: 0;
 }
 
-/* ── Filter Toggle Button ── */
+/* â”€â”€ Filter Toggle Button â”€â”€ */
 .public-filter-toggle {
   display: inline-flex;
   align-items: center;
@@ -353,7 +365,7 @@ body.modal-open {
   background: rgba(255, 255, 255, 0.25);
 }
 
-/* ── Filter Slide Animation ── */
+/* â”€â”€ Filter Slide Animation â”€â”€ */
 @keyframes filterSlideDown {
   from {
     opacity: 0;
@@ -373,7 +385,7 @@ body.modal-open {
   overflow: hidden;
 }
 
-/* ── Dropdown FadeIn ── */
+/* â”€â”€ Dropdown FadeIn â”€â”€ */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -417,14 +429,14 @@ body.modal-open {
 
 .public-filter select {
   width: 100%;
-  height: 32px;
-  padding: 0 10px;
-  border: 1px solid #dbe7e3;
-  border-radius: 7px;
+  height: 38px;
+  padding: 0 12px;
+  border: 1px solid #d2e5df;
+  border-radius: 9px;
   outline: none;
   background: #fff;
   color: #142f2b;
-  font-size: 11.5px;
+  font-size: 12.5px;
   font-weight: 500;
   transition: border-color 160ms ease, box-shadow 160ms ease;
   cursor: pointer;
@@ -444,10 +456,10 @@ body.modal-open {
   align-items: center;
   justify-content: center;
   gap: 6px;
-  height: 32px;
-  padding: 0 12px;
-  border: 1px solid #dce8e4;
-  border-radius: 7px;
+  height: 38px;
+  padding: 0 14px;
+  border: 1px solid #d2e5df;
+  border-radius: 9px;
   background: #fff;
   color: #4b6b65;
   font-size: 11px;
@@ -553,50 +565,6 @@ body.modal-open {
 
 .public-search-page {
   background: #f7fbfa;
-}
-
-.public-search-page .search-hero {
-  position: relative;
-  min-height: 275px;
-  overflow: hidden;
-  background-image: url("https://images.unsplash.com/photo-1494438639946-1ebd1d20bf85?auto=format&fit=crop&w=1800&q=85");
-  background-position: center 52%;
-  background-size: cover;
-}
-
-.public-search-page .search-hero-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(90deg, rgba(5, 48, 44, .94), rgba(7, 79, 69, .68) 48%, rgba(7, 79, 69, .12));
-}
-
-.public-search-page .search-hero-content {
-  position: relative;
-  max-width: 1230px;
-  margin: 0 auto;
-  padding: 58px 5px;
-  color: #fff;
-}
-
-.public-search-page .search-hero-content .eyebrow {
-  color: #a7dfd1;
-}
-
-.public-search-page .search-hero h1 {
-  margin: 0 0 13px;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(32px, 4vw, 52px);
-  line-height: 1.05;
-}
-
-.public-search-page .search-hero h1 span {
-  color: #a8e5d7;
-}
-
-.public-search-page .search-hero p {
-  margin: 0;
-  color: #e2f4ef;
-  font-size: 13px;
 }
 
 .public-search-page .search-results {
@@ -834,9 +802,7 @@ body.modal-open {
     padding: 28px 24px 24px;
   }
 
-  .public-search-page .search-hero-content {
-    padding: 42px 18px;
-  }
+  
 
   .public-search-page .date-range-filter {
     position: static;

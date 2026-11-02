@@ -8,9 +8,12 @@ import RouteFooter from "@/components/shared/RouteFooter";
 import { ChromeVisibilityProvider } from "@/components/shared/ChromeVisibility";
 import UserDatabaseSync from "@/components/shared/UserDatabaseSync";
 import { ClerkProvider } from "@clerk/nextjs";
+import { getMasterData } from "@/lib/master-data";
 
 const inter = Inter({
   subsets: ["latin"],
+  display: "swap",
+  variable: "--font-inter",
 });
 
 export const metadata: Metadata = {
@@ -18,8 +21,6 @@ export const metadata: Metadata = {
   description:
     "Sistem Informasi Pengelolaan Barang Hilang & Temuan Terintegrasi",
 };
-
-import { getMasterData } from "@/lib/master-data";
 
 export default async function RootLayout({
   children,
@@ -30,9 +31,15 @@ export default async function RootLayout({
 
   return (
     <ClerkProvider>
-      <html lang="id" suppressHydrationWarning>
+      <html lang="id" suppressHydrationWarning className={inter.variable}>
+        <head>
+          <link rel="preconnect" href="https://images.unsplash.com" crossOrigin="anonymous" />
+          <link rel="dns-prefetch" href="https://images.unsplash.com" />
+          <link rel="preconnect" href="https://img.clerk.com" crossOrigin="anonymous" />
+          <link rel="dns-prefetch" href="https://img.clerk.com" />
+        </head>
         <body
-          className={`${inter.className} min-h-screen flex flex-col bg-[#fdfdfd]`}
+          className="font-sans min-h-screen flex flex-col bg-[#fafbfb] text-[#102824] antialiased"
           suppressHydrationWarning
         >
           <ChromeVisibilityProvider>

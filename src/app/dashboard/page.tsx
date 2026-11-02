@@ -5,7 +5,7 @@ import { PackagePlus, PackageCheck, FileSpreadsheet, ArrowRight, Sparkles } from
 
 export default function HomePage() {
   return (
-    <div className="flex flex-col min-h-[calc(100vh-140px)] bg-[#fafcfb]">
+    <div className="flex flex-col min-h-[calc(100vh-140px)] bg-[#fafbfb]">
       {/* 🟢 KONTEN UTAMA: Aksi LACAK (3 Modul Utama) */}
       <section className="container mx-auto px-4 md:px-8 my-8 md:my-12 flex-grow">
         <div className="text-center mb-10">

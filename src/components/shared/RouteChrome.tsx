@@ -7,7 +7,7 @@ import PublicNavbar from "../public/PublicNavbar";
 import { isPetugasEmail } from "@/lib/petugas-access";
 import { useChromeVisibility } from "./ChromeVisibility";
 
-// Halaman yang tidak menampilkan navbar sama sekali (hanya tombol kembali)
+// Halaman yang tidak menampilkan navbar sama sekali (hanya tombol kembali / distraction-free)
 const noNavbarPaths = new Set([
   "/tentang-kami",
   "/beri-saran",

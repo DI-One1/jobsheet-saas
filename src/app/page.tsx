@@ -8,7 +8,7 @@ export default async function LandingPage() {
 
 
   return (
-    <div className="min-h-screen bg-[#fafcfb]">
+    <div className="min-h-screen bg-[#fafbfb]">
       <PublicPortal initialItems={items} masterData={masterData} />
     </div>
   );

@@ -1,4 +1,4 @@
-"use server";
+﻿"use server";
 
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
@@ -77,7 +77,7 @@ export async function createFoundItem(formData: FormData) {
     },
   });
 
-  // Trigger matching otomatis → menghasilkan notifikasi, BUKAN claim
+  // Trigger matching otomatis â†’ menghasilkan notifikasi, BUKAN claim
   try {
     await processNewFoundItemMatch(newItem.id);
   } catch (error) {
@@ -86,6 +86,7 @@ export async function createFoundItem(formData: FormData) {
   }
 
   revalidatePath("/");
+  revalidatePath("/pencarian");
   revalidatePath("/riwayat/temuan");
   revalidatePath("/data-warga");
   redirect("/riwayat/temuan");
@@ -112,6 +113,7 @@ export async function deleteFoundItem(id: string) {
     revalidatePath("/riwayat/pengambilan");
     revalidatePath("/data-warga");
     revalidatePath("/");
+  revalidatePath("/pencarian");
     return { success: true };
   } catch (error) {
     console.error("Gagal menghapus barang temuan:", error);
@@ -131,6 +133,7 @@ export async function deleteAllUnclaimedFoundItems() {
     });
     revalidatePath("/riwayat/temuan");
     revalidatePath("/");
+  revalidatePath("/pencarian");
     return { success: true };
   } catch (error) {
     console.error("Gagal menghapus semua barang temuan:", error);
@@ -156,6 +159,7 @@ export async function deleteAllFoundItems() {
     revalidatePath("/riwayat/pengambilan");
     revalidatePath("/data-warga");
     revalidatePath("/");
+  revalidatePath("/pencarian");
     return { success: true };
   } catch (error) {
     console.error("Gagal menghapus seluruh barang temuan:", error);

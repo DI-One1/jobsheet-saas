@@ -1,4 +1,4 @@
-import React from "react";
+﻿import React from "react";
 import NextImage from "next/image";
 import { MapPin, Calendar, CheckCircle2 } from "lucide-react";
 import {
@@ -41,7 +41,7 @@ export function ItemCard({ item, onClick, className = "" }: ItemCardProps) {
           src={imageUrl || DEFAULT_ITEM_IMAGE}
           alt={title}
           fill
-          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 16vw"
           className="object-cover transition-transform duration-500 group-hover:scale-108"
         />
 
@@ -69,7 +69,7 @@ export function ItemCard({ item, onClick, className = "" }: ItemCardProps) {
 
         {/* Meta Details */}
         <p className="mb-2 truncate text-[10.5px] font-medium text-[#5f7571]">
-          {item.merek.name} · {item.warna.name}
+          {item.merek.name} Â· {item.warna.name}
         </p>
 
         {/* Clamped Description */}

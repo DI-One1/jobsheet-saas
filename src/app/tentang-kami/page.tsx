@@ -449,7 +449,7 @@ function ClosingCTA() {
             href="/beri-saran"
             className="group inline-flex w-fit items-center gap-3 rounded-full bg-green-dark px-7 py-4 text-sm font-semibold text-white transition-colors duration-300 hover:bg-green-mid"
           >
-            <span>Menuju halaman Masukan</span>
+            <span>Berikan Masukan</span>
 
             <span className="flex h-6 w-6 items-center justify-center rounded-full bg-white/15 transition-transform duration-300 group-hover:translate-x-1">
               <ArrowIcon />
