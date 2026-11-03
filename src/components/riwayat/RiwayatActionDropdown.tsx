@@ -171,18 +171,7 @@ export default function RiwayatActionDropdown({
             }}
             className="w-48 bg-white rounded-xl shadow-xl border border-gray-100 py-1.5 animate-in fade-in zoom-in-95 duration-150 focus:outline-hidden"
           >
-            {/* 1. HAPUS */}
-            <button
-              type="button"
-              role="menuitem"
-              onClick={handleDelete}
-              className="w-full flex items-center gap-2.5 px-3.5 py-2 text-xs font-semibold text-red-600 hover:bg-red-50/80 transition-colors text-left cursor-pointer"
-            >
-              <Trash2 className="w-3.5 h-3.5 text-red-500 shrink-0" />
-              <span>Hapus</span>
-            </button>
-
-            {/* 2. RINCIAN */}
+            {/* 1. RINCIAN */}
             <button
               type="button"
               role="menuitem"
@@ -193,9 +182,7 @@ export default function RiwayatActionDropdown({
               <span>Rincian</span>
             </button>
 
-            <div className="my-1 border-t border-gray-100" />
-
-            {/* 3. SALIN KODE BARANG */}
+            {/* 2. SALIN KODE BARANG */}
             {itemCode ? (
               <button
                 type="button"
@@ -223,6 +210,19 @@ export default function RiwayatActionDropdown({
                 <span className="truncate">Salin Kode (N/A)</span>
               </div>
             )}
+
+            <div className="my-1 border-t border-gray-100" />
+
+            {/* 3. HAPUS (Ditaruh paling bawah) */}
+            <button
+              type="button"
+              role="menuitem"
+              onClick={handleDelete}
+              className="w-full flex items-center gap-2.5 px-3.5 py-2 text-xs font-semibold text-red-600 hover:bg-red-50/80 transition-colors text-left cursor-pointer"
+            >
+              <Trash2 className="w-3.5 h-3.5 text-red-500 shrink-0" />
+              <span>Hapus</span>
+            </button>
           </div>,
           document.body
         )}

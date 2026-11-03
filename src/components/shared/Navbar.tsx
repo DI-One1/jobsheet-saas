@@ -139,7 +139,7 @@ export default function Navbar() {
     <header className="sticky top-0 z-[1030] bg-white border-b border-[#e2ece8] shadow-xs">
       
       {/* BARIS 1: Logo, SearchBar, Notifikasi & User Profile */}
-      <div className="container mx-auto px-4 md:px-8 py-3">
+      <div className="container mx-auto px-4 md:px-8 py-3 relative z-30">
         <div className="grid grid-cols-[auto_1fr_auto] md:grid-cols-[140px_1fr_auto] gap-4 md:gap-8 items-center">
           
           <div className="flex items-center gap-2">
@@ -169,7 +169,7 @@ export default function Navbar() {
       </div>
 
       {/* BARIS 2: Tab Navigasi (Garis Pembatas Atas) */}
-      <div className="border-t border-[#edf3f0] bg-[#fafbfb] relative z-[1020]">
+      <div className="border-t border-[#edf3f0] bg-[#fafbfb] relative z-10">
         <NavTabs />
       </div>
 
