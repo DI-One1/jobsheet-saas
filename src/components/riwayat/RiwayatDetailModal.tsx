@@ -75,7 +75,7 @@ export default function RiwayatDetailModal({
         <div className="bg-white border-b border-gray-100 px-6 py-5 flex items-center justify-between shrink-0">
           <div className="space-y-1">
             <div className="flex items-center gap-3">
-              <h3 id="detail-modal-title" className="text-xl font-extrabold text-[#0d3b2e] tracking-tight">
+              <h3 id="detail-modal-title" className="text-xl font-extrabold text-[#102824] tracking-tight">
                 {title}
               </h3>
               {badge && <div>{badge}</div>}

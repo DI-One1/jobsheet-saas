@@ -192,7 +192,7 @@ export default function LaporanClient({ riwayatList }: LaporanClientProps) {
               onClick={() => setFilterStatus(status)}
               className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
                 filterStatus === status
-                  ? "bg-[#0d3b2e] text-white shadow-xs"
+                  ? "bg-[#0d7565] text-white shadow-xs"
                   : "bg-white text-gray-600 hover:bg-gray-100 border border-gray-200"
               }`}
             >

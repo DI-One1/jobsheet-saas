@@ -1,6 +1,6 @@
-﻿import React from "react";
+import React from "react";
 import NextImage from "next/image";
-import { MapPin, Calendar, CheckCircle2 } from "lucide-react";
+import { MapPin, Calendar } from "lucide-react";
 import {
   PublicFoundItem,
   getItemTitle,
@@ -69,7 +69,7 @@ export function ItemCard({ item, onClick, className = "" }: ItemCardProps) {
 
         {/* Meta Details */}
         <p className="mb-2 truncate text-[10.5px] font-medium text-[#5f7571]">
-          {item.merek.name} Â· {item.warna.name}
+          {item.merek.name} · {item.warna.name}
         </p>
 
         {/* Clamped Description */}

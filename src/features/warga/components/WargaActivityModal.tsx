@@ -97,15 +97,15 @@ export default function WargaActivityModal({
             {/* Card Profil Warga */}
             <div className="bg-gradient-to-br from-emerald-50/70 via-white to-gray-50/50 rounded-2xl p-4 sm:p-5 border border-emerald-100/80 shadow-xs flex flex-col gap-3.5">
               <div className="flex items-start gap-3.5">
-                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#0d3b2e] to-[#1a5c44] text-white flex items-center justify-center font-bold text-2xl shadow-md ring-4 ring-emerald-50 shrink-0">
+                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#0d7565] to-[#0a5d50] text-white flex items-center justify-center font-bold text-2xl shadow-md ring-4 ring-emerald-50 shrink-0">
                   {aksiWarga.nama.charAt(0).toUpperCase()}
                 </div>
                 <div className="min-w-0 flex-1">
-                  <h3 className="text-base sm:text-lg font-bold text-green-dark leading-snug truncate">
+                  <h3 className="text-base sm:text-lg font-bold text-[#102824] leading-snug truncate">
                     {aksiWarga.nama}
                   </h3>
                   <div className="mt-1 flex flex-wrap items-center gap-1.5">
-                    <span className="inline-flex items-center gap-1 text-[11px] font-mono font-bold px-2 py-0.5 rounded-md bg-white text-green-mid border border-emerald-200/70 shadow-2xs">
+                    <span className="inline-flex items-center gap-1 text-[11px] font-mono font-bold px-2 py-0.5 rounded-md bg-white text-[#0d7565] border border-[#d2e5df] shadow-2xs">
                       ID: {aksiWarga.id}
                     </span>
                     <span className="inline-flex items-center px-2 py-0.5 rounded-md bg-emerald-100 text-emerald-900 text-[10px] font-medium">
@@ -150,7 +150,7 @@ export default function WargaActivityModal({
             <div className="bg-white rounded-2xl p-4 sm:p-5 border border-gray-200/80 shadow-xs flex flex-col gap-3">
               <div className="flex items-center justify-between pb-2 border-b border-gray-100">
                 <span className="text-xs font-bold uppercase tracking-wider text-gray-500 flex items-center gap-1.5">
-                  <Activity className="w-3.5 h-3.5 text-green-mid" />
+                  <Activity className="w-3.5 h-3.5 text-[#0d7565]" />
                   Ringkasan Statistik
                 </span>
                 <span className="text-[11px] font-semibold text-gray-400">Total Akumulasi</span>
@@ -162,7 +162,7 @@ export default function WargaActivityModal({
                   <p className="text-[11px] font-semibold text-emerald-900">Total Aksi Warga</p>
                   <p className="text-[10px] text-gray-500 mt-0.5">Semua riwayat terdata</p>
                 </div>
-                <div className="text-2xl font-black text-green-dark">
+                <div className="text-2xl font-black text-[#102824]">
                   {totalCount}
                 </div>
               </div>
@@ -247,7 +247,7 @@ export default function WargaActivityModal({
                 <div className="mt-1 pt-3 border-t border-gray-100">
                   <div className="flex items-center justify-between text-[11px] mb-1.5">
                     <span className="text-gray-500 font-medium">Terselesaikan</span>
-                    <span className="font-bold text-green-dark">
+                    <span className="font-bold text-[#102824]">
                       {selesaiCount} / {totalCount} ({Math.round((selesaiCount / totalCount) * 100)}%)
                     </span>
                   </div>
@@ -274,7 +274,7 @@ export default function WargaActivityModal({
                 <span className="text-xs font-bold uppercase tracking-wider text-gray-500">
                   Daftar Aksi
                 </span>
-                <span className="px-2 py-0.5 rounded-full bg-emerald-100 text-green-dark text-xs font-bold">
+                <span className="px-2 py-0.5 rounded-full bg-[#eef7f4] text-[#0d7565] border border-[#d2e5df] text-xs font-bold">
                   {filteredActivities.length}
                 </span>
               </div>
@@ -286,7 +286,7 @@ export default function WargaActivityModal({
                   onClick={() => setActiveFilter("ALL")}
                   className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
                     activeFilter === "ALL"
-                      ? "bg-white text-green-dark shadow-sm font-bold"
+                      ? "bg-white text-[#0d7565] shadow-xs font-bold"
                       : "text-gray-600 hover:text-gray-900"
                   }`}
                 >
@@ -332,7 +332,7 @@ export default function WargaActivityModal({
             <div className="flex-1 min-h-0 overflow-y-auto space-y-3 pr-1.5 custom-scrollbar">
               {isLoadingActivities ? (
                 <div className="py-16 text-center text-xs text-gray-500 animate-pulse flex flex-col items-center justify-center gap-3">
-                  <div className="w-7 h-7 border-3 border-green-dark/20 border-t-green-dark rounded-full animate-spin" />
+                  <div className="w-7 h-7 border-3 border-[#0d7565]/20 border-t-[#0d7565] rounded-full animate-spin" />
                   <span className="font-medium">Memuat riwayat aksi warga...</span>
                 </div>
               ) : filteredActivities.length === 0 ? (
@@ -422,7 +422,7 @@ export default function WargaActivityModal({
 
                       {/* Baris 2: Judul Barang */}
                       <div>
-                        <h4 className="font-bold text-gray-900 text-sm sm:text-base leading-snug group-hover:text-green-dark transition-colors">
+                        <h4 className="font-bold text-gray-900 text-sm sm:text-base leading-snug group-hover:text-[#0d7565] transition-colors">
                           {act.title}
                         </h4>
                       </div>
@@ -473,7 +473,7 @@ export default function WargaActivityModal({
           <button
             type="button"
             onClick={onClose}
-            className="px-5 py-2 bg-green-dark hover:bg-green-mid text-white rounded-xl transition-all shadow-xs text-xs font-semibold cursor-pointer active:scale-95"
+            className="px-5 py-2 bg-[#0d7565] hover:bg-[#0a5d50] text-white rounded-xl transition-all shadow-xs text-xs font-semibold cursor-pointer active:scale-95"
           >
             Tutup
           </button>

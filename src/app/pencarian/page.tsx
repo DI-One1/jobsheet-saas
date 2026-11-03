@@ -1,8 +1,24 @@
+import type { Metadata } from "next";
 import { getPublicData } from "@/features/item/services/public-item-service";
 import PublicSearchPortal from "@/components/public/PublicSearchPortal";
 
-// Pencarian Publik LACAK
-// Mengakses searchParams secara dinamis, sementara data katalog di-cache via unstable_cache
+const siteUrl = process.env.NEXT_PUBLIC_APP_URL || "https://lacak.smktibazma.sch.id";
+
+export const metadata: Metadata = {
+  title: "Pencarian Barang Temuan",
+  description:
+    "Cari dan filter daftar barang temuan berdasarkan nama barang, kategori, warna, merek, dan lokasi penemuan di LACAK.",
+  alternates: {
+    canonical: `${siteUrl}/pencarian`,
+  },
+  openGraph: {
+    title: "Pencarian Barang Temuan | LACAK",
+    description:
+      "Cari dan filter daftar barang temuan berdasarkan nama barang, kategori, warna, merek, dan lokasi penemuan di LACAK.",
+    url: `${siteUrl}/pencarian`,
+    type: "website",
+  },
+};
 
 export default async function SearchPage({
   searchParams,

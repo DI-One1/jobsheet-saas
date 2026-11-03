@@ -10,7 +10,7 @@ export function Badge({ children, variant = "neutral", className = "" }: BadgePr
   let colorStyles = "";
   switch (variant) {
     case "brand":
-      colorStyles = "bg-[#0d3b2e] text-white border border-[#0d3b2e]";
+      colorStyles = "bg-[#0d7565] text-white border border-[#0d7565]";
       break;
     case "primary":
       colorStyles = "bg-[#eef7f4] text-[#0d7565] border border-[#d2e5df]";

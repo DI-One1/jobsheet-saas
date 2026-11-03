@@ -5,9 +5,9 @@
   --font-poppins: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   
   /* ── Core Design Tokens: Brand Greens ── */
-  --color-green-dark: #0d3b2e;
-  --color-green-mid: #1a5c44;
-  --color-green-accent: #3dbd84;
+  --color-green-dark: #0d7565;
+  --color-green-mid: #0a5d50;
+  --color-green-accent: #0d7565;
   
   /* ── Interactive & Neutral Tokens ── */
   --color-primary: #0d7565;
@@ -165,51 +165,33 @@ body.modal-open {
 /* â”€â”€ Subtle Aurora / Ambient Glow for Active Navigation Tabs (Refined & Airy) â”€â”€ */
 .nav-tab-aurora-active {
   position: relative;
-  color: #ffffff !important;
-  font-weight: 600 !important;
-  background: linear-gradient(135deg,
-      rgba(61, 189, 132, 0.09) 0%,
-      rgba(20, 184, 166, 0.11) 50%,
-      rgba(13, 117, 101, 0.14) 100%) !important;
-  border: 1px solid rgba(61, 189, 132, 0.22) !important;
-  box-shadow:
-    0 0 14px -3px rgba(61, 189, 132, 0.22),
-    0 0 24px -6px rgba(45, 212, 191, 0.14),
-    inset 0 1px 1px 0 rgba(255, 255, 255, 0.10) !important;
+  color: #0d7565 !important;
+  font-weight: 700 !important;
+  background: #eef7f4 !important;
+  border: 1px solid #cbe4dc !important;
+  box-shadow: 0 1px 2px 0 rgba(13, 117, 101, 0.08) !important;
   border-radius: 0.75rem !important;
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  transition: all 0.2s ease !important;
 }
 
 .nav-tab-aurora-active::before {
-  content: "";
-  position: absolute;
-  inset: -2px;
-  background: radial-gradient(ellipse at center,
-      rgba(61, 189, 132, 0.22) 0%,
-      rgba(45, 212, 191, 0.14) 40%,
-      transparent 68%);
-  border-radius: 0.85rem;
-  filter: blur(6px);
-  z-index: -1;
-  pointer-events: none;
-  opacity: 0.65;
-  transition: opacity 0.25s ease;
+  display: none !important;
 }
 
 .nav-tab-aurora-inactive {
   position: relative;
-  color: rgba(255, 255, 255, 0.75) !important;
+  color: #526b65 !important;
   font-weight: 500 !important;
   background: transparent !important;
   border: 1px solid transparent !important;
   border-radius: 0.75rem !important;
-  transition: all 0.25s ease !important;
+  transition: all 0.2s ease !important;
 }
 
 .nav-tab-aurora-inactive:hover {
-  color: #ffffff !important;
-  background: rgba(255, 255, 255, 0.08) !important;
-  border-color: rgba(255, 255, 255, 0.12) !important;
+  color: #0d7565 !important;
+  background: #f1f7f5 !important;
+  border-color: #e2ece8 !important;
 }
 
 @media (prefers-reduced-motion: reduce) {

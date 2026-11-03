@@ -54,7 +54,7 @@ export default function TemuanRow({
   return (
     <tr className="hover:bg-gray-50/80 transition-colors border-b border-gray-100">
       {/* 1. ID Penemu */}
-      <td className="px-6 py-4 font-mono font-bold text-xs text-[#0d3b2e]">
+      <td className="px-6 py-4 font-mono font-bold text-xs text-[#102824]">
         {finderId}
       </td>
 

@@ -30,7 +30,7 @@ export function Button({
       break;
     case "brand":
       variantStyles =
-        "bg-[#0d3b2e] hover:bg-[#1a5c44] active:scale-[0.98] text-white shadow-xs hover:shadow-md";
+        "bg-[#0d7565] hover:bg-[#0a5d50] active:scale-[0.98] text-white shadow-xs hover:shadow-md";
       break;
     case "secondary":
       variantStyles =

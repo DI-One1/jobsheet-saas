@@ -148,7 +148,7 @@ export default function RiwayatActionDropdown({
         aria-haspopup="menu"
         className={`p-1.5 rounded-lg border transition-all cursor-pointer inline-flex items-center justify-center ${
           isOpen
-            ? "bg-[#0d3b2e] text-white border-[#0d3b2e] shadow-xs"
+            ? "bg-[#0d7565] text-white border-[#0d7565] shadow-xs"
             : "bg-white text-gray-600 border-gray-200 hover:bg-gray-100 hover:text-gray-900"
         }`}
       >
@@ -187,7 +187,7 @@ export default function RiwayatActionDropdown({
               type="button"
               role="menuitem"
               onClick={handleDetail}
-              className="w-full flex items-center gap-2.5 px-3.5 py-2 text-xs font-semibold text-gray-700 hover:bg-emerald-50/80 hover:text-[#0d3b2e] transition-colors text-left cursor-pointer"
+              className="w-full flex items-center gap-2.5 px-3.5 py-2 text-xs font-semibold text-gray-700 hover:bg-emerald-50/80 hover:text-[#102824] transition-colors text-left cursor-pointer"
             >
               <Eye className="w-3.5 h-3.5 text-gray-500 shrink-0" />
               <span>Rincian</span>

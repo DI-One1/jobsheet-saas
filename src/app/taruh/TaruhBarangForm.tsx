@@ -134,11 +134,11 @@ export default function TaruhBarangForm({
       <div className="mb-8">
         <Link
           href="/dashboard"
-          className="text-sm text-gray-500 hover:text-[#3dbd84] flex items-center gap-2 w-fit mb-2 transition-colors"
+          className="text-sm text-gray-500 hover:text-[#0d7565] flex items-center gap-2 w-fit mb-2 transition-colors"
         >
           <span>&larr;</span> Kembali ke Beranda
         </Link>
-        <h1 className="text-3xl font-extrabold text-[#0d3b2e]">
+        <h1 className="text-3xl font-extrabold text-[#102824]">
           Formulir Taruh Barang Temuan
         </h1>
       </div>
@@ -168,8 +168,8 @@ export default function TaruhBarangForm({
         {verified && selectedWarga && (
           <div className="space-y-6 animate-in fade-in duration-300">
             <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 md:p-8 space-y-6">
-              <h3 className="text-lg font-bold text-[#0d3b2e] flex items-center gap-2">
-                <span className="w-6 h-6 rounded-full bg-[#0d3b2e] text-white text-xs flex items-center justify-center font-bold">
+              <h3 className="text-lg font-bold text-[#102824] flex items-center gap-2">
+                <span className="w-6 h-6 rounded-full bg-[#0d7565] text-white text-xs flex items-center justify-center font-bold">
                   2
                 </span>
                 Detail Barang Temuan
@@ -184,7 +184,7 @@ export default function TaruhBarangForm({
                     value={jenisId}
                     onChange={(e) => setJenisId(e.target.value)}
                     required
-                    className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#3dbd84] bg-white transition-all"
+                    className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#0d7565] bg-white transition-all"
                   >
                     <option value="">-- Pilih Jenis Barang --</option>
                     {categories.map((cat) => (
@@ -203,7 +203,7 @@ export default function TaruhBarangForm({
                     value={warnaId}
                     onChange={(e) => setWarnaId(e.target.value)}
                     required
-                    className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#3dbd84] bg-white transition-all"
+                    className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#0d7565] bg-white transition-all"
                   >
                     <option value="">-- Pilih Warna --</option>
                     {colors.map((c) => (
@@ -222,7 +222,7 @@ export default function TaruhBarangForm({
                     value={merekId}
                     onChange={(e) => setMerekId(e.target.value)}
                     required
-                    className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#3dbd84] bg-white transition-all"
+                    className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#0d7565] bg-white transition-all"
                   >
                     <option value="">-- Pilih Merek --</option>
                     {brands.map((b) => (
@@ -241,7 +241,7 @@ export default function TaruhBarangForm({
                     value={lokasiId}
                     onChange={(e) => setLokasiId(e.target.value)}
                     required
-                    className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#3dbd84] bg-white transition-all"
+                    className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#0d7565] bg-white transition-all"
                   >
                     <option value="">-- Pilih Lokasi Ditemukan --</option>
                     {locations.map((loc) => (
@@ -262,7 +262,7 @@ export default function TaruhBarangForm({
                   value={additionalDesc}
                   onChange={(e) => setAdditionalDesc(e.target.value)}
                   placeholder="Contoh: Ada stiker kucing di pojok kanan, ada gantungan kunci huruf A..."
-                  className="w-full border border-gray-200 rounded-xl p-4 text-sm focus:outline-none focus:border-[#3dbd84] transition-all"
+                  className="w-full border border-gray-200 rounded-xl p-4 text-sm focus:outline-none focus:border-[#0d7565] transition-all"
                 />
               </div>
 
@@ -273,7 +273,7 @@ export default function TaruhBarangForm({
                     <p className="text-xs text-emerald-700 font-semibold uppercase tracking-wider">
                       Kode Barang Otomatis (Preview)
                     </p>
-                    <p className="text-xl font-mono font-extrabold text-[#0d3b2e] mt-0.5">
+                    <p className="text-xl font-mono font-extrabold text-[#102824] mt-0.5">
                       {previewCode}
                     </p>
                   </div>
@@ -295,7 +295,7 @@ export default function TaruhBarangForm({
               <button
                 type="submit"
                 disabled={isSubmitting || !verified}
-                className="px-8 py-3 bg-[#3dbd84] hover:bg-[#32a873] disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold text-sm rounded-xl transition-all shadow-md cursor-pointer"
+                className="px-8 py-3 bg-[#0d7565] hover:bg-[#32a873] disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold text-sm rounded-xl transition-all shadow-md cursor-pointer"
               >
                 {isSubmitting ? "Menyimpan Data..." : "Simpan Barang Temuan"}
               </button>

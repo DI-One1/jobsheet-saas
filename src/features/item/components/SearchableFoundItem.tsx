@@ -69,24 +69,24 @@ export default function SearchableFoundItem({ currentFormState, onSelect }: Sear
   const renderItem = (item: FoundItemMatch) => (
     <li
       key={item.id}
-      className="p-3 hover:bg-gray-50 transition-colors flex items-center justify-between border-b last:border-0"
+      className="p-3 hover:bg-[#fafbfb] transition-colors flex items-center justify-between border-b border-[#e2ece8] last:border-0"
     >
       <div className="flex-1 min-w-0 pr-4">
-        <p className="font-bold text-sm text-green-dark truncate">
+        <p className="font-bold text-xs md:text-sm text-[#102824] truncate">
           {item.jenis.name} {item.merek.name}
         </p>
-        <p className="text-xs text-gray-500 truncate">
-          Kode: <span className="font-mono text-green-mid">{item.businessCode}</span> | Lokasi: {item.lokasi.name}
+        <p className="text-[11px] text-[#526b65] truncate mt-0.5">
+          Kode: <span className="font-mono font-semibold text-[#0d7565]">{item.businessCode}</span> | Lokasi: {item.lokasi.name}
         </p>
       </div>
 
       <div className="flex items-center gap-2 flex-shrink-0">
         {item.matchScore >= 75 && (
           <span
-            className={`px-2 py-1 text-[10px] font-bold rounded-full ${
+            className={`px-2 py-0.5 text-[10px] font-bold rounded-full ${
               item.matchScore === 100
-                ? "bg-green-100 text-green-700 border border-green-200"
-                : "bg-amber-100 text-amber-700 border border-amber-200"
+                ? "bg-[#eef7f4] text-[#0d7565] border border-[#d2e5df]"
+                : "bg-amber-50 text-amber-700 border border-amber-200"
             }`}
           >
             {item.matchScore}% Mirip
@@ -95,7 +95,7 @@ export default function SearchableFoundItem({ currentFormState, onSelect }: Sear
         <button
           type="button"
           onClick={() => setDetailItem(item)}
-          className="px-3 py-1.5 bg-green-dark hover:bg-green-mid text-white text-[10px] font-bold rounded-lg transition-colors cursor-pointer border-none outline-none"
+          className="px-3 py-1.5 bg-[#0d7565] hover:bg-[#0a5d50] active:scale-[0.98] text-white text-[11px] font-bold rounded-lg transition-all shadow-xs cursor-pointer border-none outline-none"
         >
           Lihat Rincian
         </button>
@@ -105,7 +105,7 @@ export default function SearchableFoundItem({ currentFormState, onSelect }: Sear
 
   return (
     <div className="relative w-full" ref={dropdownRef}>
-      <label htmlFor="searchFoundItemInput" className="block text-sm font-semibold text-gray-700 mb-1">
+      <label htmlFor="searchFoundItemInput" className="block text-xs font-semibold text-[#526b65] mb-1.5">
         Cari di Riwayat Barang Temuan (Opsional)
       </label>
 
@@ -113,7 +113,7 @@ export default function SearchableFoundItem({ currentFormState, onSelect }: Sear
       <input
         id="searchFoundItemInput"
         type="text"
-        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-accent focus:border-transparent outline-none transition-all text-sm"
+        className="w-full px-4 py-2.5 border border-[#d2e5df] rounded-xl focus:border-[#0d7565] focus:ring-2 focus:ring-[#0d7565]/20 bg-white transition-all text-xs md:text-sm text-[#142e29] outline-none"
         placeholder="Ketik kode unik, merek, atau jenis barang..."
         value={query}
         onChange={(e) => {
@@ -125,18 +125,18 @@ export default function SearchableFoundItem({ currentFormState, onSelect }: Sear
 
       {/* Dropdown List */}
       {isOpen && (
-        <div className="absolute z-50 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-xl max-h-80 overflow-y-auto">
+        <div className="absolute z-50 w-full mt-1.5 bg-white border border-[#e2ece8] rounded-xl shadow-lg max-h-80 overflow-y-auto">
           {/* Tab filter All / 100% / 75% */}
-          <div className="flex p-1.5 gap-1 border-b border-gray-100 sticky top-0 bg-white/95 backdrop-blur-xs z-10">
+          <div className="flex p-1.5 gap-1 border-b border-[#e2ece8] sticky top-0 bg-white/95 backdrop-blur-xs z-10">
             {TABS.map((tab) => (
               <button
                 key={tab.key}
                 type="button"
                 onClick={() => setActiveTab(tab.key)}
-                className={`flex-1 px-2.5 py-1.5 text-[11px] font-bold rounded-md transition-all cursor-pointer border outline-none ${
+                className={`flex-1 px-2.5 py-1.5 text-[11px] font-bold rounded-lg transition-all cursor-pointer border outline-none ${
                   activeTab === tab.key
-                    ? "bg-emerald-50/90 text-green-dark border-emerald-300/80 shadow-[0_0_12px_rgba(61,189,132,0.18)]"
-                    : "bg-transparent text-gray-500 hover:text-gray-800 border-transparent hover:bg-gray-50"
+                    ? "bg-[#eef7f4] text-[#0d7565] border-[#a8dbc9] shadow-xs"
+                    : "bg-transparent text-[#526b65] hover:text-[#102824] border-transparent hover:bg-[#fafbfb]"
                 }`}
               >
                 {tab.label}
@@ -145,14 +145,14 @@ export default function SearchableFoundItem({ currentFormState, onSelect }: Sear
           </div>
 
           {isLoading ? (
-            <div className="p-4 text-center text-sm text-gray-500">Mencari...</div>
+            <div className="p-4 text-center text-xs text-[#526b65]">Mencari...</div>
           ) : results.length > 0 ? (
-            <ul className="divide-y divide-gray-100">
+            <ul className="divide-y divide-[#e2ece8]">
               {activeTab === "all" ? (
                 <>
                   {match100.map(renderItem)}
                   {match100.length > 0 && match75.length > 0 && (
-                    <li className="px-3 py-1.5 bg-gray-50 text-[10px] font-bold text-gray-400 uppercase tracking-wider">
+                    <li className="px-3 py-1.5 bg-[#fafbfb] text-[10px] font-bold text-[#526b65] uppercase tracking-wider">
                       75% mendekati
                     </li>
                   )}
@@ -164,7 +164,7 @@ export default function SearchableFoundItem({ currentFormState, onSelect }: Sear
               )}
             </ul>
           ) : (
-            <div className="p-4 text-center text-sm text-gray-500">
+            <div className="p-4 text-center text-xs text-[#526b65]">
               Tidak ada barang lawas yang cocok.
             </div>
           )}
@@ -180,40 +180,40 @@ export default function SearchableFoundItem({ currentFormState, onSelect }: Sear
         >
           <div className="space-y-4">
             <div>
-              <p className="text-xs text-gray-500 uppercase font-semibold">Kode Unik (Business Code)</p>
-              <p className="text-sm font-mono font-bold text-green-mid">{detailItem.businessCode}</p>
+              <p className="text-[11px] text-[#526b65] uppercase font-bold tracking-wider">Kode Unik (Business Code)</p>
+              <p className="text-sm font-mono font-bold text-[#0d7565]">{detailItem.businessCode}</p>
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <p className="text-xs text-gray-500 uppercase font-semibold">Kategori Barang</p>
-                <p className="text-sm font-medium text-gray-800">{detailItem.jenis?.name}</p>
+                <p className="text-[11px] text-[#526b65] uppercase font-bold tracking-wider">Kategori Barang</p>
+                <p className="text-sm font-semibold text-[#102824]">{detailItem.jenis?.name}</p>
               </div>
               <div>
-                <p className="text-xs text-gray-500 uppercase font-semibold">Merek / Warna</p>
-                <p className="text-sm font-medium text-gray-800">
+                <p className="text-[11px] text-[#526b65] uppercase font-bold tracking-wider">Merek / Warna</p>
+                <p className="text-sm font-semibold text-[#102824]">
                   {detailItem.merek?.name || "-"} ({detailItem.warna?.name || "-"})
                 </p>
               </div>
             </div>
             <div>
-              <p className="text-xs text-gray-500 uppercase font-semibold">Lokasi Ditemukan</p>
-              <p className="text-sm font-medium text-gray-800">{detailItem.lokasi?.name}</p>
+              <p className="text-[11px] text-[#526b65] uppercase font-bold tracking-wider">Lokasi Ditemukan</p>
+              <p className="text-sm font-semibold text-[#102824]">{detailItem.lokasi?.name}</p>
             </div>
             <div>
-              <p className="text-xs text-gray-500 uppercase font-semibold">Deskripsi Tambahan</p>
-              <p className="text-sm font-medium text-gray-800 p-2 bg-gray-50 border rounded-lg mt-1 whitespace-pre-wrap animate-none">
+              <p className="text-[11px] text-[#526b65] uppercase font-bold tracking-wider">Deskripsi Tambahan</p>
+              <p className="text-xs md:text-sm text-[#102824] p-3 bg-[#fafbfb] border border-[#e2ece8] rounded-xl mt-1 whitespace-pre-wrap">
                 {detailItem.additionalDesc || "Tidak ada deskripsi tambahan."}
               </p>
             </div>
             <div>
-              <p className="text-xs text-gray-500 uppercase font-semibold">Status Keaktifan</p>
+              <p className="text-[11px] text-[#526b65] uppercase font-bold tracking-wider">Status Keaktifan</p>
               <span
-                className={`inline-block px-2.5 py-1 rounded-full text-xs font-bold mt-1 ${
+                className={`inline-block px-2.5 py-1 rounded-full text-[11px] font-bold mt-1 ${
                   detailItem.status === "FOUND"
-                    ? "bg-blue-100 text-blue-800"
+                    ? "bg-blue-50 text-blue-700 border border-blue-200"
                     : detailItem.status === "CLAIMED"
-                    ? "bg-green-100 text-green-800"
-                    : "bg-red-100 text-red-800"
+                    ? "bg-[#eef7f4] text-[#0d7565] border border-[#d2e5df]"
+                    : "bg-red-50 text-red-700 border border-red-200"
                 }`}
               >
                 {detailItem.status}
@@ -221,11 +221,11 @@ export default function SearchableFoundItem({ currentFormState, onSelect }: Sear
             </div>
           </div>
 
-          <div className="mt-8 pt-4 border-t flex justify-end gap-3">
+          <div className="mt-8 pt-4 border-t border-[#e2ece8] flex justify-end gap-3">
             <button
               type="button"
               onClick={() => setDetailItem(null)}
-              className="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl transition-colors text-sm font-semibold cursor-pointer border-none outline-none"
+              className="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-[#526b65] rounded-xl transition-colors text-xs font-bold cursor-pointer border-none outline-none"
             >
               Tutup
             </button>
@@ -236,9 +236,9 @@ export default function SearchableFoundItem({ currentFormState, onSelect }: Sear
                 setDetailItem(null);
                 setIsOpen(false);
               }}
-              className="px-5 py-2 bg-green-accent hover:bg-green-mid hover:scale-105 active:scale-95 text-white rounded-xl transition-all text-sm font-bold cursor-pointer border-none outline-none"
+              className="px-5 py-2 bg-[#0d7565] hover:bg-[#0a5d50] active:scale-[0.98] text-white rounded-xl transition-all text-xs font-bold shadow-xs cursor-pointer border-none outline-none"
             >
-              Pilih & Proses
+              Pilih &amp; Proses
             </button>
           </div>
         </Modal>

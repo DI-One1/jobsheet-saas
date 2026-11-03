@@ -13,10 +13,13 @@ const isPublicRoute = createRouteMatcher([
   "/sign-up(.*)",
   "/access-denied(.*)",
   "/tentang-kami(.*)",
-  "/test(.*)",
   "/beri-saran(.*)",
   "/api/public(.*)",
   "/api/v1/public(.*)",
+  "/robots.txt",
+  "/sitemap.xml",
+  "/sitemap(.*)",
+  "/favicon.ico",
 ]);
 
 const handler = clerkMiddleware(async (auth, request) => {

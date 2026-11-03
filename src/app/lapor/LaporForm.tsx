@@ -205,8 +205,8 @@ export default function LaporForm({
                   !verified
                     ? "bg-gray-400 cursor-not-allowed opacity-70"
                     : matchedFoundItem
-                    ? "bg-[#1a5c44] hover:bg-[#0d3b2e]"
-                    : "bg-[#0d3b2e] hover:bg-[#1a5c44]"
+                    ? "bg-[#1a5c44] hover:bg-[#0d7565]"
+                    : "bg-[#0d7565] hover:bg-[#1a5c44]"
                 }`}
               >
                 {isSubmitting ? (

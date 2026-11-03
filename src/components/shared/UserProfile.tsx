@@ -6,7 +6,7 @@ export default function UserProfile() {
   const { isSignedIn, isLoaded } = useUser();
 
   if (!isLoaded) {
-    return <div className="w-8 h-8 rounded-full bg-white/20 animate-pulse ml-2"></div>;
+    return <div className="w-8 h-8 rounded-full bg-gray-100 animate-pulse ml-2" />;
   }
 
   return (
@@ -15,13 +15,13 @@ export default function UserProfile() {
         <UserButton
           appearance={{
             elements: {
-              userButtonAvatarBox: "w-8 h-8 border-2 border-white/20 hover:border-white transition-colors",
+              userButtonAvatarBox: "w-8 h-8 border border-[#d6e5df] hover:border-[#0d7565] transition-colors shadow-2xs",
             },
           }}
         />
       ) : (
         <SignInButton mode="modal">
-          <button className="bg-green-accent hover:bg-emerald-600 text-white text-xs font-semibold px-4 py-2 rounded-full transition-colors shadow-sm">
+          <button className="bg-[#0d7565] hover:bg-[#0a5d50] text-white text-xs font-semibold px-4 py-2 rounded-xl transition-colors shadow-xs cursor-pointer">
             Masuk
           </button>
         </SignInButton>

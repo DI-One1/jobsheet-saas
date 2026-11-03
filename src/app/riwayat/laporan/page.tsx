@@ -29,10 +29,10 @@ export default async function RiwayatLaporanPage() {
       
       {/* Header & Navigasi */}
       <div className="mb-8">
-        <Link href="/dashboard" className="text-sm text-gray-500 hover:text-[#3dbd84] flex items-center gap-2 w-fit mb-2 transition-colors">
+        <Link href="/dashboard" className="text-sm text-gray-500 hover:text-[#0d7565] flex items-center gap-2 w-fit mb-2 transition-colors">
           <span>&larr;</span> Kembali ke Beranda
         </Link>
-        <h1 className="text-3xl font-extrabold text-[#0d3b2e]">Riwayat Laporan Kehilangan</h1>
+        <h1 className="text-3xl font-extrabold text-[#102824]">Riwayat Laporan Kehilangan</h1>
       </div>
 
       {/* Render Client Component */}

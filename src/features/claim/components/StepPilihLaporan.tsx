@@ -20,20 +20,20 @@ export default function StepPilihLaporan({
   onSelectLostReport,
 }: Props) {
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 md:p-8 space-y-4 animate-in fade-in duration-300">
-      <h3 className="text-lg font-bold text-green-dark flex items-center gap-2">
-        <span className="w-6 h-6 rounded-full bg-green-dark text-white text-xs flex items-center justify-center font-bold">
+    <div className="bg-white rounded-2xl shadow-xs border border-[#e2ece8] p-6 md:p-8 space-y-4 animate-in fade-in duration-300">
+      <h3 className="text-base md:text-lg font-bold text-[#102824] flex items-center gap-2.5">
+        <span className="w-7 h-7 rounded-full bg-[#0d7565] text-white text-xs flex items-center justify-center font-bold shadow-xs">
           2
         </span>
-        Pilih Laporan Kehilangan yang Diselesaikan
+        <span>Pilih Laporan Kehilangan yang Diselesaikan</span>
       </h3>
 
-      <p className="text-xs text-gray-500">
+      <p className="text-xs text-[#526b65]">
         Pengambilan barang ditujukan untuk menyelesaikan laporan kehilangan yang berstatus aktif (DICARI).
       </p>
 
       {isLoadingReports ? (
-        <div className="p-6 text-center text-xs text-gray-400 animate-pulse">
+        <div className="p-6 text-center text-xs text-[#526b65] animate-pulse">
           Memuat laporan kehilangan milik {selectedWarga.nama}...
         </div>
       ) : wargaLostReports.length === 0 ? (
@@ -57,26 +57,26 @@ export default function StepPilihLaporan({
               onClick={() => onSelectLostReport(report)}
               className={`text-left p-4 rounded-xl border text-xs transition-all cursor-pointer ${
                 selectedLostReport?.id === report.id
-                  ? "border-green-mid bg-green-accent/10 shadow-sm ring-2 ring-green-accent/20"
-                  : "border-gray-200 hover:border-gray-300 bg-white"
+                  ? "border-[#0d7565] bg-[#eef7f4] shadow-xs ring-2 ring-[#0d7565]/20"
+                  : "border-[#e2ece8] hover:border-[#d2e5df] bg-white"
               }`}
             >
               <div className="flex justify-between items-start mb-1">
-                <span className="font-bold text-green-dark text-sm truncate">
+                <span className="font-bold text-[#102824] text-xs md:text-sm truncate">
                   {report.jenis?.name} {report.merek?.name}
                 </span>
 
-                <span className="px-2 py-0.5 rounded-full text-[9px] font-bold bg-blue-100 text-blue-700">
+                <span className="px-2 py-0.5 rounded-full text-[9px] font-bold bg-blue-50 text-blue-700 border border-blue-200">
                   {report.status}
                 </span>
               </div>
 
-              <p className="text-gray-500">
+              <p className="text-[#526b65]">
                 Warna: {report.warna?.name} | Lokasi Hilang: {report.lokasi?.name}
               </p>
 
               {report.additionalDesc && (
-                <p className="text-[11px] text-gray-400 mt-1 italic truncate">
+                <p className="text-[11px] text-[#526b65]/80 mt-1 italic truncate">
                   &quot;{report.additionalDesc}&quot;
                 </p>
               )}

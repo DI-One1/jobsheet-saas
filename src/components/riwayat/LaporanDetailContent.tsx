@@ -163,7 +163,7 @@ export default function LaporanDetailContent({ report, onToast }: LaporanDetailC
                 Kode Barang Temuan Terkait:
               </span>
               <div className="flex items-center justify-between">
-                <span className="font-mono font-bold text-sm text-[#0d3b2e]">
+                <span className="font-mono font-bold text-sm text-[#102824]">
                   {relatedItemCode}
                 </span>
                 <button
@@ -172,7 +172,7 @@ export default function LaporanDetailContent({ report, onToast }: LaporanDetailC
                     navigator.clipboard.writeText(relatedItemCode);
                     onToast?.(`Kode barang "${relatedItemCode}" berhasil disalin!`, "success");
                   }}
-                  className="px-2.5 py-1 text-[11px] font-bold text-[#0d3b2e] bg-white border border-emerald-300 rounded-lg hover:bg-emerald-100 transition-colors cursor-pointer"
+                  className="px-2.5 py-1 text-[11px] font-bold text-[#102824] bg-white border border-emerald-300 rounded-lg hover:bg-emerald-100 transition-colors cursor-pointer"
                 >
                   Salin Kode
                 </button>

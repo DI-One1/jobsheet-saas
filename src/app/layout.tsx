@@ -16,10 +16,41 @@ const inter = Inter({
   variable: "--font-inter",
 });
 
+const siteUrl = process.env.NEXT_PUBLIC_APP_URL || "https://lacak.smktibazma.sch.id";
+
 export const metadata: Metadata = {
-  title: "LACAK - Lapak Cari barang Kembali",
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: "LACAK - Lapak Cari Barang Kembali | Sistem Lost & Found",
+    template: "%s | LACAK",
+  },
   description:
-    "Sistem Informasi Pengelolaan Barang Hilang & Temuan Terintegrasi",
+    "Sistem Informasi Pengelolaan Barang Hilang & Temuan Terintegrasi. Cari barang temuan, laporkan kehilangan, dan pantau status barang secara transparan dan aman.",
+  keywords: [
+    "barang hilang",
+    "barang temuan",
+    "lost and found",
+    "lacak barang",
+    "lapor barang hilang",
+    "portal temuan",
+  ],
+  openGraph: {
+    type: "website",
+    locale: "id_ID",
+    url: siteUrl,
+    siteName: "LACAK",
+    title: "LACAK - Lapak Cari Barang Kembali | Sistem Lost & Found",
+    description:
+      "Sistem Informasi Pengelolaan Barang Hilang & Temuan Terintegrasi.",
+    images: ["/images/about/hero.jpg"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "LACAK - Lapak Cari Barang Kembali | Sistem Lost & Found",
+    description:
+      "Sistem Informasi Pengelolaan Barang Hilang & Temuan Terintegrasi.",
+    images: ["/images/about/hero.jpg"],
+  },
 };
 
 export default async function RootLayout({
@@ -32,12 +63,6 @@ export default async function RootLayout({
   return (
     <ClerkProvider>
       <html lang="id" suppressHydrationWarning className={inter.variable}>
-        <head>
-          <link rel="preconnect" href="https://images.unsplash.com" crossOrigin="anonymous" />
-          <link rel="dns-prefetch" href="https://images.unsplash.com" />
-          <link rel="preconnect" href="https://img.clerk.com" crossOrigin="anonymous" />
-          <link rel="dns-prefetch" href="https://img.clerk.com" />
-        </head>
         <body
           className="font-sans min-h-screen flex flex-col bg-[#fafbfb] text-[#102824] antialiased"
           suppressHydrationWarning
@@ -46,7 +71,7 @@ export default async function RootLayout({
             <UserDatabaseSync />
             <Suspense
               fallback={
-                <header className="bg-[#0d3b2e] min-h-[120px]" />
+                <header className="bg-white border-b border-[#e2ece8] min-h-[64px]" />
               }
             >
               <RouteChrome publicData={{ categories, colors, brands, locations }} />

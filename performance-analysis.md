@@ -19,6 +19,7 @@
 | 9 | **Pembersihan CSS Mati (`globals.css`)** | ✅ Selesai | Menghapus aturan CSS `.search-hero` mati berukuran 1800px dan menaikkan tinggi select filter dari 32px ke 38px. | CSS bundle lebih ramping, filter navbar lebih mudah disentuh di smartphone. |
 | 10 | **Navigasi Terisolasi Editorial (`RouteChrome.tsx`)** | ✅ Selesai | Mengisolasi `/tentang-kami` dan `/beri-saran` tanpa top navbar (fokus distraction-free dengan tombol kembali bawaan). | Halaman informasi tampil estetik, fokus konten, tanpa gangguan bar navigasi atas. |
 | 11 | **Standarisasi Komponen Inti (`src/components/ui/`)** | ✅ Selesai | Memperbarui `Button.tsx`, `Badge.tsx`, `Card.tsx`, `Input.tsx`, dan `Select.tsx`. | Token warna konsisten (`#0d7565`, `#0d3b2e`, `#e2ece8`) dengan touch target minimal 40–44px. |
+| 12 | **Migrasi Gambar Lokal (`public/images/`)** | ✅ Selesai | Memindahkan seluruh gambar kategori, modul dashboard, dan tentang-kami dari Unsplash ke `public/images/`. | 0ms DNS/TLS handshake ke domain luar, tahan offline, dan tidak akan rusak jika Unsplash lambat/down. |
 
 ---
 

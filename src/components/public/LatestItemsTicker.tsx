@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState, useRef } from "react";
 import Image from "next/image";
@@ -31,7 +31,7 @@ export default function LatestItemsTicker({
 
   const displayItems = items.length < 4 ? [...items, ...items, ...items, ...items] : [...items, ...items];
 
-  /* â”€â”€ Mouse Drag & Touch Swipe Handlers â”€â”€ */
+  /* ── Mouse Drag & Touch Swipe Handlers ── */
   const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
     const el = containerRef.current;
     if (!el) return;
@@ -132,7 +132,7 @@ export default function LatestItemsTicker({
                     {title}
                   </strong>
                   <span className="block truncate text-[10px] text-[#c9ede4]">
-                    {item.merek.name} Â· {item.lokasi.name}
+                    {item.merek.name} · {item.lokasi.name}
                   </span>
                 </div>
               </button>

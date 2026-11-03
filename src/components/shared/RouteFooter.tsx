@@ -42,10 +42,10 @@ export default function RouteFooter() {
   }
 
   return (
-    <footer className="bg-[#0d3b2e] text-white/90 py-6 text-center text-xs border-t border-white/10">
+    <footer className="bg-white border-t border-[#e2ece8] text-[#526b65] py-6 text-center text-xs">
       <div className="max-w-[1240px] mx-auto px-4">
-        <p className="font-medium tracking-wide">© 2026 LACAK — Sistem Pengelolaan Barang Temuan</p>
-        <p className="text-[11px] text-white/60 mt-1">Platform Terintegrasi Lost &amp; Found</p>
+        <p className="font-semibold tracking-wide text-[#102824]">© 2026 LACAK — Sistem Pengelolaan Barang Temuan</p>
+        <p className="text-[11px] text-[#526b65]/80 mt-1">Platform Terintegrasi Lost &amp; Found</p>
       </div>
     </footer>
   );
