@@ -20,13 +20,13 @@ export default function HomePage() {
 
         {/* Grid 3 Modul Utama */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-7 max-w-6xl mx-auto pb-8">
-          
+
           {/* Modul 1: Taruh Barang */}
           <div className="group bg-white rounded-2xl shadow-xs border border-[#e2ece8] overflow-hidden flex flex-col transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl hover:border-[#0d7565]/40">
             <div className="relative h-48 w-full overflow-hidden bg-[#eef5f2]">
-              <Image 
-                src={MODULE_CARD_IMAGES.taruhBarang} 
-                alt="Taruh Barang" 
+              <Image
+                src={MODULE_CARD_IMAGES.taruhBarang}
+                alt="Taruh Barang"
                 fill
                 sizes="(max-width: 768px) 100vw, 33vw"
                 className="object-cover transition-transform duration-500 group-hover:scale-108"
@@ -44,8 +44,8 @@ export default function HomePage() {
               <p className="text-[#57706a] text-xs flex-grow leading-relaxed mb-6">
                 Scan sidik jari penemu, input data detail barang temuan baru, dan cetak label barcode lokasi penyimpanan.
               </p>
-              <PrefetchLink 
-                href="/taruh" 
+              <PrefetchLink
+                href="/taruh"
                 className="inline-flex items-center justify-center gap-2 bg-[#0d7565] hover:bg-[#0a5d50] active:scale-[0.98] text-white text-center py-3 px-4 rounded-xl text-xs font-bold transition-all shadow-xs hover:shadow-md cursor-pointer"
               >
                 <span>Mulai Input Barang</span>
@@ -57,9 +57,9 @@ export default function HomePage() {
           {/* Modul 2: Ambil Barang */}
           <div className="group bg-white rounded-2xl shadow-xs border border-[#e2ece8] overflow-hidden flex flex-col transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl hover:border-[#0d7565]/40">
             <div className="relative h-48 w-full overflow-hidden bg-[#eef5f2]">
-              <Image 
-                src={MODULE_CARD_IMAGES.ambilBarang} 
-                alt="Ambil Barang" 
+              <Image
+                src={MODULE_CARD_IMAGES.ambilBarang}
+                alt="Ambil Barang"
                 fill
                 sizes="(max-width: 768px) 100vw, 33vw"
                 className="object-cover transition-transform duration-500 group-hover:scale-108"
@@ -77,8 +77,8 @@ export default function HomePage() {
               <p className="text-[#57706a] text-xs flex-grow leading-relaxed mb-6">
                 Scan barcode barang temuan dan verifikasi identitas/sidik jari pengambil untuk menyelesaikan serah terima.
               </p>
-              <PrefetchLink 
-                href="/ambil" 
+              <PrefetchLink
+                href="/ambil"
                 className="inline-flex items-center justify-center gap-2 bg-[#0d7565] hover:bg-[#0a5d50] active:scale-[0.98] text-white text-center py-3 px-4 rounded-xl text-xs font-bold transition-all shadow-xs hover:shadow-md cursor-pointer"
               >
                 <span>Proses Pengambilan</span>
@@ -90,9 +90,9 @@ export default function HomePage() {
           {/* Modul 3: Laporan Kehilangan */}
           <div className="group bg-white rounded-2xl shadow-xs border border-[#e2ece8] overflow-hidden flex flex-col transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl hover:border-[#0d7565]/40">
             <div className="relative h-48 w-full overflow-hidden bg-[#eef5f2]">
-              <Image 
-                src={MODULE_CARD_IMAGES.laporKehilangan} 
-                alt="Laporan Kehilangan" 
+              <Image
+                src={MODULE_CARD_IMAGES.laporKehilangan}
+                alt="Laporan Kehilangan"
                 fill
                 sizes="(max-width: 768px) 100vw, 33vw"
                 className="object-cover transition-transform duration-500 group-hover:scale-108"
@@ -110,8 +110,8 @@ export default function HomePage() {
               <p className="text-[#57706a] text-xs flex-grow leading-relaxed mb-6">
                 Bantu warga/siswa mencatat detail barang yang hilang agar sistem dapat merekomendasikan kecocokan barang temuan.
               </p>
-              <PrefetchLink 
-                href="/lapor" 
+              <PrefetchLink
+                href="/lapor"
                 className="inline-flex items-center justify-center gap-2 bg-[#0d7565] hover:bg-[#0a5d50] active:scale-[0.98] text-white text-center py-3 px-4 rounded-xl text-xs font-bold transition-all shadow-xs hover:shadow-md cursor-pointer"
               >
                 <span>Buat Laporan Baru</span>
@@ -125,4 +125,3 @@ export default function HomePage() {
     </div>
   );
 }
-

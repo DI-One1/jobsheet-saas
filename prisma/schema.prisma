@@ -72,6 +72,8 @@ model Warga {
   foundItems        FoundItem[]
   claimTransactions ClaimTransaction[]
 
+  @@index([nama])
+  @@index([createdAt(sort: Desc)])
   @@map("warga")
 }
 
@@ -133,6 +135,8 @@ model LostReport {
 
   claimTransactions ClaimTransaction[]
 
+  @@index([status, createdAt(sort: Desc)])
+  @@index([wargaId])
   @@map("lost_reports")
 }
 
@@ -174,6 +178,10 @@ model FoundItem {
 
   claim ClaimTransaction?
 
+  @@index([status, createdAt(sort: Desc)])
+  @@index([wargaId])
+  @@index([jenisId])
+  @@index([lokasiId])
   @@map("found_items")
 }
 
@@ -195,6 +203,8 @@ model ClaimTransaction {
 
   claimedAt DateTime @default(now()) @map("claimed_at")
 
+  @@index([wargaId])
+  @@index([claimedAt(sort: Desc)])
   @@map("claim_transactions")
 }
 
@@ -234,5 +244,7 @@ model Notification {
   link         String? // URL tujuan saat diklik
   createdAt    DateTime @default(now()) @map("created_at")
 
+  @@index([wargaId, isRead])
+  @@index([createdAt(sort: Desc)])
   @@map("notifications")
 }

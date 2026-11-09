@@ -32,24 +32,22 @@ export default function NavTabs() {
           {/* 1. Beranda */}
           <Link
             href="/dashboard"
-            className={`whitespace-nowrap text-xs md:text-sm px-3.5 md:px-4 py-2 rounded-xl transition-all no-underline flex items-center gap-2 select-none cursor-pointer ${
-              isActive("/dashboard")
+            className={`whitespace-nowrap text-xs md:text-sm px-3.5 md:px-4 py-2 rounded-xl transition-all no-underline flex items-center gap-2 select-none cursor-pointer ${isActive("/dashboard")
                 ? "bg-[#eef7f4] text-[#0d7565] font-bold border border-[#cbe4dc] shadow-2xs"
                 : "text-[#526b65] hover:text-[#0d7565] hover:bg-[#f1f7f5] font-medium border border-transparent"
-            }`}
+              }`}
           >
             <LayoutDashboard className={`h-4 w-4 ${isActive("/dashboard") ? "text-[#0d7565]" : "text-[#526b65]"}`} />
-            <span>Beranda</span>
+            <span>Dashboard</span>
           </Link>
 
           {/* 2. Data Warga */}
           <Link
             href="/data-warga"
-            className={`whitespace-nowrap text-xs md:text-sm px-3.5 md:px-4 py-2 rounded-xl transition-all no-underline flex items-center gap-2 select-none cursor-pointer ${
-              isActive("/data-warga")
+            className={`whitespace-nowrap text-xs md:text-sm px-3.5 md:px-4 py-2 rounded-xl transition-all no-underline flex items-center gap-2 select-none cursor-pointer ${isActive("/data-warga")
                 ? "bg-[#eef7f4] text-[#0d7565] font-bold border border-[#cbe4dc] shadow-2xs"
                 : "text-[#526b65] hover:text-[#0d7565] hover:bg-[#f1f7f5] font-medium border border-transparent"
-            }`}
+              }`}
           >
             <Users className={`h-4 w-4 ${isActive("/data-warga") ? "text-[#0d7565]" : "text-[#526b65]"}`} />
             <span>Data Warga</span>
@@ -61,11 +59,10 @@ export default function NavTabs() {
               onClick={() => setIsDropdownOpen(!isDropdownOpen)}
               aria-expanded={isDropdownOpen}
               aria-haspopup="true"
-              className={`whitespace-nowrap text-xs md:text-sm px-3.5 md:px-4 py-2 rounded-xl transition-all cursor-pointer flex items-center gap-2 select-none ${
-                isRiwayatActive
+              className={`whitespace-nowrap text-xs md:text-sm px-3.5 md:px-4 py-2 rounded-xl transition-all cursor-pointer flex items-center gap-2 select-none ${isRiwayatActive
                   ? "bg-[#eef7f4] text-[#0d7565] font-bold border border-[#cbe4dc] shadow-2xs"
                   : "text-[#526b65] hover:text-[#0d7565] hover:bg-[#f1f7f5] font-medium border border-transparent"
-              }`}
+                }`}
             >
               <History className={`h-4 w-4 ${isRiwayatActive ? "text-[#0d7565]" : "text-[#526b65]"}`} />
               <span>Riwayat</span>
@@ -77,11 +74,10 @@ export default function NavTabs() {
                 <Link
                   href="/riwayat/temuan"
                   onClick={() => setIsDropdownOpen(false)}
-                  className={`rounded-xl px-3.5 py-2.5 text-xs font-semibold transition-colors no-underline flex items-center gap-2.5 ${
-                    isActive("/riwayat/temuan")
+                  className={`rounded-xl px-3.5 py-2.5 text-xs font-semibold transition-colors no-underline flex items-center gap-2.5 ${isActive("/riwayat/temuan")
                       ? "bg-[#0d7565] text-white shadow-xs"
                       : "text-[#1c3833] hover:bg-[#eef7f4] hover:text-[#0d7565]"
-                  }`}
+                    }`}
                 >
                   <PackagePlus className="h-4 w-4" />
                   <span>Taruh Barang</span>
@@ -89,11 +85,10 @@ export default function NavTabs() {
                 <Link
                   href="/riwayat/laporan"
                   onClick={() => setIsDropdownOpen(false)}
-                  className={`rounded-xl px-3.5 py-2.5 text-xs font-semibold transition-colors no-underline flex items-center gap-2.5 ${
-                    isActive("/riwayat/laporan")
+                  className={`rounded-xl px-3.5 py-2.5 text-xs font-semibold transition-colors no-underline flex items-center gap-2.5 ${isActive("/riwayat/laporan")
                       ? "bg-[#0d7565] text-white shadow-xs"
                       : "text-[#1c3833] hover:bg-[#eef7f4] hover:text-[#0d7565]"
-                  }`}
+                    }`}
                 >
                   <FileSpreadsheet className="h-4 w-4" />
                   <span>Laporan Kehilangan</span>
@@ -101,11 +96,10 @@ export default function NavTabs() {
                 <Link
                   href="/riwayat/pengambilan"
                   onClick={() => setIsDropdownOpen(false)}
-                  className={`rounded-xl px-3.5 py-2.5 text-xs font-semibold transition-colors no-underline flex items-center gap-2.5 ${
-                    isActive("/riwayat/pengambilan")
+                  className={`rounded-xl px-3.5 py-2.5 text-xs font-semibold transition-colors no-underline flex items-center gap-2.5 ${isActive("/riwayat/pengambilan")
                       ? "bg-[#0d7565] text-white shadow-xs"
                       : "text-[#1c3833] hover:bg-[#eef7f4] hover:text-[#0d7565]"
-                  }`}
+                    }`}
                 >
                   <PackageCheck className="h-4 w-4" />
                   <span>Pengambilan Barang</span>

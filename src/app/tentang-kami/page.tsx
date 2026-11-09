@@ -30,11 +30,9 @@ type ProcessStep = {
 /*  Content                                                            */
 /* ------------------------------------------------------------------ */
 
-const HERO_IMAGE =
-  "https://images.unsplash.com/photo-1454923634634-bd1614719a7b?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fGh1bWFuJTIwYmVpbmd8ZW58MHx8MHx8fDA%3D";
+const HERO_IMAGE = "/images/about/hero.jpg";
 
-const INTRO_IMAGE =
-  "https://images.unsplash.com/photo-1749828198068-b224469a39c4?w=1000&h=1250&fit=crop&q=80";
+const INTRO_IMAGE = "/images/about/intro.jpg";
 
 /*
  * LACAK saat ini dikembangkan oleh dua orang.
@@ -47,7 +45,7 @@ const TEAM_MEMBERS: TeamMember[] = [
     description:
       "Bertanggung jawab atas arsitektur sistem dan pengembangan ide LACAK.",
     image:
-      "https://static.vecteezy.com/system/resources/previews/037/336/395/non_2x/user-profile-flat-illustration-avatar-person-icon-gender-neutral-silhouette-profile-picture-free-vector.jpg",
+      "/images/about/avatar.jpg",
     profile: "#",
   },
   {
@@ -56,7 +54,7 @@ const TEAM_MEMBERS: TeamMember[] = [
     description:
       "Mengembangkan ide inti, antarmuka dan sistem backend yang menjadi fondasi platform LACAK.",
     image:
-      "https://static.vecteezy.com/system/resources/previews/037/336/395/non_2x/user-profile-flat-illustration-avatar-person-icon-gender-neutral-silhouette-profile-picture-free-vector.jpg",
+      "/images/about/avatar.jpg",
     profile: "#",
   },
 ];

@@ -5,6 +5,7 @@ import { Suspense } from "react";
 import "./globals.css";
 import RouteChrome from "@/components/shared/RouteChrome";
 import RouteFooter from "@/components/shared/RouteFooter";
+import MobileBottomNav from "@/components/shared/MobileBottomNav";
 import { ChromeVisibilityProvider } from "@/components/shared/ChromeVisibility";
 import UserDatabaseSync from "@/components/shared/UserDatabaseSync";
 import { ClerkProvider } from "@clerk/nextjs";
@@ -25,28 +26,44 @@ export const metadata: Metadata = {
     template: "%s | LACAK",
   },
   description:
-    "Sistem Informasi Pengelolaan Barang Hilang & Temuan Terintegrasi. Cari barang temuan, laporkan kehilangan, dan pantau status barang secara transparan dan aman.",
+    "Sistem Informasi Pengelolaan Barang Hilang & Temuan Terintegrasi. Laporkan barang hilang atau temukan barang tercecer di lingkungan institusi dengan cepat dan transparan.",
   keywords: [
+    "lost and found",
     "barang hilang",
     "barang temuan",
-    "lost and found",
     "lacak barang",
-    "lapor barang hilang",
-    "portal temuan",
+    "sistem informasi",
+    "sekolah",
+    "institusi",
   ],
+  authors: [{ name: "Tim Pengembang LACAK" }],
+  creator: "SMK TI BAZMA",
+  publisher: "SMK TI BAZMA",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
   openGraph: {
-    type: "website",
-    locale: "id_ID",
-    url: siteUrl,
-    siteName: "LACAK",
-    title: "LACAK - Lapak Cari Barang Kembali | Sistem Lost & Found",
+    title: "LACAK - Lapak Cari Barang Kembali",
     description:
       "Sistem Informasi Pengelolaan Barang Hilang & Temuan Terintegrasi.",
-    images: ["/images/about/hero.jpg"],
+    url: siteUrl,
+    siteName: "LACAK",
+    locale: "id_ID",
+    type: "website",
+    images: [
+      {
+        url: "/images/about/hero.jpg",
+        width: 1200,
+        height: 630,
+        alt: "LACAK Banner",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "LACAK - Lapak Cari Barang Kembali | Sistem Lost & Found",
+    title: "LACAK - Lapak Cari Barang Kembali",
     description:
       "Sistem Informasi Pengelolaan Barang Hilang & Temuan Terintegrasi.",
     images: ["/images/about/hero.jpg"],
@@ -77,11 +94,12 @@ export default async function RootLayout({
               <RouteChrome publicData={{ categories, colors, brands, locations }} />
             </Suspense>
 
-            <main className="flex-grow flex flex-col">
+            <main className="flex-grow flex flex-col pb-16 md:pb-0">
               {children}
             </main>
 
             <RouteFooter />
+            <MobileBottomNav />
           </ChromeVisibilityProvider>
         </body>
       </html>

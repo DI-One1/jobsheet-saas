@@ -357,7 +357,7 @@ export default function WargaClient({ initialData }: { initialData: Warga[] }) {
       </div>
 
       {/* ─── Expandable FAB ──────────────────────────────────────── */}
-      <div ref={fabRef} className="fixed bottom-8 right-8 z-[1000] flex flex-col-reverse items-end gap-3">
+      <div ref={fabRef} className="fixed bottom-20 md:bottom-8 right-5 md:right-8 z-[1000] flex flex-col-reverse items-end gap-3">
         {/* Main Toggle Button */}
         <button
           type="button"

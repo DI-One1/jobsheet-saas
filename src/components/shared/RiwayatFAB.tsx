@@ -52,7 +52,7 @@ export default function RiwayatFAB({
     <>
       <div
         ref={fabRef}
-        className="fixed bottom-8 right-8 z-[1000] flex flex-col-reverse items-end gap-3"
+        className="fixed bottom-20 md:bottom-8 right-5 md:right-8 z-[1000] flex flex-col-reverse items-end gap-3"
       >
         {/* Tombol Utama (Toggle) */}
         <button
